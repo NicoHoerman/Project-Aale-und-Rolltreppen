@@ -1,0 +1,16 @@
+*.XML
+*.xml
+*.props
+*.nupkg
+*.p7s
+*.txt
+*.targets
+*.cs
+*.CopyComplete
+*.config
+*.json
+*.md
+*._
+*.TXT
+*.csproj
+packages/Castle.Core.4.3.1/LICENSE
