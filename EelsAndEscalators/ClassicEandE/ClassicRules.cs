@@ -46,6 +46,7 @@ namespace EelsAndEscalators.ClassicEandE
 
         public void RollDice()
         {
+
             throw new NotImplementedException();
         }
     }
