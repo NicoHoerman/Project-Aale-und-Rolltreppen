@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<EscalatorConfigurations>
+  
+  <config>
+    <toplocation> 27 </toplocation>
+    <bottomlocation> 22 </bottomlocation>
+  </config>
+
+  <config>
+    <toplocation> 18 </toplocation>
+    <bottomlocation> 14 </bottomlocation>
+  </config>
+
+</EscalatorConfigurations>

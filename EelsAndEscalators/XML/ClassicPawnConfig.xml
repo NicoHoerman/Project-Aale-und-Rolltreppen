@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<PawnConfigurations>
+  
+  <config>
+    <location> 0 </location>
+    <color>    1 </color>
+    <playerID> 1 </playerID>
+  </config>
+  
+  <config>
+    <location> 0 </location>
+    <color>    2 </color>
+    <playerID> 2 </playerID> 
+  </config>
+  
+</PawnConfigurations>
