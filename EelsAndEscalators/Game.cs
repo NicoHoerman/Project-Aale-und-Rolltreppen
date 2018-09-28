@@ -13,7 +13,7 @@ namespace EelsAndEscalators
     public class Game : IGame
     {
 
-        public IBoard Board { get; }
+        public IBoard Board { get; set; }
         public IRules Rules { get; }
         public IState State { get; set; }
         public MainMenuState MenuState { get; set; }
@@ -32,16 +32,6 @@ namespace EelsAndEscalators
             Rules = rules;
         }
 
-
-        public void EntityCreation()
-        {
-
-        }
-
-        public void PawnCreation()
-        {
-            throw new NotImplementedException();
-        }
 
         public string CreateBoard()
         {
@@ -134,6 +124,7 @@ namespace EelsAndEscalators
         }
         public string InitializeGame()
         {
+           Rules.SetupEntitites();
             throw new NotImplementedException();
         }
 

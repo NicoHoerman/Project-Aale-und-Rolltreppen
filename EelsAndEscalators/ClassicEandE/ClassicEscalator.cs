@@ -12,6 +12,8 @@ namespace EelsAndEscalators.ClassicEandE
 
         public EntityType type => EntityType.Escalator;
 
+        public long Id { get; set; }
+
         private readonly IPawn _pawn;
 
         public ClassicEscalator(IPawn pawn)

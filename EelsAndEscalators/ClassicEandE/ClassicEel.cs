@@ -11,6 +11,8 @@ namespace EelsAndEscalators.ClassicEandE
         public int bottom_location { get; set; }
         public EntityType type => EntityType.Eel;
 
+        public long Id { get; set; }
+
         private readonly IPawn _pawn;
 
         public ClassicEel(IPawn pawn)
