@@ -6,69 +6,35 @@ using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.Configurations;
 using EelsAndEscalators.States;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace EelsAndEscalators
 {
-    class ConfigurationProvider
+    class ConfigurationProvider : IConfigurationProvider
     {
-        XmlDocument doc = new XmlDocument();
-        int iD = 1;
+        private readonly string _configurationFile;
 
-        public List<PawnConfig> GetPawnConfig()
+        private List<XElement> _configurations;
+
+        public ConfigurationProvider(string configurationFile)
         {
-            doc.Load(@"C:\Users\HNI\Documents\Aale und rolltreppen\Projekt AuR\EelsAndEscalators\XML\ClassicPawnConfig.xml");
-             List<PawnConfig> configurations = new List<PawnConfig>();
+            _configurationFile = configurationFile;
 
-            foreach(XmlNode configNode in doc.DocumentElement.ChildNodes)
-            {
-                string location = configNode.Attributes["location"]?.InnerText;
-                string color = configNode.Attributes["color"]?.InnerText;
-                string playerID = configNode.Attributes["playerID"]?.InnerText;
-
-                configurations.Add(new PawnConfig(int.Parse(location), int.Parse(color)
-                                                 ,int.Parse(playerID),iD));
-                iD++;
-            }
-            iD = 1;
-            return configurations;
+            ReadConfigurationFile();
         }
 
+        public ConfigurationProvider()
+            : this(@"C:\Users\HNI\Documents\Aale und rolltreppen\Projekt AuR\EelsAndEscalators\XML\Config.xml")
+        { }
 
-        public List<EelConfig> GetEelConfig()
+
+        private void ReadConfigurationFile()
         {
-            doc.Load(@"C:\Users\HNI\Documents\Aale und rolltreppen\Projekt AuR\EelsAndEscalators\XML\ClassicEelConfig.xml");
-            List<EelConfig> configurations = new List<EelConfig>();
-
-            foreach (XmlNode configNode in doc.DocumentElement.ChildNodes)
-            {
-                string topLocation = configNode.Attributes["toplocation"]?.InnerText;
-                string bottomLocation = configNode.Attributes["toplocation"]?.InnerText;
-
-                configurations.Add(new EelConfig(int.Parse(topLocation), int.Parse(bottomLocation)
-                                                ,iD));
-                iD++;
-            }
-            iD = 1;
-            return configurations;
+            var doc = XDocument.Load(_configurationFile);
+            _configurations = doc.Root.Elements().Select(x => x.Element("config")).ToList();
         }
 
-        public List<EscalatorConfig> GetEscalatorConfig()
-        {
-            doc.Load(@"C:\Users\HNI\Documents\Aale und rolltreppen\Projekt AuR\EelsAndEscalators\XML\ClassicEscalatorConfig.xml");
-            List<EscalatorConfig> configurations = new List<EscalatorConfig>();
-
-            foreach (XmlNode configNode in doc.DocumentElement.ChildNodes)
-            {
-                string topLocation = configNode.Attributes["toplocation"]?.InnerText;
-                string bottomLocation = configNode.Attributes["botlocation"]?.InnerText;
-
-                configurations.Add(new EscalatorConfig(int.Parse(topLocation), int.Parse(bottomLocation)
-                                                , iD));
-                iD++;
-            }
-            iD = 1;
-            return configurations;
-        }
-
+        public List<XElement> GetEntityConfigurations() => _configurations;
     }
 }
