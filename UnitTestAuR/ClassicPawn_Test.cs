@@ -46,7 +46,7 @@ namespace UnitTestAuR
             {
 
                 var pawn = Creator();
-                pawn.MovePawn(diceResultUnderTest);
+                pawn.MovePawn();
 
                 Assert.AreEqual(9, pawn.location);
             }

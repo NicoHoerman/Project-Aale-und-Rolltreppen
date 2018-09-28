@@ -18,5 +18,10 @@ namespace EelsAndEscalators.Configurations
             this.playerID = playerID;
             this.iD = iD;
         }
+
+        public PawnConfig()
+        {
+
+        }
     }
 }

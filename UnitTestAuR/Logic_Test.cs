@@ -142,7 +142,7 @@ namespace UnitTestAuR
             pawnLocationUnderTest = 13;
             diceResultUnderTest = 5;
             var logic = Creator();
-            logic.MakeTurn(diceResultUnderTest);
+            logic.MakeTurn();
 
             Assert.AreEqual(pawnLocationUnderTest, pawnLocationUnderTest);
         }
@@ -158,7 +158,7 @@ namespace UnitTestAuR
             pawnLocationUnderTest = 13;
             diceResultUnderTest = 2;
             var logic = Creator();
-            logic.MakeTurn(diceResultUnderTest);
+            logic.MakeTurn();
 
             Assert.AreNotEqual(pawnLocationUnderTest, pawnLocationUnderTest);
         }

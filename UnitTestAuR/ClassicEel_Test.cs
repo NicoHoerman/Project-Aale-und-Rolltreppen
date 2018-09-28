@@ -46,7 +46,7 @@ namespace UnitTestAuR
 
             var eel = Creator();
 
-            result = eel.OnSamePositionAs(pawnLocationUnderTest);
+            result = eel.OnSamePositionAs();
 
             Assert.IsTrue(result);
         }
@@ -57,7 +57,7 @@ namespace UnitTestAuR
 
             var eel = Creator();
 
-            result = eel.OnSamePositionAs(pawnLocationUnderTest);
+            result = eel.OnSamePositionAs();
 
             Assert.IsFalse(result);
         }
@@ -68,7 +68,7 @@ namespace UnitTestAuR
 
             var eel = Creator();
 
-            eel.SetPawn(pawnLocationUnderTest);
+            eel.SetPawn();
 
             result = pawnLocationUnderTest < 6 ? true : false;
 

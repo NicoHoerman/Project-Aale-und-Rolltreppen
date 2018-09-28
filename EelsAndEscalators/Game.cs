@@ -45,7 +45,7 @@ namespace EelsAndEscalators
 
         public string CreateBoard()
         {
-
+            /*
 
             var classicboard = Rules.CreateBoard();
 
@@ -62,6 +62,7 @@ namespace EelsAndEscalators
 
             for (int i = fieldNumberInt; i >= 1; i--) //Einen einzigen Kasten bauen?
             {
+                
                 //<Number>
                 fieldNumber = fieldNumberInt.ToString();
                 board += fieldNumber;
@@ -128,7 +129,8 @@ namespace EelsAndEscalators
             //</Right>
 
 
-
+            */
+            throw new NotImplementedException();
         }
         public string InitializeGame()
         {
@@ -214,5 +216,4 @@ namespace EelsAndEscalators
     public void MakeTurn(int dice) { ...}
     public TurnState GetTurnState() { ...}
     */
-}
 
