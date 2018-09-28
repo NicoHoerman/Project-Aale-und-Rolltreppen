@@ -36,16 +36,17 @@ namespace EelsAndEscalators.ClassicEandE
 
         public IEntity CreateEel(EelConfig configuration)
         {
-            throw new NotImplementedException();
+            return new ClassicEel();
         }
 
         public IEntity CreateEscalator(EscalatorConfig configuration)
         {
-            throw new NotImplementedException();
+            return new ClassicEscalator();
         }
 
         public void RollDice()
         {
+
             throw new NotImplementedException();
         }
     }

@@ -9,11 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{25680541
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{8486D7AC-29AD-4311-B88F-A6E6BB51EA60}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Crap", "Crap", "{D03F40A8-C2EB-4186-B37B-04D9CEF5A989}"
-	ProjectSection(SolutionItems) = preProject
-		ClassLibraryRegeln\PseudoCode.cs = ClassLibraryRegeln\PseudoCode.cs
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EelsAndEscalators", "EelsAndEscalators\EelsAndEscalators.csproj", "{52DA76B4-3D05-4A2F-A60E-021A96D7CE03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestAuR", "UnitTestAuR\UnitTestAuR.csproj", "{5DFC0924-784A-43B4-BBC1-65B531FEBA6B}"
