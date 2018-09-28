@@ -4,6 +4,7 @@ using System.Text;
 using EelsAndEscalators.Configurations;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
+using EelsAndEscalators.States;
 
 
 
@@ -11,11 +12,19 @@ namespace EelsAndEscalators
 {
     public class Game : IGame
     {
-        
+
         public IBoard Board { get; }
         public IRules Rules { get; }
         public IState State { get; set; }
+        public MainMenuState MenuState { get; set; }
         public Logic Logic { get; }
+
+        public IEntity Entity { get; set; }
+
+        public IPawn pawn;
+
+        List<IEntity> AllEels = new List<IEntity>();
+              
 
         public Game(IBoard board, IRules rules)
         {
@@ -23,27 +32,24 @@ namespace EelsAndEscalators
             Rules = rules;
         }
 
-        public void ChooseRules(int rules_set)
-        {
-            throw new NotImplementedException();
-        }
 
         public void EntityCreation()
         {
-            throw new NotImplementedException();
+
         }
 
         public void PawnCreation()
         {
-
             throw new NotImplementedException();
         }
 
         public string CreateBoard()
         {
-           /* ClassicRules classicrules = new ClassicRules();
-            var classicboard = classicrules.CreateBoard();
-            int fieldNumberInt = classicboard.board_size;
+
+
+            var classicboard = Rules.CreateBoard();
+
+            int fieldNumberInt = classicboard.size;
             string fieldNumber = "";
             string left = "[";
             string right = "] ";
@@ -52,13 +58,13 @@ namespace EelsAndEscalators
             string topspace = "";
             string bottomspace = "";
             string board = "";
-            string memory ="";
+            string memory = "";
 
-            for (int i = classicboard.board_size; i >= 1; i--)
+            for (int i = fieldNumberInt; i >= 1; i--) //Einen einzigen Kasten bauen?
             {
                 //<Number>
                 fieldNumber = fieldNumberInt.ToString();
-                board = board + fieldNumber;
+                board += fieldNumber;
                 memory = board;
                 fieldNumberInt--;
                 //</Number>
@@ -69,65 +75,69 @@ namespace EelsAndEscalators
                 //</left>
 
                 //<top>
-                foreach (entities)
-                {
-                    if(toplocation = i)
-                       choose E S
-                    topspace = "S";
-                }
-                board = board + topspace;
-                memory = board;
-                //</top>
 
-                //<pawn1space>
-                foreach (pawns)
-                {
-                    if (pawn.location = i)
-                        pawn1space = "1";
-                }
-                board = board + pawn1space;
-                board = memory;
-                //</pawn1space>
 
-                //<pawn2space>
-                foreach(pawns)
+                Board.Entities.ForEach(if (Entity.type == EntityType.Eel)
+                {
+                    if (Entity.top_location == i)
+                        topspace = "E";
+
+                })
+                
+                
+                
+                    if (Entity.top_location == i)
+                topspace = "E";
+
+            board = board + topspace;
+            memory = board;
+            //</top>
+
+            //<pawn1space>
+            foreach (pawns)
+            {
+                if (pawn.location = i)
+                    pawn1space = "1";
+            }
+            board = board + pawn1space;
+            board = memory;
+            //</pawn1space>
+
+            //<pawn2space>
+            foreach (pawns)
                 if (pawnlocation = i)
                     pawn2space = "2";
-                board = board + pawn2space;
-                board = memory;
-                //</pawn2space>
+            board = board + pawn2space;
+            board = memory;
+            //</pawn2space>
 
-                //<bot>
-                foreach (entities)
-                {
-                    if (botlocation = i)
-                        choose e s
-                     topspace = "e";
-                }
-                board = board + bottomspace;
-                memory = board;
-                //</bot>
-
-                //<Right>
-                board = board + right;
-                memory = board;
-                //</Right>
+            //<bot>
+            foreach (entities)
+            {
+                if (botlocation = i)
+                    choose e s
+                 topspace = "e";
             }
+            board = board + bottomspace;
+            memory = board;
+            //</bot>
+
+            //<Right>
+            board = board + right;
+            memory = board;
+            //</Right>
 
 
 
-
-            */
-
-            throw new NotImplementedException();
         }
-
         public string InitializeGame()
         {
             throw new NotImplementedException();
         }
 
     }
+
+}
 
 
 /*
