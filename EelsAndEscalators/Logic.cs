@@ -4,6 +4,7 @@ using System.Text;
 using EelsAndEscalators.Configurations;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
+using EelsAndEscalators.States;
 
 
 
@@ -11,36 +12,88 @@ using EelsAndEscalators.ClassicEandE;
 namespace EelsAndEscalators
 {
 
-    public class Logic 
+    public class Logic
     {
-        private readonly IGame _game;
-        public bool gameFinished;
+
+        GameRunningState gameRunningState { get; set; }
+
+        private IPawn CurrentPawn;
+        public bool GameFinished;
         private int player = 1;
 
+        private readonly IGame _game;
         public Logic(IGame game)
         {
             _game = game;
         }
-       
-        public bool CheckIfGameFinished()
-        {
-            throw new NotImplementedException();
-        }
 
         public IPawn GetPawn()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _game.Board.Pawns[player];
+            }
+            catch
+            {
+                throw new Exception();
+            }
+
         }
+
+        public TurnState CheckIfGameFinished()
+        {
+            try
+            {
+                GameFinished = CurrentPawn.location == _game.Board.size ? true : false;
+                return GameFinished == true ? TurnState.GameFinished : TurnState.TurnFinished;
+            }
+            catch
+            {
+                throw new Exception();
+            }
+
+        }
+
 
         public void NextPlayer()
         {
-            throw new NotImplementedException();
-        }
-        
+            try
+            {
+                player = player == 1 ? 2 : 1;
+            }
 
-        public bool MakeTurn(int dice_result)
+            catch
+            {
+                throw new Exception();
+            }
+        }
+
+
+        public TurnState MakeTurn()
         {
-            throw new NotImplementedException();
+            try
+            {
+                CurrentPawn = GetPawn();
+
+                _game.Rules.RollDice();
+
+                CurrentPawn.MovePawn();
+
+                _game.Board.Entities.ForEach(entity =>
+                {
+                    if (entity.OnSamePositionAs())
+                    { entity.SetPawn(); }
+                });
+
+                NextPlayer();
+
+                return CheckIfGameFinished();
+            }
+            catch
+            {
+                throw new Exception();
+            }
+
         }
 
         public enum TurnState
@@ -51,9 +104,14 @@ namespace EelsAndEscalators
             PlayerWins,
         }
 
-        public TurnState GetTurnState()
+        public void SwitchState()
+        {
+            gameRunningState.isRunning = false;
+        }
+
+        /*public TurnState GetTurnState()
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }
