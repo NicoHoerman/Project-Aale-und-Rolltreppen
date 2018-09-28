@@ -22,6 +22,7 @@ namespace UnitTestAuR
         private int NumberOfListContent;
         private int boardSizeUnderTest;
         private int diceSidesUnderTest;
+        private int diceResultUnderTest;
 
         private bool correctDice;
 
@@ -52,10 +53,17 @@ namespace UnitTestAuR
             mockedBoard.Setup(m => m.Pawns).
                 Returns(() => pawnListUnderTest);
 
+            //mockedRules Setup
+            var mockedRule = new Mock<IRules>();
+            mockedRule.Setup(g => g.diceResult)
+                .Returns(diceResultUnderTest);
+
             //mockedGame Setup
             var mockedGame = new Mock<IGame>();
             mockedGame.Setup(m => m.Board).
                 Returns(() => mockedBoard.Object);
+            mockedGame.Setup(m => m.Rules).
+                Returns(() => mockedRule.Object);
 
             Creator = () => new ClassicRules(mockedGame.Object);
         }
@@ -163,9 +171,9 @@ namespace UnitTestAuR
         {
             diceSidesUnderTest = 6;
             var rules = Creator();
-            var diceResult = rules.RollDice();
-            if (diceResult == 1 | diceResult == 2 | diceResult == 3 |
-                diceResult == 4 | diceResult == 5 | diceResult == 6)
+            rules.RollDice();
+            if (diceResultUnderTest == 1 | diceResultUnderTest == 2 | diceResultUnderTest == 3 |
+                diceResultUnderTest == 4 | diceResultUnderTest == 5 | diceResultUnderTest == 6)
                 correctDice = true;
 
             Assert.IsTrue(correctDice);

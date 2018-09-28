@@ -44,7 +44,7 @@ namespace UnitTestAuR
 
                 var escalator = Creator();
 
-                var result = escalator.OnSamePositionAs(pawnLocationUnderTest);
+                var result = escalator.OnSamePositionAs();
 
                 Assert.IsTrue(result);
             }
@@ -55,7 +55,7 @@ namespace UnitTestAuR
 
                 var escalator = Creator();
 
-                var result = escalator.OnSamePositionAs(pawnLocationUnderTest);
+                var result = escalator.OnSamePositionAs();
 
                 Assert.IsFalse(result);
             }
@@ -66,7 +66,7 @@ namespace UnitTestAuR
 
                 var escalator = Creator();
 
-                escalator.SetPawn(pawnLocationUnderTest);
+                escalator.SetPawn();
 
                 result = pawnLocationUnderTest > 6 ? true : false;
 

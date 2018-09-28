@@ -17,5 +17,11 @@ namespace EelsAndEscalators.Configurations
             this.bottom_location = bottom_location;
             this.iD = iD;
         }
+
+
+        public EelConfig()
+        {
+
+        }
     }
 }
