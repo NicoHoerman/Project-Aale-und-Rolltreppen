@@ -19,6 +19,11 @@ namespace EelsAndEscalators.ClassicEandE
             _pawn = pawn;
         }
 
+        public ClassicEscalator()
+        {
+
+        }
+
         public void SetPawn()
         {
             try
