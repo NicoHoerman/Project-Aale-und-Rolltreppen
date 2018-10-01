@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
-using EelsAndEscalators.Configurations;
 using EelsAndEscalators.States;
 
 namespace UnitTestAuR
