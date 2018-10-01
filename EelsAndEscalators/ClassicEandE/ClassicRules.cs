@@ -18,7 +18,7 @@ namespace EelsAndEscalators.ClassicEandE
 
         public int numberOfPawns { get; } = 2;
         public int diceSides { get; } = 6;
-        public int diceResult { get; }
+        public int diceResult { get; set; }
 
 
         public ClassicRules(IGame game, IConfigurationProvider configurationProvider)
@@ -73,8 +73,8 @@ namespace EelsAndEscalators.ClassicEandE
         {
             return new ClassicEel
             {
-                bottom_location = Convert.ToInt32(configuration.Element("bottom_location")),
                 top_location = Convert.ToInt32(configuration.Element("top_location")),
+                bottom_location = Convert.ToInt32(configuration.Element("bottom_location")),
                 Id = NextId(),
             };
         }
@@ -83,16 +83,17 @@ namespace EelsAndEscalators.ClassicEandE
         {
             return new ClassicEscalator
             {
-                bottom_location = Convert.ToInt32(configuration.Element("bottom_location")),
                 top_location = Convert.ToInt32(configuration.Element("top_location")),
+                bottom_location = Convert.ToInt32(configuration.Element("bottom_location")),
                 Id = NextId(),
             };
         }
 
         public void RollDice()
         {
+            Random rnd = new Random();
+            diceResult = rnd.Next(1, diceSides+1);
 
-           
         }
 
         #region Private methods
