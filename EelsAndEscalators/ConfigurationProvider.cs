@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
-using EelsAndEscalators.Configurations;
+
 using EelsAndEscalators.States;
 using System.Xml.Linq;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace EelsAndEscalators
         }
 
         public ConfigurationProvider()
-            : this(@"C:\Users\HNI\Documents\Aale und rolltreppen\Projekt AuR\EelsAndEscalators\XML\Config.xml")
+            : this(@"Projekt AuR\EelsAndEscalators\XML\Configurations.xml")
         { }
 
 
