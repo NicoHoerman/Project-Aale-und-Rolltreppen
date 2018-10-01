@@ -107,30 +107,7 @@ namespace UnitTestAuR
             Assert.IsFalse(gameFinishedUnderTest);
         }
 
-        [TestMethod]
-        // ChoosePawn chooses the right pawn through bool Attribute in StateMachine
-        // Test for PlayerOne's Pawn 
-        public void If_Calling_ChoosePawn_Pawn_Should_Be_Chosen_For_Player_One()
-        {
-            playerUnderTest = 1;
-            pawnPlayerUnderTest = 1;
-            var logic = Creator();
-            var correctpawn =logic.GetPawn();
-
-            Assert.AreEqual(pawnPlayerUnderTest, correctpawn.playerID);
-        }
-
-        [TestMethod]
-        //Test for PlayerTwo's Pawn 
-        public void If_Calling_ChoosePawn_Pawn_Should_Be_Chosen_For_Player_Two()
-        {
-            playerUnderTest = 2;
-            pawnPlayerUnderTest = 2;
-            var logic = Creator();
-            var correctpawn = logic.GetPawn();
-
-            Assert.AreEqual(pawnPlayerUnderTest, correctpawn.playerID);
-        }
+        
 
         [TestMethod]
         //Make Turn should be canceld if dice result exceeds the boardsize
