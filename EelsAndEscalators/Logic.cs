@@ -16,22 +16,26 @@ namespace EelsAndEscalators
     {
 
         GameRunningState gameRunningState { get; set; }
+        GameFinishedState gameFinishedState { get; set; }
+        
 
         private IPawn CurrentPawn;
         public bool GameFinished;
-        private int player = 1;
+        private int playerID = 1;
 
+        private IState _currentState;
         private readonly IGame _game;
         public Logic(IGame game)
         {
             _game = game;
         }
 
+        //Gets the Pawn with the matching playerID from the Pawns List
         public IPawn GetPawn()
         {
             try
             {
-                return _game.Board.Pawns[player];
+                return CurrentPawn =  _game.Board.Pawns[playerID];
             }
             catch
             {
@@ -39,6 +43,7 @@ namespace EelsAndEscalators
             }
 
         }
+
 
         public TurnState CheckIfGameFinished()
         {
@@ -57,9 +62,10 @@ namespace EelsAndEscalators
 
         public void NextPlayer()
         {
+            //if its player 1's turn, switch int player to 2. If not, switch it to 1.
             try
             {
-                player = player == 1 ? 2 : 1;
+                playerID = playerID == 1 ? 2 : 1;
             }
 
             catch
@@ -73,21 +79,27 @@ namespace EelsAndEscalators
         {
             try
             {
-                CurrentPawn = GetPawn();
+                GetPawn();
 
                 _game.Rules.RollDice();
 
-                CurrentPawn.MovePawn();
-
+                //Check If Player Exceeds Board
+                if (CurrentPawn.location + _game.Rules.diceResult > _game.Board.size)
+                    return TurnState.PlayerExceedsBoard;
+                else CurrentPawn.MovePawn();
+                
+                //Entities check if the pawn is on them
                 _game.Board.Entities.ForEach(entity =>
                 {
                     if (entity.OnSamePositionAs())
                     { entity.SetPawn(); }
                 });
 
+                
                 NextPlayer();
 
                 return CheckIfGameFinished();
+
             }
             catch
             {
@@ -101,17 +113,36 @@ namespace EelsAndEscalators
             TurnFinished,
             PlayerExceedsBoard,
             GameFinished,
-            PlayerWins,
         }
 
-        public void SwitchState()
+        //Undertakes diffrent Actions, depending on the TurnState returned by MakeTurn()
+        public void ActOnTurnState(TurnState currentTurnState)
         {
-            gameRunningState.isRunning = false;
+            currentTurnState = MakeTurn();
+
+            if (currentTurnState == TurnState.GameFinished)
+            {
+                gameFinishedState.Execute();
+                gameRunningState.isRunning = false;
+            }
+            else if (currentTurnState == TurnState.PlayerExceedsBoard)
+            {
+                gameRunningState.AfterTurnMessage();
+                currentTurnState = TurnState.TurnFinished;
+            }
+            else
+            {
+                gameRunningState.AfterTurnMessage();
+                
+            }    
+
         }
 
-        /*public TurnState GetTurnState()
+        public void SwitchState(IState newState)
         {
-            throw new NotImplementedException();
-        }*/
+            _currentState = newState;
+        }
+
+        
     }
 }
