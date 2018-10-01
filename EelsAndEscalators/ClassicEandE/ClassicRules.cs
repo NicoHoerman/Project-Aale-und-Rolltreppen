@@ -36,7 +36,7 @@ namespace EelsAndEscalators.ClassicEandE
         public ClassicRules(IGame game)
              : this(game, new ConfigurationProvider())
         { }
-
+        
 
         public void SetupEntitites()
         {

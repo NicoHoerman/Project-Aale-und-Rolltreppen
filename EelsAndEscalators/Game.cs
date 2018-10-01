@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EelsAndEscalators.Configurations;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
@@ -30,6 +29,11 @@ namespace EelsAndEscalators
         {
             Board = board;
             Rules = rules;
+        }
+
+        public Game()
+        {
+
         }
 
 
@@ -128,6 +132,10 @@ namespace EelsAndEscalators
             throw new NotImplementedException();
         }
 
+        public void SwitchRules(IRules createdRule)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
