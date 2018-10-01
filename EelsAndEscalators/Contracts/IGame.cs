@@ -14,5 +14,6 @@ namespace EelsAndEscalators.Contracts
 
         string InitializeGame();
         string CreateBoard();
+        void SwitchRules(IRules creator);
     }
 }
