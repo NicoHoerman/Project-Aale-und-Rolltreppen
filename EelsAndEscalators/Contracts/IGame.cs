@@ -9,13 +9,10 @@ namespace EelsAndEscalators.Contracts
          
         Logic  Logic { get; }
         IRules Rules { get; }
-        IBoard Board { get; }
+        IBoard Board { get; set; }
         IState State { get; }
 
         string InitializeGame();
         string CreateBoard();
-        void PawnCreation();
-        void EntityCreation();
-
     }
 }

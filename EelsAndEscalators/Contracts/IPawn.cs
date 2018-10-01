@@ -9,6 +9,7 @@ namespace EelsAndEscalators.Contracts
         int location { get; set; }
         int color { get; set; }
         int playerID { get; set; }
+        long Id { get; set; }
         void MovePawn();
     }
 }

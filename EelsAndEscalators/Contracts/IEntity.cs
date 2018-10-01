@@ -7,7 +7,8 @@ namespace EelsAndEscalators.Contracts
     public enum EntityType
     {
         Eel,
-        Escalator
+        Escalator,
+        Pawn,
     }
     
     public interface IEntity
@@ -15,6 +16,7 @@ namespace EelsAndEscalators.Contracts
         int top_location { get; set; }
         int bottom_location{ get; set; }
         EntityType type { get; }
+        long Id { get; }
 
         void SetPawn();
         bool OnSamePositionAs();

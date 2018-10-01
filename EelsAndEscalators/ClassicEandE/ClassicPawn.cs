@@ -10,6 +10,7 @@ namespace EelsAndEscalators.ClassicEandE
         public int location { get; set; }
         public int color { get; set; }
         public int playerID { get; set; }
+        public long Id { get; set; }
 
         private readonly IGame _game;
 
