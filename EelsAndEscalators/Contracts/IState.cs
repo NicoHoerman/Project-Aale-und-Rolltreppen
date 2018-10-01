@@ -6,7 +6,6 @@ namespace EelsAndEscalators.Contracts
 {
    public interface IState
     {
-        bool palyerOneTurn { get; set; }
         bool Execute();
         void WaitingForInput();
     }

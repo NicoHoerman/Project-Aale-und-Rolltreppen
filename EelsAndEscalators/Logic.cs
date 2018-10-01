@@ -23,7 +23,7 @@ namespace EelsAndEscalators
         public bool GameFinished;
         private int playerID = 1;
 
-        private IState _currentState;
+      
         private readonly IGame _game;
         public Logic(IGame game)
         {
@@ -138,10 +138,7 @@ namespace EelsAndEscalators
 
         }
 
-        public void SwitchState(IState newState)
-        {
-            _currentState = newState;
-        }
+        
 
         
     }
