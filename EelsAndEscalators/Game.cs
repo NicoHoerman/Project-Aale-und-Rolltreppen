@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
@@ -14,22 +18,19 @@ namespace EelsAndEscalators
 
         public IBoard Board { get; set; }
         public IRules Rules { get; }
+<<<<<<< HEAD
         public IState State { get; private set; }
+=======
+        public IState State { get; set; }       
+>>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
         public Logic Logic { get; }
+        public IPawn Pawn { get; }
 
         public IEntity Entity { get; set; }
-
-        public IPawn pawn;
-
+      
         List<IEntity> AllEels = new List<IEntity>();
-              
 
-        public Game(IBoard board, IRules rules)
-        {
-            Board = board;
-            Rules = rules;
-        }
-
+<<<<<<< HEAD
         public Game()
         {
 
@@ -52,100 +53,118 @@ namespace EelsAndEscalators
                 State.Execute();
             }
         }
+=======
+        private IRules currentRule;
+>>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
 
+     
         public string CreateBoard()
         {
-            /*
 
-            var classicboard = Rules.CreateBoard();
-
-            int fieldNumberInt = classicboard.size;
-            string fieldNumber = "";
-            string left = "[";
-            string right = "] ";
-            string pawn1space = "";
-            string pawn2space = "";
-            string topspace = "";
-            string bottomspace = "";
-            string board = "";
-            string memory = "";
-
-            for (int i = fieldNumberInt; i >= 1; i--) //Einen einzigen Kasten bauen?
+            try
             {
-                
-                //<Number>
-                fieldNumber = fieldNumberInt.ToString();
-                board += fieldNumber;
-                memory = board;
-                fieldNumberInt--;
-                //</Number>
+                var classicboard = currentRule.CreateBoard();
 
-                //<Left>
-                board = board + left;
-                memory = board;
-                //</left>
+                int fieldNumberInt = classicboard.size;
+                string fieldNumber = "";
+                string left = "[";
+                string right = "] ";
+                string pawn1space = "";
+                string pawn2space = "";
+                string topspace = "";
+                string bottomspace = "";
+                string board = "";
+                string memory = "";
 
-                //<top>
-
-
-                Board.Entities.ForEach(if (Entity.type == EntityType.Eel)
+                for (int i = fieldNumberInt; i >= 1; i--) //Methoden Inhalt: Einen Kasten bauen.
                 {
-                    if (Entity.top_location == i)
-                        topspace = "E";
 
-                })
-                
-                
-                
-                    if (Entity.top_location == i)
-                topspace = "E";
+                    //<Number>
+                    fieldNumber = fieldNumberInt.ToString();
+                    board += fieldNumber;
+                    memory = board;
+                    fieldNumberInt--;
+                    //</Number>
 
-            board = board + topspace;
-            memory = board;
-            //</top>
+                    //<Left>
+                    board = board + left;
+                    memory = board;
+                    //</left>
 
-            //<pawn1space>
-            foreach (pawns)
-            {
-                if (pawn.location = i)
-                    pawn1space = "1";
+                    //<topspace>
+                    Board.Entities.ForEach(entity =>
+                    {
+                        if (Entity.type == EntityType.Eel & Entity.top_location == i)
+                            topspace = "S";
+                        else if (Entity.type == EntityType.Escalator & Entity.top_location == i)
+                            topspace = "E";
+                        else topspace = " ";
+
+                    });
+
+                    board = board + topspace;
+                    memory = board;
+                    //</topspace>
+
+                    //<pawnspace>
+                    Board.Pawns.ForEach(pawn =>
+                    {
+                        if (Pawn.location == i & pawn1space.Length == 0)
+                            pawn1space = "|" + Pawn.playerID.ToString();
+                        else if (Pawn.location == i & pawn2space.Length == 0  )
+                            pawn2space = Pawn.playerID.ToString() + "|";
+                        else pawn1space = " "; pawn2space = " ";
+                        
+
+                    });
+
+                    if (pawn2space.Length == 0)
+                        pawn2space = " ";
+
+
+
+                    board = board + pawn1space + pawn2space;
+                    board = memory;
+                    //</pawnspace>
+
+                    //<bot>
+                    Board.Entities.ForEach(entity =>
+                    {
+                        if (Entity.type == EntityType.Eel & Entity.bottom_location == i)
+                            bottomspace = "s";
+                        else if (Entity.type == EntityType.Escalator & Entity.bottom_location == i)
+                            bottomspace = "e";
+                        else bottomspace = " ";
+
+
+                    });
+
+                    board = board + bottomspace;
+                    memory = board;
+                    //</bot>
+
+                    //<Right>
+                    board = board + right;
+                    memory = board;
+                    //</Right>
+
+
+                }
+                return memory;
             }
-            board = board + pawn1space;
-            board = memory;
-            //</pawn1space>
-
-            //<pawn2space>
-            foreach (pawns)
-                if (pawnlocation = i)
-                    pawn2space = "2";
-            board = board + pawn2space;
-            board = memory;
-            //</pawn2space>
-
-            //<bot>
-            foreach (entities)
+            catch
             {
-                if (botlocation = i)
-                    choose e s
-                 topspace = "e";
+                throw new Exception();
             }
-            board = board + bottomspace;
-            memory = board;
-            //</bot>
-
-            //<Right>
-            board = board + right;
-            memory = board;
-            //</Right>
-
-
-            */
-            throw new NotImplementedException();
         }
         public string InitializeGame()
         {
-           Rules.SetupEntitites();
-            throw new NotImplementedException();
+           currentRule.SetupEntitites();
+            return CreateBoard();  
+        }
+        public void SwitchRules(IRules createdRule)
+        {
+             currentRule = createdRule;     
         }
 
         public void SwitchRules(IRules createdRule)
