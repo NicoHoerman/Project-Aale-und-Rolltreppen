@@ -5,6 +5,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+    //Nico
     public class ClassicEel : IEntity
     {
         public int top_location { get ;set; }
@@ -29,7 +30,7 @@ namespace EelsAndEscalators.ClassicEandE
         {
             try
             {
-            _pawn.location = bottom_location;
+                _pawn.location = bottom_location;
             }
             catch
             {
@@ -42,7 +43,7 @@ namespace EelsAndEscalators.ClassicEandE
         {
             try
             {
-            return top_location == _pawn.location ? true : false;
+                return top_location == _pawn.location ? true : false;
             }
             catch
             {

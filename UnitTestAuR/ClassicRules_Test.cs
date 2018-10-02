@@ -1,183 +1,182 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using EelsAndEscalators;
-using EelsAndEscalators.Contracts;
-using EelsAndEscalators.Configurations;
-using EelsAndEscalators.States;
-using EelsAndEscalators.ClassicEandE;
+﻿//using System;
+//using System.Text;
+//using System.Collections.Generic;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Moq;
+//using EelsAndEscalators;
+//using EelsAndEscalators.Contracts;
+//using EelsAndEscalators.States;
+//using EelsAndEscalators.ClassicEandE;
 
-namespace UnitTestAuR
-{
-    [TestClass]
-    public class ClassicRules_Test
-    {
-        public Func<IRules> Creator;
+//namespace UnitTestAuR
+//{
+//    [TestClass]
+//    public class ClassicRules_Test
+//    {
+//        public Func<IRules> Creator;
 
-        private List<IPawn> pawnListUnderTest;
-        private List<IEntity> entityListUnderTest;
+//        private List<IPawn> pawnListUnderTest;
+//        private List<IEntity> entityListUnderTest;
 
-        private int NumberOfListContent;
-        private int boardSizeUnderTest;
-        private int diceSidesUnderTest;
-        private int diceResultUnderTest;
+//        private int NumberOfListContent;
+//        private int boardSizeUnderTest;
+//        private int diceSidesUnderTest;
+//        private int diceResultUnderTest;
 
-        private bool correctDice;
+//        private bool correctDice;
 
-        PawnConfig pawnConfig = new PawnConfig();
-        EelConfig eelConfig = new EelConfig();
-        EscalatorConfig escalatorConfig = new EscalatorConfig();
+//        //PawnConfig pawnConfig = new PawnConfig();
+//        //EelConfig eelConfig = new EelConfig();
+//        //EscalatorConfig escalatorConfig = new EscalatorConfig();
 
-        [TestInitialize]
-        public void Setup()
-        {
-            //Attribute Arrange
-            escalatorConfig.bottom_location = 6;
-            eelConfig.top_location = 5;
-            pawnConfig.location = 4;
-            pawnConfig.playerID = 1;
-            pawnConfig.color = 2;
+//        [TestInitialize]
+//        public void Setup()
+//        {
+//            //Attribute Arrange
+//            escalatorConfig.bottom_location = 6;
+//            eelConfig.top_location = 5;
+//            pawnConfig.location = 4;
+//            pawnConfig.playerID = 1;
+//            pawnConfig.color = 2;
 
-            boardSizeUnderTest = 10;
-
+//            boardSizeUnderTest = 10;
 
 
-            //mockedBoard Setup
-            var mockedBoard = new Mock<IBoard>();
-            mockedBoard.Setup(m => m.size).
-                Returns(() => boardSizeUnderTest);
-            mockedBoard.Setup(m => m.Entities).
-                Returns(() => entityListUnderTest);
-            mockedBoard.Setup(m => m.Pawns).
-                Returns(() => pawnListUnderTest);
 
-            //mockedRules Setup
-            var mockedRule = new Mock<IRules>();
-            mockedRule.Setup(g => g.diceResult)
-                .Returns(diceResultUnderTest);
+//            //mockedBoard Setup
+//            var mockedBoard = new Mock<IBoard>();
+//            mockedBoard.Setup(m => m.size).
+//                Returns(() => boardSizeUnderTest);
+//            mockedBoard.Setup(m => m.Entities).
+//                Returns(() => entityListUnderTest);
+//            mockedBoard.Setup(m => m.Pawns).
+//                Returns(() => pawnListUnderTest);
 
-            //mockedGame Setup
-            var mockedGame = new Mock<IGame>();
-            mockedGame.Setup(m => m.Board).
-                Returns(() => mockedBoard.Object);
-            mockedGame.Setup(m => m.Rules).
-                Returns(() => mockedRule.Object);
+//            //mockedRules Setup
+//            var mockedRule = new Mock<IRules>();
+//            mockedRule.Setup(g => g.diceResult)
+//                .Returns(diceResultUnderTest);
 
-            Creator = () => new ClassicRules(mockedGame.Object);
-        }
+//            //mockedGame Setup
+//            var mockedGame = new Mock<IGame>();
+//            mockedGame.Setup(m => m.Board).
+//                Returns(() => mockedBoard.Object);
+//            mockedGame.Setup(m => m.Rules).
+//                Returns(() => mockedRule.Object);
 
-        [TestMethod]
-        public void If_Calling_CreatePawn__Pawn_Should_Have_Location_As_Defined_By_Configuration()
-        {
+//            Creator = () => new ClassicRules(mockedGame.Object);
+//        }
 
-            var rules = Creator();
-            var result = rules.CreatePawn(pawnConfig);
+//        [TestMethod]
+//        public void If_Calling_CreatePawn__Pawn_Should_Have_Location_As_Defined_By_Configuration()
+//        {
 
-            Assert.AreEqual(pawnConfig.location, result.location);
-        }
+//            var rules = Creator();
+//            var result = rules.CreatePawn(pawnConfig);
 
-        [TestMethod]
-        public void If_Calling_CreatePawn__Pawn_Should_Have_Color_As_Defined_By_Configuration()
-        {
+//            Assert.AreEqual(pawnConfig.location, result.location);
+//        }
 
-            var rules = Creator();
-            var result = rules.CreatePawn(pawnConfig);
+//        [TestMethod]
+//        public void If_Calling_CreatePawn__Pawn_Should_Have_Color_As_Defined_By_Configuration()
+//        {
 
-            Assert.AreEqual(pawnConfig.color, result.color);
-        }
+//            var rules = Creator();
+//            var result = rules.CreatePawn(pawnConfig);
 
-        [TestMethod]
-        public void If_Calling_CreatePawn__Pawn_Should_Have_PlayerID_As_Defined_By_Configuration()
-        {
+//            Assert.AreEqual(pawnConfig.color, result.color);
+//        }
 
-            var rules = Creator();
-            var result = rules.CreatePawn(pawnConfig);
+//        [TestMethod]
+//        public void If_Calling_CreatePawn__Pawn_Should_Have_PlayerID_As_Defined_By_Configuration()
+//        {
 
-            Assert.AreEqual(pawnConfig.playerID, result.playerID);
-        }
+//            var rules = Creator();
+//            var result = rules.CreatePawn(pawnConfig);
 
-        [TestMethod]
-        public void If_Calling_CreateEel__Eel_Should_Have_Bottom_Location_As_Defined_By_Configuration()
-        {
-            var rules = Creator();
-            var result = rules.CreateEel(eelConfig);
+//            Assert.AreEqual(pawnConfig.playerID, result.playerID);
+//        }
 
-            Assert.AreEqual(eelConfig.bottom_location, result.bottom_location);
-        }
+//        [TestMethod]
+//        public void If_Calling_CreateEel__Eel_Should_Have_Bottom_Location_As_Defined_By_Configuration()
+//        {
+//            var rules = Creator();
+//            var result = rules.CreateEel(eelConfig);
 
-        [TestMethod]
-        public void If_Calling_CreateEel__Eel_Should_Have_Top_Location_As_Defined_By_Configuration()
-        {
-            var rules = Creator();
-            var result = rules.CreateEel(eelConfig);
+//            Assert.AreEqual(eelConfig.bottom_location, result.bottom_location);
+//        }
 
-            Assert.AreEqual(eelConfig.top_location, result.top_location);
-        }
+//        [TestMethod]
+//        public void If_Calling_CreateEel__Eel_Should_Have_Top_Location_As_Defined_By_Configuration()
+//        {
+//            var rules = Creator();
+//            var result = rules.CreateEel(eelConfig);
 
-        [TestMethod]
-        public void If_Calling_CreateEscalator__Escalator_Should_Have_Bottom_Location_As_Defined_By_Configuration()
-        {
-            var rules = Creator();
-            var result = rules.CreateEscalator(escalatorConfig);
+//            Assert.AreEqual(eelConfig.top_location, result.top_location);
+//        }
 
-            Assert.AreEqual(escalatorConfig.bottom_location, result.bottom_location);
-        }
+//        [TestMethod]
+//        public void If_Calling_CreateEscalator__Escalator_Should_Have_Bottom_Location_As_Defined_By_Configuration()
+//        {
+//            var rules = Creator();
+//            var result = rules.CreateEscalator(escalatorConfig);
 
-        [TestMethod]
-        public void If_Calling_CreateEscalator__Escalator_Should_Have_Top_Location_As_Defined_By_Configuration()
-        {
-            var rules = Creator();
-            var result = rules.CreateEscalator(escalatorConfig);
+//            Assert.AreEqual(escalatorConfig.bottom_location, result.bottom_location);
+//        }
 
-            Assert.AreEqual(escalatorConfig.top_location, result.top_location);
-        }
+//        [TestMethod]
+//        public void If_Calling_CreateEscalator__Escalator_Should_Have_Top_Location_As_Defined_By_Configuration()
+//        {
+//            var rules = Creator();
+//            var result = rules.CreateEscalator(escalatorConfig);
 
-        [TestMethod]
-        public void If_Calling_CreateBoard__Board_Should_Be_Created_With_The_Correct_Board_Size()
-        {
-            var rules = Creator();
-            var result = rules.CreateBoard();
+//            Assert.AreEqual(escalatorConfig.top_location, result.top_location);
+//        }
 
-            Assert.AreEqual(boardSizeUnderTest, result.size);
-        }
+//        [TestMethod]
+//        public void If_Calling_CreateBoard__Board_Should_Be_Created_With_The_Correct_Board_Size()
+//        {
+//            var rules = Creator();
+//            var result = rules.CreateBoard();
 
-        [TestMethod]
-        public void If_Calling_CreateBoard__Entity_List_Should_Be_Empty()
-        {
-            var rules = Creator();
-            var result = rules.CreateBoard();
+//            Assert.AreEqual(boardSizeUnderTest, result.size);
+//        }
 
-            NumberOfListContent = result.Entities.Count;
+//        [TestMethod]
+//        public void If_Calling_CreateBoard__Entity_List_Should_Be_Empty()
+//        {
+//            var rules = Creator();
+//            var result = rules.CreateBoard();
 
-            Assert.IsNull(NumberOfListContent);
-        }
+//            NumberOfListContent = result.Entities.Count;
 
-        [TestMethod]
-        public void If_Calling_CreateBoard__Pawn_List_Should_Be_Empty()
-        {
-            var rules = Creator();
-            var result = rules.CreateBoard();
+//            Assert.IsNull(NumberOfListContent);
+//        }
 
-            NumberOfListContent = result.Pawns.Count;
+//        [TestMethod]
+//        public void If_Calling_CreateBoard__Pawn_List_Should_Be_Empty()
+//        {
+//            var rules = Creator();
+//            var result = rules.CreateBoard();
 
-            Assert.IsNull(NumberOfListContent);
-        }
+//            NumberOfListContent = result.Pawns.Count;
 
-        [TestMethod]
-        // RollDice should return a nubmer with in the interval
-        public void If_Calling_RollDice_With_Six_DiceSides_CorrectDiceAttribute_Should_Be_True()
-        {
-            diceSidesUnderTest = 6;
-            var rules = Creator();
-            rules.RollDice();
-            if (diceResultUnderTest == 1 | diceResultUnderTest == 2 | diceResultUnderTest == 3 |
-                diceResultUnderTest == 4 | diceResultUnderTest == 5 | diceResultUnderTest == 6)
-                correctDice = true;
+//            Assert.IsNull(NumberOfListContent);
+//        }
 
-            Assert.IsTrue(correctDice);
-        }
+//        [TestMethod]
+//        // RollDice should return a nubmer with in the interval
+//        public void If_Calling_RollDice_With_Six_DiceSides_CorrectDiceAttribute_Should_Be_True()
+//        {
+//            diceSidesUnderTest = 6;
+//            var rules = Creator();
+//            rules.RollDice();
+//            if (diceResultUnderTest == 1 | diceResultUnderTest == 2 | diceResultUnderTest == 3 |
+//                diceResultUnderTest == 4 | diceResultUnderTest == 5 | diceResultUnderTest == 6)
+//                correctDice = true;
 
-    }
-}
+//            Assert.IsTrue(correctDice);
+//        }
+
+//    }
+//}

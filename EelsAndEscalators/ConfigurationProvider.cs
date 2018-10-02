@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace EelsAndEscalators
 {
-    class ConfigurationProvider : IConfigurationProvider
+    public class ConfigurationProvider : IConfigurationProvider
     {
         private readonly string _configurationFile;
 
@@ -25,7 +25,7 @@ namespace EelsAndEscalators
         }
 
         public ConfigurationProvider()
-            : this(@"Projekt AuR\EelsAndEscalators\XML\Configurations.xml")
+            : this(@".\XML\Configurations.xml")
         { }
 
 

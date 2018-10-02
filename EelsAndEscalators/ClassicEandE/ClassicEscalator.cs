@@ -5,6 +5,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+
     public class ClassicEscalator : IEntity
     {
         public int top_location { get; set; }

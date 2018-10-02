@@ -3,6 +3,7 @@
 
 namespace EelsAndEscalators.Contracts
 {
+
     public interface IRules
     {
         int numberOfPawns { get;}

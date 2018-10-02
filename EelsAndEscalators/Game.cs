@@ -14,6 +14,7 @@ namespace EelsAndEscalators
 
         public IBoard Board { get; set; }
         public IRules Rules { get; private set; }
+<<<<<<< HEAD
         public IState State { get; private set; }       
         public Logic Logic { get; }
         public IPawn Pawn { get; }
@@ -21,6 +22,29 @@ namespace EelsAndEscalators
         public IEntity Entity { get; set; }
       
                     
+=======
+
+        public IState State { get; private set; }        
+                             
+
+        public void Init()
+        {
+            // Wichtige Objekte initialisiert
+            // Configurationen ausgelesen.
+
+            State = new MainMenuState(this);
+        }
+
+        public void Run()
+        {
+            bool isRunning = true;
+            while (isRunning)
+            {
+                State.Execute();
+            }
+        }
+           
+>>>>>>> f27082b75e89ea2b85989fd9da4865a98b6eb088
         public string CreateBoard()
         {
 
@@ -57,9 +81,9 @@ namespace EelsAndEscalators
                     //<topspace>
                     Board.Entities.ForEach(entity =>
                     {
-                        if (Entity.type == EntityType.Eel & Entity.top_location == i)
+                        if (Board.Entity.type == EntityType.Eel & Board.Entity.top_location == i)
                             topspace = "S";
-                        else if (Entity.type == EntityType.Escalator & Entity.top_location == i)
+                        else if (Board.Entity.type == EntityType.Escalator & Board.Entity.top_location == i)
                             topspace = "E";
                         else topspace = "|";
 
@@ -72,17 +96,25 @@ namespace EelsAndEscalators
                     //<pawnspace>
                     Board.Pawns.ForEach(pawn =>
                     {
+<<<<<<< HEAD
                         if (Pawn.location == i & pawn1space.Length == 0)
                             pawn1space = "|" + Pawn.playerID.ToString();
                         else if (Pawn.location == i & pawn2space.Length == 0  )
                             pawn2space = Pawn.playerID.ToString() + "|";
                         else pawn1space = " | "; pawn2space = "|";
+=======
+                        if (Board.Pawn.location == i & pawn1space.Length == 0)
+                            pawn1space = "|" + Board.Pawn.playerID.ToString();
+                        else if (Board.Pawn.location == i & pawn2space.Length == 0  )
+                            pawn2space = Board.Pawn.playerID.ToString() + "|";
+                        else pawn1space = " |"; pawn2space = " | ";
+>>>>>>> f27082b75e89ea2b85989fd9da4865a98b6eb088
                         
 
                     });
 
                     if (pawn2space.Length == 0)
-                        pawn2space = " ";
+                        pawn2space = " | ";
 
 
 
@@ -93,9 +125,9 @@ namespace EelsAndEscalators
                     //<bot>
                     Board.Entities.ForEach(entity =>
                     {
-                        if (Entity.type == EntityType.Eel & Entity.bottom_location == i)
+                        if (Board.Entity.type == EntityType.Eel & Board.Entity.bottom_location == i)
                             bottomspace = "s";
-                        else if (Entity.type == EntityType.Escalator & Entity.bottom_location == i)
+                        else if (Board.Entity.type == EntityType.Escalator & Board.Entity.bottom_location == i)
                             bottomspace = "e";
                         else bottomspace = " |";
 
@@ -130,12 +162,17 @@ namespace EelsAndEscalators
         public void SwitchRules(IRules createdRule)
         {
              Rules = createdRule;     
+<<<<<<< HEAD
         }
+=======
+        }       
+>>>>>>> f27082b75e89ea2b85989fd9da4865a98b6eb088
 
         public void SwitchState(IState newState)
         {
             State = newState;
         }
+
 
     }
 

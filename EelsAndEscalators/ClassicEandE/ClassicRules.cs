@@ -7,6 +7,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+
     public class ClassicRules : IRules
     {
         private long _idCounter;
@@ -36,7 +37,7 @@ namespace EelsAndEscalators.ClassicEandE
         public ClassicRules(IGame game)
              : this(game, new ConfigurationProvider())
         { }
-
+        
 
         public void SetupEntitites()
         {

@@ -5,6 +5,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+    //Nico
     public class ClassicPawn : IPawn
     {
         public int location { get; set; }
@@ -28,7 +29,7 @@ namespace EelsAndEscalators.ClassicEandE
         {
             try
             {
-            location +=_game.Rules.diceResult;
+                location +=_game.Rules.diceResult;
             }
             catch
             {
