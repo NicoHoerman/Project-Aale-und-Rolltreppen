@@ -14,15 +14,15 @@ namespace EelsAndEscalators
 
         public IBoard Board { get; set; }
         public IRules Rules { get; private set; }
-        public IState State { get; private set; }       
+        public IState State { get; private set; }
         public Logic Logic { get; }
         public IPawn Pawn { get; }
 
         public IEntity Entity { get; set; }
-                                                                     
+
 
         public void Init()
-        {         
+        {
             State = new MainMenuState(this);
         }
 
@@ -34,8 +34,8 @@ namespace EelsAndEscalators
                 State.Execute();
             }
         }
-           
-        public string CreateBoard()
+
+        /*public string CreateBoard()
         {
 
             try
@@ -135,7 +135,29 @@ namespace EelsAndEscalators
                 throw new Exception();
             }
         }
+        */
 
+        public string[,] CreateBoard()
+        {
+            int BoardRows = Board.size / 5;
+            string[,] array2D = new string[,]
+            {
+                {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"},
+                {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"},
+                {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"}, {"["," "," "," ","]"},
+            };
+
+            Board.Pawns.ForEach(pawn =>
+            {
+                if(pawn.playerID == 1)
+                    array2D[pawn.locationX., pawn.locationY] = "1";
+               else if(pawn.playerID == 2)
+                        array2D[pawn.locationX., pawn.locationY] = "2";
+            });
+
+
+            return array2D;
+        }       
         public string InitializeGame()
         {
            Rules.SetupEntitites();

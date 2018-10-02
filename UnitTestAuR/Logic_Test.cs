@@ -18,11 +18,10 @@ namespace UnitTestAuR
     {
         //Attributes
         private Func<Logic> Creator;
-        private bool gameFinishedUnderTest;
         private int boardSizeUnderTest;
         private List<IPawn> pawnsUnderTest = new List<IPawn>();
         private int pawnLocationUnderTest;
-
+        
         private int pawnPlayerUnderTest;
         private int playerUnderTest;
 
@@ -32,13 +31,15 @@ namespace UnitTestAuR
         public void Setup()
         {
             //Defaults
-            gameFinishedUnderTest = false;
+            
             boardSizeUnderTest = 10;
             pawnLocationUnderTest = 5;
             pawnPlayerUnderTest = 1;
             playerUnderTest = 1;
             diceResultUnderTest = 6;
 
+
+            
             //Mock Board
             var mockedBoard = new Mock<IBoard>();
             mockedBoard.Setup(m => m.size)
@@ -53,7 +54,8 @@ namespace UnitTestAuR
             mockedPawn.Setup(p => p.playerID)
                 .Returns(() => pawnPlayerUnderTest);
             pawnsUnderTest.Add(mockedPawn.Object);
-
+            
+            
             //Mock Rules
             var mockedRules = new Mock<IRules>();
             mockedRules.Setup(r => r.diceResult)
@@ -63,10 +65,9 @@ namespace UnitTestAuR
             var mockedGame = new Mock<IGame>();
             mockedGame.Setup(m => m.Board).
                 Returns(mockedBoard.Object);
-            mockedGame.Setup(m => m.Board.Pawns).
-                Returns(pawnsUnderTest);
             mockedGame.Setup(m => m.Rules).
                 Returns(() => mockedRules.Object);
+            
 
 
             Creator = () => new Logic(mockedGame.Object);
@@ -83,12 +84,15 @@ namespace UnitTestAuR
         public void If_Calling_CheckIfGameFinished_With_Pawn_On_Endpoint_GameFinished_Should_Be_True()
         {
             boardSizeUnderTest = 10;
-            pawnLocationUnderTest = 10;
-            gameFinishedUnderTest = false;
+           
+            
             var logic = Creator();
+            logic.CurrentPawn.location = 5;
+            logic.CurrentPawn.playerID = 1;
+                       
             logic.CheckIfGameFinished();
 
-            Assert.IsTrue(gameFinishedUnderTest);
+            Assert.IsTrue(logic.GameFinished);
         }
 
         [TestMethod]
@@ -102,7 +106,7 @@ namespace UnitTestAuR
             var logic = Creator();
             logic.CheckIfGameFinished();
 
-            Assert.IsFalse(gameFinishedUnderTest);
+            Assert.IsFalse(logic.GameFinished);
         }
 
         
