@@ -5,7 +5,6 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
-    //Nico
     class GameFinishedState : IState
     {
         private readonly IGame _game;
@@ -19,13 +18,5 @@ namespace EelsAndEscalators.States
         {
             throw new NotImplementedException();
         }
-
-        public string WaitingForInput()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
     }
 }

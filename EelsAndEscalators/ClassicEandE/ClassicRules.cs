@@ -7,7 +7,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
-    //Nico
+
     public class ClassicRules : IRules
     {
         private long _idCounter;

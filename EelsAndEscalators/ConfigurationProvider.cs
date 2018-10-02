@@ -11,17 +11,7 @@ using System.Linq;
 
 namespace EelsAndEscalators
 {
-<<<<<<< HEAD
-
-    class ConfigurationProvider
-
-    //alt
     public class ConfigurationProvider : IConfigurationProvider
-
-=======
-    //Nico
-    public class ConfigurationProvider : IConfigurationProvider
->>>>>>> NicosChangesStart28.09
     {
         private readonly string _configurationFile;
 

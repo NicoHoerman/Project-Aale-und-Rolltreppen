@@ -8,7 +8,6 @@ using EelsAndEscalators.Contracts;
 using EelsAndEscalators.States;
 using EelsAndEscalators.ClassicEandE;
 
-//Nico
 namespace UnitTestAuR
 {
     /// <summary>

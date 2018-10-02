@@ -4,7 +4,6 @@ using System.Text;
 
 namespace EelsAndEscalators
 {
-    //Nico
     public class Parse
     {
         public void ChooseOutput(string command)

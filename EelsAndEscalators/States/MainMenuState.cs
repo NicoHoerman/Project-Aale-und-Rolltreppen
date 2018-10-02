@@ -6,11 +6,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
-<<<<<<< HEAD
 
-=======
-    //Nico
->>>>>>> NicosChangesStart28.09
     public class MainMenuState : IState
     {
         private readonly IGame _game;
@@ -62,9 +58,6 @@ namespace EelsAndEscalators.States
                 if (input == "/startgame")
                 {
                     _game.SwitchState(new GameStartingState(_game));
-                   // gameStartingState.gameStarting = true;
-                   // gameStartingState.Execute();
-                                            
                     inMenu = false;
                 }
             }

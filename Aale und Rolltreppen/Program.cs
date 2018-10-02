@@ -10,10 +10,8 @@ using EelsAndEscalators.States;
 
 namespace Aale_und_Rolltreppen
 {
-    //Nico 
-    class Program
+    public class Program
     {
-        //private static IGame game;
 
         static void Main(string[] args)
         {
