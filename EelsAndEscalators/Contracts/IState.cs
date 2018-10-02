@@ -4,9 +4,9 @@ using System.Text;
 
 namespace EelsAndEscalators.Contracts
 {
-   public interface IState
+    //Nico
+    public interface IState
     {
         void Execute();
-       // string WaitingForInput();
     }
 }

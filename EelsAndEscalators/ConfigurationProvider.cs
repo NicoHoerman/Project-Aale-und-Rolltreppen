@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace EelsAndEscalators
 {
+    //Nico
     public class ConfigurationProvider : IConfigurationProvider
     {
         private readonly string _configurationFile;

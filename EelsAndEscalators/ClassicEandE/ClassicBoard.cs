@@ -5,6 +5,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+    //Nico
     public class ClassicBoard : IBoard
     {
         public int size { get => size; set => size = 30; }
