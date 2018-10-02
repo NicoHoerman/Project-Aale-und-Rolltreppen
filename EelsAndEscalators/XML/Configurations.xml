@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Configurations>
+  <!--Nico-->
+  <!--Eel-->
+  <config>
+    <entitytype>    0</entitytype>
+    <toplocation>   28</toplocation>
+    <bottomlocation>24</bottomlocation>
+  </config>
+  <!--Eel-->
+  <config>
+    <entitytype>    0</entitytype>
+    <toplocation>   16</toplocation>
+    <bottomlocation>11</bottomlocation>
+  </config>
+
+  <!--Escalator-->
+  <config>
+    <entitytype>    1</entitytype>
+    <toplocation>   18</toplocation>
+    <bottomlocation>14</bottomlocation>
+  </config>
+  <!--Escalator-->
+  <config>
+    <entitytype>    1</entitytype>
+    <toplocation>   27</toplocation>
+    <bottomlocation>22 </bottomlocation>
+  </config>
+  
+  <!--Pawn-->
+  <config>
+    <entitytype>2</entitytype>
+    <location>  0 </location>
+    <color>     1 </color>
+    <playerID>  1 </playerID>
+  </config>
+  <!--Pawn-->
+  <config>
+    <entitytype>2</entitytype>
+    <location>  0 </location>
+    <color>     2 </color>
+    <playerID>  2 </playerID>
+  </config> 
+  
+</Configurations>
