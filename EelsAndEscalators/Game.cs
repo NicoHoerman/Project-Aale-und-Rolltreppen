@@ -14,8 +14,7 @@ namespace EelsAndEscalators
 
         public IBoard Board { get; set; }
         public IRules Rules { get; }
-        public IState State { get; set; }
-        public MainMenuState MenuState { get; set; }
+        public IState State { get; private set; }
         public Logic Logic { get; }
 
         public IEntity Entity { get; set; }
@@ -36,6 +35,23 @@ namespace EelsAndEscalators
 
         }
 
+
+        public void Init()
+        {
+            // Wichtige Objekte initialisiert
+            // Configurationen ausgelesen.
+
+            State = new MainMenuState(this);
+        }
+
+        public void Run()
+        {
+            bool isRunning = true;
+            while (isRunning)
+            {
+                State.Execute();
+            }
+        }
 
         public string CreateBoard()
         {
@@ -136,6 +152,13 @@ namespace EelsAndEscalators
         {
             throw new NotImplementedException();
         }
+
+        public void SwitchState(IState newState)
+        {
+            State = newState;
+        }
+
+
     }
 
 }

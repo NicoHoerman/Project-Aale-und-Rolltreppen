@@ -19,7 +19,6 @@ namespace EelsAndEscalators
         private IPawn CurrentPawn;
         public bool GameFinished;
         private int player = 1;
-        private IState _currentState;
         private readonly IGame _game;
         public Logic(IGame game)
         {
@@ -101,11 +100,6 @@ namespace EelsAndEscalators
             PlayerExceedsBoard,
             GameFinished,
             PlayerWins,
-        }
-
-        public void SwitchState( IState newState)
-        {
-            _currentState = newState;
         }
 
         /*public TurnState GetTurnState()
