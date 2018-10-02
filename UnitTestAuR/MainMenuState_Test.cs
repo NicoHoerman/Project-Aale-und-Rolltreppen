@@ -31,7 +31,7 @@ namespace UnitTestAuR
             //mockedGame.Setup(g => g.)
 
 
-            Creator = () => new MainMenuState(mockedGame.Object);
+      //      Creator = () => new MainMenuState(mockedGame.Object);
         }
 
 
