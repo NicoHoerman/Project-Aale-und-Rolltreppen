@@ -5,10 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
-using EelsAndEscalators.Configurations;
 using EelsAndEscalators.States;
 using EelsAndEscalators.ClassicEandE;
-
 
 namespace UnitTestAuR
 {

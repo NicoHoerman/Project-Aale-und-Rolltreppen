@@ -9,12 +9,12 @@ namespace EelsAndEscalators
     {
         public string ReadInput()
         {
-            throw new NotImplementedException();
+            return Console.ReadLine();
         }
 
         public void WriteOutput(string output)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(output);
         }
 
     }

@@ -11,6 +11,8 @@ namespace EelsAndEscalators.ClassicEandE
         public int bottom_location { get; set; }
         public EntityType type => EntityType.Eel;
 
+        public long Id { get; set; }
+
         private readonly IPawn _pawn;
 
         public ClassicEel(IPawn pawn)
@@ -27,7 +29,7 @@ namespace EelsAndEscalators.ClassicEandE
         {
             try
             {
-            _pawn.location = bottom_location;
+                _pawn.location = bottom_location;
             }
             catch
             {
@@ -40,7 +42,7 @@ namespace EelsAndEscalators.ClassicEandE
         {
             try
             {
-            return top_location == _pawn.location ? true : false;
+                return top_location == _pawn.location ? true : false;
             }
             catch
             {

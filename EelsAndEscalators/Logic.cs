@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EelsAndEscalators.Configurations;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
@@ -20,7 +19,6 @@ namespace EelsAndEscalators
         private IPawn CurrentPawn;
         public bool GameFinished;
         private int player = 1;
-
         private readonly IGame _game;
         public Logic(IGame game)
         {
@@ -102,11 +100,6 @@ namespace EelsAndEscalators
             PlayerExceedsBoard,
             GameFinished,
             PlayerWins,
-        }
-
-        public void SwitchState()
-        {
-            gameRunningState.isRunning = false;
         }
 
         /*public TurnState GetTurnState()

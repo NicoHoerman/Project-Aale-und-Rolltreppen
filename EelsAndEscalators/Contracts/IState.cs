@@ -4,10 +4,8 @@ using System.Text;
 
 namespace EelsAndEscalators.Contracts
 {
-   public interface IState
+    public interface IState
     {
-        bool palyerOneTurn { get; set; }
-        bool Execute();
-        void WaitingForInput();
+        void Execute();  
     }
 }

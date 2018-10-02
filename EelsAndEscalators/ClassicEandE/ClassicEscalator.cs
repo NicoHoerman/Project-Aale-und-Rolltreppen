@@ -5,12 +5,15 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+
     public class ClassicEscalator : IEntity
     {
         public int top_location { get; set; }
         public int bottom_location { get; set; }
 
         public EntityType type => EntityType.Escalator;
+
+        public long Id { get; set; }
 
         private readonly IPawn _pawn;
 

@@ -5,8 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
-using EelsAndEscalators.Configurations;
 using EelsAndEscalators.States;
+
 
 namespace UnitTestAuR
 {
@@ -139,12 +139,12 @@ namespace UnitTestAuR
 
             var acutalBoard = game.CreateBoard();
 
-            var boardDesignUnderTest = "30[    ]" + "29[    ]" + "28[S   ]" + "27[E   ]" + "26[    ]" +
-                                       "25[    ]" + "24[   s]" + "23[    ]" + "22[   e]" + "21[    ]" +
-                                       "20[    ]" + "19[    ]" + "18[E   ]" + "17[    ]" + "16[S   ]" +
-                                       "15[    ]" + "14[   e]" + "13[    ]" + "12[    ]" + "11[   s]" +
-                                       "10[    ]" + "09[    ]" + "08[    ]" + "07[    ]" + "06[    ]" +
-                                       "05[    ]" + "04[    ]" + "03[    ]" + "02[    ]" + "01[ 12 ]";
+            var boardDesignUnderTest = "30[ | _ | ]" + "29[ | _ | ]" + "28[S| _ | ]" + "27[E| _ | ]" + "26[ | _ | ]" +
+                                       "25[ | _ | ]" + "24[ | _ |s]" + "23[ | _ | ]" + "22[ | _ |e]" + "21[ | _ | ]" +
+                                       "20[ | _ | ]" + "19[ | _ | ]" + "18[E| _ | ]" + "17[ | _ | ]" + "16[S| _ | ]" +
+                                       "15[ | _ | ]" + "14[ | _ |e]" + "13[ | _ | ]" + "12[ | _ | ]" + "11[ | _ |s]" +
+                                       "10[ | _ | ]" + "09[ | _ | ]" + "08[ | _ | ]" + "07[ | _ | ]" + "06[ | _ | ]" +
+                                       "05[ | _ | ]" + "04[ | _ | ]" + "03[ | _ | ]" + "02[ | _ | ]" + "01[ |1_2| ]";
             Assert.AreEqual(boardDesignUnderTest, acutalBoard);
         }
     }

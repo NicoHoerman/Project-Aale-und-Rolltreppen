@@ -14,19 +14,9 @@ namespace EelsAndEscalators.States
             _game = game;
         }
 
-        public bool palyerOneTurn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public bool Execute()
+        public void Execute()
         {
             throw new NotImplementedException();
         }
-
-        public void WaitingForInput()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
     }
 }
