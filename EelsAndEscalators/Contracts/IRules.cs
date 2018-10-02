@@ -6,6 +6,7 @@ using EelsAndEscalators.Configurations;
 
 namespace EelsAndEscalators.Contracts
 {
+    //Nico
     public interface IRules
     {
         int numberOfPawns { get; set; }

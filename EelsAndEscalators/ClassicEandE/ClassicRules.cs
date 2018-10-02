@@ -6,6 +6,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+    //Nico
     public class ClassicRules : IRules
     {
         private readonly IGame _game;

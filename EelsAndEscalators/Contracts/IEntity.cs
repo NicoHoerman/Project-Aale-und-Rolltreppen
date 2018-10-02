@@ -4,6 +4,7 @@ using System.Text;
 
 namespace EelsAndEscalators.Contracts
 {
+    //Nico
     public enum EntityType
     {
         Eel,

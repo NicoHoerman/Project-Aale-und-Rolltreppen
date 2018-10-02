@@ -5,6 +5,10 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
+<<<<<<< HEAD
+=======
+    //Nico
+>>>>>>> 6bebf2c... Nicos Changes
     public class MainMenuState : IState
     {
         private readonly IGame _game;

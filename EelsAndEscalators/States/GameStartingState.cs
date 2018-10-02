@@ -5,6 +5,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
+    //Nico
     public class GameStartingState : IState
     {
         private readonly IGame _game;

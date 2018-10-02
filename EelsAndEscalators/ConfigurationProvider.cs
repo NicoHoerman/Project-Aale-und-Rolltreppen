@@ -9,7 +9,12 @@ using EelsAndEscalators.States;
 
 namespace EelsAndEscalators
 {
+<<<<<<< HEAD
     class ConfigurationProvider
+=======
+    //Nico
+    public class ConfigurationProvider : IConfigurationProvider
+>>>>>>> 6bebf2c... Nicos Changes
     {
         XmlDocument doc = new XmlDocument();
         int iD = 1;
