@@ -14,18 +14,12 @@ namespace EelsAndEscalators
 
         public IBoard Board { get; set; }
         public IRules Rules { get; private set; }
-<<<<<<< HEAD
         public IState State { get; private set; }       
         public Logic Logic { get; }
         public IPawn Pawn { get; }
 
         public IEntity Entity { get; set; }
-      
-                    
-=======
-
-        public IState State { get; private set; }        
-                             
+                                                                     
 
         public void Init()
         {
@@ -44,7 +38,6 @@ namespace EelsAndEscalators
             }
         }
            
->>>>>>> f27082b75e89ea2b85989fd9da4865a98b6eb088
         public string CreateBoard()
         {
 
@@ -96,21 +89,14 @@ namespace EelsAndEscalators
                     //<pawnspace>
                     Board.Pawns.ForEach(pawn =>
                     {
-<<<<<<< HEAD
+
                         if (Pawn.location == i & pawn1space.Length == 0)
                             pawn1space = "|" + Pawn.playerID.ToString();
                         else if (Pawn.location == i & pawn2space.Length == 0  )
                             pawn2space = Pawn.playerID.ToString() + "|";
                         else pawn1space = " | "; pawn2space = "|";
-=======
-                        if (Board.Pawn.location == i & pawn1space.Length == 0)
-                            pawn1space = "|" + Board.Pawn.playerID.ToString();
-                        else if (Board.Pawn.location == i & pawn2space.Length == 0  )
-                            pawn2space = Board.Pawn.playerID.ToString() + "|";
-                        else pawn1space = " |"; pawn2space = " | ";
->>>>>>> f27082b75e89ea2b85989fd9da4865a98b6eb088
-                        
 
+                                            
                     });
 
                     if (pawn2space.Length == 0)
@@ -162,12 +148,9 @@ namespace EelsAndEscalators
         public void SwitchRules(IRules createdRule)
         {
              Rules = createdRule;     
-<<<<<<< HEAD
-        }
-=======
-        }       
->>>>>>> f27082b75e89ea2b85989fd9da4865a98b6eb088
 
+        }
+      
         public void SwitchState(IState newState)
         {
             State = newState;

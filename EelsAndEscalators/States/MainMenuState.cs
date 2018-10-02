@@ -32,10 +32,7 @@ namespace EelsAndEscalators.States
             _configurationProvider = configurationProvider;
             _sourceWrapper = sourceWrapper;
         }
-<<<<<<< HEAD
-      
-        public bool Execute()
-=======
+     
 
         public MainMenuState(IGame game)
             : this(game, new ConfigurationProvider(), new SourceWrapper())
@@ -68,7 +65,6 @@ namespace EelsAndEscalators.States
         }
 
         private void CreateNewRulesInGame(string rulesname)
->>>>>>> f27082b75e89ea2b85989fd9da4865a98b6eb088
         {
             if (_rulesFactory.TryGetValue(rulesname, out var createdRule))
             { 
