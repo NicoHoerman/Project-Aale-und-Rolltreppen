@@ -4,10 +4,15 @@ using System.Text;
 
 namespace EelsAndEscalators.Contracts
 {
-   public interface IState
+    //Nico
+    public interface IState
     {
+<<<<<<< HEAD
         bool palyerOneTurn { get; set; }
         bool Execute();
         void WaitingForInput();
+=======
+        void Execute();
+>>>>>>> 6bebf2c... Nicos Changes
     }
 }
