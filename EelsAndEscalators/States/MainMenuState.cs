@@ -6,15 +6,17 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
+
     public class MainMenuState : IState
     {
         private readonly IGame _game;
         private readonly IConfigurationProvider _configurationProvider;
+        private readonly ISourceWrapper _sourceWrapper;
+
         public bool inMenu;
         private bool ruleNotSet = true;
         private string input;
         Parse parse = new Parse();
-        SourceWrapper sourceWrapper = new SourceWrapper();
         GameStartingState gameStartingState;
 
         private Dictionary<string, Func<IGame,IConfigurationProvider, IRules>> _rulesFactory = new Dictionary<string, Func<IGame, IConfigurationProvider, IRules>>
@@ -24,45 +26,44 @@ namespace EelsAndEscalators.States
         };
 
 
-        public MainMenuState(IGame game, IConfigurationProvider configurationProvider)
+        public MainMenuState(IGame game, IConfigurationProvider configurationProvider, ISourceWrapper sourceWrapper)
         {
             _game = game;
             _configurationProvider = configurationProvider;
+            _sourceWrapper = sourceWrapper;
         }
 
+        public MainMenuState(IGame game)
+            : this(game, new ConfigurationProvider(), new SourceWrapper())
+        { }
 
         public void Execute()
         {
 
             while (inMenu)
             {
-                sourceWrapper.WriteOutput(parse.MainMenuInfo());
+                _sourceWrapper.WriteOutput(parse.MainMenuInfo());
                 while (ruleNotSet)
                 {
-                     input = WaitingForInput();
+                     input = _sourceWrapper.ReadInput();
 
                     if (input.Substring(0, 1) == "/")
                     {
                         CreateNewRulesInGame(input.Substring(1, input.Length - 1));
                     }
-                    else sourceWrapper.WriteOutput("Type in an existing Command");
+                    else _sourceWrapper.WriteOutput("Type in an existing Command");
                 }
 
-                    input = WaitingForInput();
-                    if (input == "/startgame")
-                    {
-                        _game.Logic.SwitchState(new GameStartingState(_game));
-                        gameStartingState.gameStarting = true;
-                        gameStartingState.Execute();
+                input = _sourceWrapper.ReadInput();
+                if (input == "/startgame")
+                {
+                    _game.SwitchState(new GameStartingState(_game));
+                   // gameStartingState.gameStarting = true;
+                   // gameStartingState.Execute();
                                             
-                        inMenu = false;
-                    }
+                    inMenu = false;
+                }
             }
-        }
-
-        public string WaitingForInput()
-        {
-            return sourceWrapper.ReadInput();
         }
 
         private void CreateNewRulesInGame(string rulesname)
@@ -80,9 +81,9 @@ namespace EelsAndEscalators.States
         {
             if(input == "/startgame")
             {
-                sourceWrapper.WriteOutput("select a rule first");
+                _sourceWrapper.WriteOutput("select a rule first");
             }
-            else sourceWrapper.WriteOutput("Rule does not exist");
+            else _sourceWrapper.WriteOutput("Rule does not exist");
         }
     }
 }

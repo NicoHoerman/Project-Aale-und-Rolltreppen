@@ -8,10 +8,12 @@ namespace EelsAndEscalators.States
     public class GameStartingState : IState
     {
         private readonly IGame _game;
-        public bool gameStarting;
+        private bool _gameStarting;
+
         public GameStartingState(IGame game)
         {
             _game = game;
+            _gameStarting = true;
         }
 
         public void Execute()

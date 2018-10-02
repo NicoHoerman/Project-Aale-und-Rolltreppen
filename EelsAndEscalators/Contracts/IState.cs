@@ -7,6 +7,6 @@ namespace EelsAndEscalators.Contracts
    public interface IState
     {
         void Execute();
-        string WaitingForInput();
+       // string WaitingForInput();
     }
 }
