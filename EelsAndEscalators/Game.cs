@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-<<<<<<< HEAD
-=======
-
->>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
@@ -17,25 +13,10 @@ namespace EelsAndEscalators
     {
 
         public IBoard Board { get; set; }
-        public IRules Rules { get; }
-<<<<<<< HEAD
-        public IState State { get; private set; }
-=======
-        public IState State { get; set; }       
->>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
-        public Logic Logic { get; }
-        public IPawn Pawn { get; }
+        public IRules Rules { get; private set; }
 
-        public IEntity Entity { get; set; }
-      
-        List<IEntity> AllEels = new List<IEntity>();
-
-<<<<<<< HEAD
-        public Game()
-        {
-
-        }
-
+        public IState State { get; private set; }        
+                             
 
         public void Init()
         {
@@ -53,17 +34,13 @@ namespace EelsAndEscalators
                 State.Execute();
             }
         }
-=======
-        private IRules currentRule;
->>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
-
-     
+           
         public string CreateBoard()
         {
 
             try
             {
-                var classicboard = currentRule.CreateBoard();
+                var classicboard = Rules.CreateBoard();
 
                 int fieldNumberInt = classicboard.size;
                 string fieldNumber = "";
@@ -94,9 +71,9 @@ namespace EelsAndEscalators
                     //<topspace>
                     Board.Entities.ForEach(entity =>
                     {
-                        if (Entity.type == EntityType.Eel & Entity.top_location == i)
+                        if (Board.Entity.type == EntityType.Eel & Board.Entity.top_location == i)
                             topspace = "S";
-                        else if (Entity.type == EntityType.Escalator & Entity.top_location == i)
+                        else if (Board.Entity.type == EntityType.Escalator & Board.Entity.top_location == i)
                             topspace = "E";
                         else topspace = " ";
 
@@ -109,17 +86,17 @@ namespace EelsAndEscalators
                     //<pawnspace>
                     Board.Pawns.ForEach(pawn =>
                     {
-                        if (Pawn.location == i & pawn1space.Length == 0)
-                            pawn1space = "|" + Pawn.playerID.ToString();
-                        else if (Pawn.location == i & pawn2space.Length == 0  )
-                            pawn2space = Pawn.playerID.ToString() + "|";
-                        else pawn1space = " "; pawn2space = " ";
+                        if (Board.Pawn.location == i & pawn1space.Length == 0)
+                            pawn1space = "|" + Board.Pawn.playerID.ToString();
+                        else if (Board.Pawn.location == i & pawn2space.Length == 0  )
+                            pawn2space = Board.Pawn.playerID.ToString() + "|";
+                        else pawn1space = " |"; pawn2space = " | ";
                         
 
                     });
 
                     if (pawn2space.Length == 0)
-                        pawn2space = " ";
+                        pawn2space = " | ";
 
 
 
@@ -130,9 +107,9 @@ namespace EelsAndEscalators
                     //<bot>
                     Board.Entities.ForEach(entity =>
                     {
-                        if (Entity.type == EntityType.Eel & Entity.bottom_location == i)
+                        if (Board.Entity.type == EntityType.Eel & Board.Entity.bottom_location == i)
                             bottomspace = "s";
-                        else if (Entity.type == EntityType.Escalator & Entity.bottom_location == i)
+                        else if (Board.Entity.type == EntityType.Escalator & Board.Entity.bottom_location == i)
                             bottomspace = "e";
                         else bottomspace = " ";
 
@@ -159,18 +136,13 @@ namespace EelsAndEscalators
         }
         public string InitializeGame()
         {
-           currentRule.SetupEntitites();
+           Rules.SetupEntitites();
             return CreateBoard();  
         }
         public void SwitchRules(IRules createdRule)
         {
-             currentRule = createdRule;     
-        }
-
-        public void SwitchRules(IRules createdRule)
-        {
-            throw new NotImplementedException();
-        }
+             Rules = createdRule;     
+        }       
 
         public void SwitchState(IState newState)
         {

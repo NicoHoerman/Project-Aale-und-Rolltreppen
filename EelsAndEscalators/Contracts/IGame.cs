@@ -7,7 +7,7 @@ namespace EelsAndEscalators.Contracts
     public interface IGame
     {
          
-        Logic  Logic { get; }
+       
         IRules Rules { get; }
         IBoard Board { get; set; }
         IState State { get; }

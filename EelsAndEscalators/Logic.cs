@@ -20,13 +20,13 @@ namespace EelsAndEscalators
 
         private IPawn CurrentPawn;
         public bool GameFinished;
-<<<<<<< HEAD
+
         private int player = 1;
-=======
+
         private int playerID = 1;
 
       
->>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
+
         private readonly IGame _game;
         public Logic(IGame game)
         {
@@ -118,12 +118,7 @@ namespace EelsAndEscalators
             GameFinished,
         }
 
-<<<<<<< HEAD
-        /*public TurnState GetTurnState()
-        {
-            throw new NotImplementedException();
-        }*/
-=======
+
         //Undertakes diffrent Actions, depending on the TurnState returned by MakeTurn()
         public void ActOnTurnState(TurnState currentTurnState)
         {
@@ -150,6 +145,6 @@ namespace EelsAndEscalators
         
 
         
->>>>>>> 49ec32429f67daa9bd2dc3429847650ee5c780aa
+
     }
 }
