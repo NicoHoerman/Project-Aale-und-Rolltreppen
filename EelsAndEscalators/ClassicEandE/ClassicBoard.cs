@@ -10,7 +10,7 @@ namespace EelsAndEscalators.ClassicEandE
         public int size { get => size; set => size = 30; }
         public List<IPawn> Pawns { get; set; }
         public List<IEntity> Entities { get; set; }
-
-        
+        public IPawn Pawn { get; set; }
+        public IEntity Entity { get; set; }
     }
 }

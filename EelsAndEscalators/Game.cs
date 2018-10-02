@@ -24,6 +24,7 @@ namespace EelsAndEscalators
             // Configurationen ausgelesen.
 
             State = new MainMenuState(this);
+            Run();
         }
 
         public void Run()
