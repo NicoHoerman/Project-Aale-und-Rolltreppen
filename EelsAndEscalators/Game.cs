@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EelsAndEscalators.Configurations;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
@@ -13,10 +12,9 @@ namespace EelsAndEscalators
     public class Game : IGame
     {
 
-        public IBoard Board { get; }
+        public IBoard Board { get; set; }
         public IRules Rules { get; }
-        public IState State { get; set; }
-        public MainMenuState MenuState { get; set; }
+        public IState State { get; private set; }
         public Logic Logic { get; }
 
         public IEntity Entity { get; set; }
@@ -32,15 +30,27 @@ namespace EelsAndEscalators
             Rules = rules;
         }
 
-
-        public void EntityCreation()
+        public Game()
         {
 
         }
 
-        public void PawnCreation()
+
+        public void Init()
         {
-            throw new NotImplementedException();
+            // Wichtige Objekte initialisiert
+            // Configurationen ausgelesen.
+
+            State = new MainMenuState(this);
+        }
+
+        public void Run()
+        {
+            bool isRunning = true;
+            while (isRunning)
+            {
+                State.Execute();
+            }
         }
 
         public string CreateBoard()
@@ -134,8 +144,20 @@ namespace EelsAndEscalators
         }
         public string InitializeGame()
         {
+           Rules.SetupEntitites();
             throw new NotImplementedException();
         }
+
+        public void SwitchRules(IRules createdRule)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SwitchState(IState newState)
+        {
+            State = newState;
+        }
+
 
     }
 

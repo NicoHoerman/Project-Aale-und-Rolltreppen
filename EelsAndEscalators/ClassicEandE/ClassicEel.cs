@@ -5,11 +5,14 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
+    //Nico
     public class ClassicEel : IEntity
     {
         public int top_location { get ;set; }
         public int bottom_location { get; set; }
         public EntityType type => EntityType.Eel;
+
+        public long Id { get; set; }
 
         private readonly IPawn _pawn;
 

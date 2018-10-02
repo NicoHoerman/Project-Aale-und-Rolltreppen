@@ -4,6 +4,7 @@ using System.Text;
 
 namespace EelsAndEscalators
 {
+    //Nico
     public class Parse
     {
         public void ChooseOutput(string command)
@@ -13,22 +14,18 @@ namespace EelsAndEscalators
 
         public string MainMenuInfo()
         {
-            throw new NotImplementedException();
+            return  "Test MainMenu Info";
         }
 
         public string GameInfo()
         {
-            throw new NotImplementedException();
+            return "Test Game Info";
         }
 
-        public string Board()
-        {
-            throw new NotImplementedException();
-        }
 
         public string HelpInfo()
         {
-            throw new NotImplementedException();
+            return "Test Help Info";
         }
     }
 }

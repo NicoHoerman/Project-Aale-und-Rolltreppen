@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using EelsAndEscalators.Configurations;
+﻿using System.Xml.Linq;
 
 
 namespace EelsAndEscalators.Contracts
 {
+    //Nico
     public interface IRules
     {
-        int numberOfPawns { get; set; }
-        int diceSides { get; set; }  
-        int diceResult { get; set; }
+        int numberOfPawns { get;}
+        int diceSides { get; }  
+        int diceResult { get; }
 
 
-        IPawn CreatePawn(PawnConfig configuration);
-        IEntity CreateEel(EelConfig configuration);
-        IEntity CreateEscalator(EscalatorConfig configuration);
+        IPawn CreatePawn(XElement configuration);
+        IEntity CreateEel(XElement configuration);
+        IEntity CreateEscalator(XElement configuration);
         IBoard CreateBoard();
 
         void RollDice();
-        
+        void SetupEntitites();
     }
 }

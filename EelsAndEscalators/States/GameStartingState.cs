@@ -5,23 +5,24 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
+    //Nico
     public class GameStartingState : IState
     {
         private readonly IGame _game;
-        public bool gameStarting;
+        private bool _gameStarting;
+
         public GameStartingState(IGame game)
         {
             _game = game;
+            _gameStarting = true;
         }
 
-        public bool palyerOneTurn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public bool Execute()
+        public void Execute()
         {
             throw new NotImplementedException();
         }
 
-        public void WaitingForInput()
+        public string WaitingForInput()
         {
             throw new NotImplementedException();
         }
