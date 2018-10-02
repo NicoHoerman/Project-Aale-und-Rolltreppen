@@ -13,7 +13,7 @@ namespace EelsAndEscalators
 
         public string MainMenuInfo()
         {
-            return  "Test MainMenu Info";
+            return  "Welcome at Eels and Escalators \t gdfgdf";
         }
 
         public string GameInfo()
