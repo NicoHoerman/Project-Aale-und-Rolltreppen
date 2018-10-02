@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
@@ -14,24 +13,20 @@ namespace EelsAndEscalators
     {
 
         public IBoard Board { get; set; }
-        public IRules Rules { get; }
-        public IState State { get; set; }       
+        public IRules Rules { get; private set; }
+        public IState State { get; private set; }       
         public Logic Logic { get; }
         public IPawn Pawn { get; }
 
         public IEntity Entity { get; set; }
       
-        List<IEntity> AllEels = new List<IEntity>();
-
-        private IRules currentRule;
-
-     
+                    
         public string CreateBoard()
         {
 
             try
             {
-                var classicboard = currentRule.CreateBoard();
+                var classicboard = Rules.CreateBoard();
 
                 int fieldNumberInt = classicboard.size;
                 string fieldNumber = "";
@@ -66,7 +61,7 @@ namespace EelsAndEscalators
                             topspace = "S";
                         else if (Entity.type == EntityType.Escalator & Entity.top_location == i)
                             topspace = "E";
-                        else topspace = " ";
+                        else topspace = "|";
 
                     });
 
@@ -81,7 +76,7 @@ namespace EelsAndEscalators
                             pawn1space = "|" + Pawn.playerID.ToString();
                         else if (Pawn.location == i & pawn2space.Length == 0  )
                             pawn2space = Pawn.playerID.ToString() + "|";
-                        else pawn1space = " "; pawn2space = " ";
+                        else pawn1space = " | "; pawn2space = "|";
                         
 
                     });
@@ -102,7 +97,7 @@ namespace EelsAndEscalators
                             bottomspace = "s";
                         else if (Entity.type == EntityType.Escalator & Entity.bottom_location == i)
                             bottomspace = "e";
-                        else bottomspace = " ";
+                        else bottomspace = " |";
 
 
                     });
@@ -125,14 +120,21 @@ namespace EelsAndEscalators
                 throw new Exception();
             }
         }
+
         public string InitializeGame()
         {
-           currentRule.SetupEntitites();
+           Rules.SetupEntitites();
             return CreateBoard();  
         }
+
         public void SwitchRules(IRules createdRule)
         {
-             currentRule = createdRule;     
+             Rules = createdRule;     
+        }
+
+        public void SwitchState(IState newState)
+        {
+            State = newState;
         }
 
     }

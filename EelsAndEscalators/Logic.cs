@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EelsAndEscalators.Configurations;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
