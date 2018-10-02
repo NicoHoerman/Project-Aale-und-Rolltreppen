@@ -13,18 +13,17 @@ namespace EelsAndEscalators.States
         private readonly IConfigurationProvider _configurationProvider;
         private readonly ISourceWrapper _sourceWrapper;
 
-        public bool inMenu;
+        private bool inMenu = true;
         private bool ruleNotSet = true;
+        private bool gameNotStarted = true;
         private string input;
         Parse parse = new Parse();
-        GameStartingState gameStartingState;
 
         private Dictionary<string, Func<IGame,IConfigurationProvider, IRules>> _rulesFactory = new Dictionary<string, Func<IGame, IConfigurationProvider, IRules>>
         {
             { "classic", (game,configP) => new ClassicRules(game,configP) },
         //    { "fancy", (g) => new FancyRules(g) },
         };
-
 
         public MainMenuState(IGame game, IConfigurationProvider configurationProvider, ISourceWrapper sourceWrapper)
         {
@@ -47,18 +46,26 @@ namespace EelsAndEscalators.States
                 {
                      input = _sourceWrapper.ReadInput();
 
-                    if (input.Substring(0, 1) == "/")
-                    {
+                    if(input == "/closegame")
+                        Environment.Exit(0);
+
+                    else if (input.Substring(0, 1) == "/")
                         CreateNewRulesInGame(input.Substring(1, input.Length - 1));
-                    }
+
                     else _sourceWrapper.WriteOutput("Type in an existing Command");
                 }
-
-                input = _sourceWrapper.ReadInput();
-                if (input == "/startgame")
+                while (gameNotStarted)
                 {
-                    _game.SwitchState(new GameStartingState(_game));
-                    inMenu = false;
+                    input = _sourceWrapper.ReadInput();
+                    if (input == "/startgame")
+                    {
+                        _game.SwitchState(new GameStartingState(_game));
+                        inMenu = false;
+                        gameNotStarted = false;
+                    }
+                    else if(input == "/closegame")
+                        Environment.Exit(0);
+                    else _sourceWrapper.WriteOutput("start the game or close");
                 }
             }
         }
@@ -69,6 +76,7 @@ namespace EelsAndEscalators.States
             { 
                 _game.SwitchRules(createdRule(_game,_configurationProvider));
                 ruleNotSet = false;
+                _sourceWrapper.WriteOutput("Classic Rules set." + "You can now start the game");
             }
             else
                 GiveErrorRuleNotFound();
@@ -77,10 +85,9 @@ namespace EelsAndEscalators.States
         private void GiveErrorRuleNotFound()
         {
             if(input == "/startgame")
-            {
                 _sourceWrapper.WriteOutput("select a rule first");
-            }
-            else _sourceWrapper.WriteOutput("Rule does not exist");
+
+            else _sourceWrapper.WriteOutput("Command does not exist");
         }
     }
 }
