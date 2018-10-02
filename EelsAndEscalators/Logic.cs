@@ -131,7 +131,7 @@ namespace EelsAndEscalators
             }
             else if (currentTurnState == TurnState.PlayerExceedsBoard)
             {
-                gameRunningState.AfterTurnMessage();
+                gameRunningState.PlayerExceedsBoardMessage();
                 currentTurnState = TurnState.TurnFinished;
             }
             else

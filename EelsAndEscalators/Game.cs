@@ -22,10 +22,7 @@ namespace EelsAndEscalators
                                                                      
 
         public void Init()
-        {
-            // Wichtige Objekte initialisiert
-            // Configurationen ausgelesen.
-
+        {         
             State = new MainMenuState(this);
         }
 
