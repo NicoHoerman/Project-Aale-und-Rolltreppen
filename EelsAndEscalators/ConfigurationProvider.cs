@@ -4,17 +4,17 @@ using System.Text;
 using System.Xml;
 using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
-using EelsAndEscalators.Configurations;
+
 using EelsAndEscalators.States;
 
 namespace EelsAndEscalators
 {
-<<<<<<< HEAD
+
     class ConfigurationProvider
-=======
-    //Nico
+
+    //alt
     public class ConfigurationProvider : IConfigurationProvider
->>>>>>> 6bebf2c... Nicos Changes
+
     {
         XmlDocument doc = new XmlDocument();
         int iD = 1;
