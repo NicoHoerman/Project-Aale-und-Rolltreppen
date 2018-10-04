@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using EelsAndEscalators.Contracts;
 
@@ -17,10 +18,16 @@ namespace EelsAndEscalators
             return Console.ReadLine();
         }
 
-        public void WriteOutput(int x, int y, string output)
+        public void WriteOutput(int x, int y, string output, ConsoleColor color)
         {
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine(output);
+            var offsetY = 0;
+            output.Split('\n').ToList().ForEach(line =>
+            {
+                Console.ForegroundColor = color;
+                Console.SetCursorPosition(x, y + offsetY);
+                Console.WriteLine(line);
+                offsetY++;
+            });
         }
 
     }

@@ -12,8 +12,7 @@ namespace EelsAndEscalators.States
         private readonly IGame _game;
         private readonly IConfigurationProvider _configurationProvider;
         private readonly ISourceWrapper _sourceWrapper;
-        Parse parse = new Parse();
-        DataProvider Show = new DataProvider();
+        private readonly DataProvider _dataProvider;
 
         private bool inMenu;
         private bool ruleNotSet = true;
@@ -29,17 +28,22 @@ namespace EelsAndEscalators.States
         };
         private string rulesname;
 
-        public MainMenuState(IGame game, IConfigurationProvider configurationProvider, ISourceWrapper sourceWrapper)
+        public MainMenuState(
+            IGame game, 
+            IConfigurationProvider configurationProvider, 
+            ISourceWrapper sourceWrapper,
+            DataProvider dataProvider)
         {
             _game = game;
             _configurationProvider = configurationProvider;
             _sourceWrapper = sourceWrapper;
+            _dataProvider = dataProvider;
             inMenu = true;
         }
      
 
         public MainMenuState(IGame game)
-            : this(game, new ConfigurationProvider(), new SourceWrapper())
+            : this(game, new ConfigurationProvider(), new SourceWrapper(), new DataProvider())
 
         { }
 
@@ -114,7 +118,7 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0,Show.MainMenuInfo());
+            _sourceWrapper.WriteOutput(0,0, _dataProvider.GetText("mainmenuinfo"), ConsoleColor.Blue);
             _sourceWrapper.WriteOutput(0, 12, string.Empty);
 
             if (_additionalInformation.Length != 0)
@@ -122,10 +126,8 @@ namespace EelsAndEscalators.States
 
             if (_error.Length != 0)
             {
-                _sourceWrapper.WriteOutput(0, 12, "Last Input: ");
-                _sourceWrapper.WriteOutput(11, 12, _lastInput);
-                _sourceWrapper.WriteOutput(0, 13, "Last Error: ");
-                _sourceWrapper.WriteOutput(11, 13, _error);
+                _sourceWrapper.WriteOutput(0, 12, "Last Input: " + _lastInput, ConsoleColor.DarkRed);
+                _sourceWrapper.WriteOutput(0, 13, "Last Error: " + _error, ConsoleColor.Red);
             }
         }
 

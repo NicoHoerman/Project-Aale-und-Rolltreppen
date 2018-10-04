@@ -10,7 +10,13 @@ namespace EelsAndEscalators
         private Dictionary<string, Action> _commandList;
         private Action<string> _errorAction = s => { };
 
-        
+        public Parse()
+        {
+            _commandList = new Dictionary<string, Action>();
+        }
+
+
+
         public void AddCommand(string token, Action command) => _commandList.Add(token, command);
 
         public void SetErrorAction(Action<string> action) => _errorAction = action;

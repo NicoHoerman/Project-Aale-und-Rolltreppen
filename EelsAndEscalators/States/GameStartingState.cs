@@ -9,8 +9,7 @@ namespace EelsAndEscalators.States
     {
         private readonly IGame _game;
         private readonly ISourceWrapper _sourceWrapper;
-        private Parse parse = new Parse();
-        private DataProvider Show = new DataProvider();
+        private readonly DataProvider _dataProvider;
 
         private bool _gameStarting;
         private bool _diceNotRolled = true;
@@ -19,15 +18,16 @@ namespace EelsAndEscalators.States
         private string _lastInput = string.Empty;
         private string _helpOutput = string.Empty;
 
-        public GameStartingState(IGame game, ISourceWrapper sourceWrapper) 
+        public GameStartingState(IGame game, ISourceWrapper sourceWrapper, DataProvider dataProvider) 
         {
             _game = game;
             _sourceWrapper = sourceWrapper;
+            _dataProvider = dataProvider;
             _gameStarting = true;
         }
 
         public GameStartingState(IGame game)
-            : this(game, new SourceWrapper())
+            : this(game, new SourceWrapper(), new DataProvider())
         { }
         
 
@@ -82,7 +82,7 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0,Show.GameInfo());
+            _sourceWrapper.WriteOutput(0,0,_dataProvider.GetText("gameinfo"), ConsoleColor.Blue);
             if (!gameInitialized)
             {
                 _sourceWrapper.WriteOutput(0, 16, _game.InitializeGame());
@@ -90,10 +90,10 @@ namespace EelsAndEscalators.States
             }
             else _sourceWrapper.WriteOutput(0, 16, _game.CreateBoard());
 
-            _sourceWrapper.WriteOutput(0, 19, Show.AfterBoardInfo());
+            _sourceWrapper.WriteOutput(0, 19, _dataProvider.GetText("afterboardinfo"));
 
             if (_helpOutput.Length != 0)
-                _sourceWrapper.WriteOutput(0, 25, _helpOutput);
+                _sourceWrapper.WriteOutput(30, 2, _helpOutput);
 
             if (_error.Length != 0)
             {
