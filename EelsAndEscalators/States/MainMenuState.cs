@@ -13,11 +13,15 @@ namespace EelsAndEscalators.States
         private readonly IConfigurationProvider _configurationProvider;
         private readonly ISourceWrapper _sourceWrapper;
 
-        public bool inMenu;
+        private bool inMenu;
         private bool ruleNotSet = true;
-        private string input;
+        private bool gameNotStarted = true;
+        //private int attempts = 0;
+        private string _error = string.Empty;
+        private string _lastInput = string.Empty;
+        private string _additionalInformation = string.Empty;
+
         Parse parse = new Parse();
-        GameStartingState gameStartingState;
 
         private Dictionary<string, Func<IGame,IConfigurationProvider, IRules>> _rulesFactory = new Dictionary<string, Func<IGame, IConfigurationProvider, IRules>>
         {
@@ -25,63 +29,108 @@ namespace EelsAndEscalators.States
         //    { "fancy", (g) => new FancyRules(g) },
         };
 
-
         public MainMenuState(IGame game, IConfigurationProvider configurationProvider, ISourceWrapper sourceWrapper)
         {
             _game = game;
             _configurationProvider = configurationProvider;
             _sourceWrapper = sourceWrapper;
+            inMenu = true;
         }
      
 
         public MainMenuState(IGame game)
             : this(game, new ConfigurationProvider(), new SourceWrapper())
+
         { }
 
         public void Execute()
         {
-
+            
             while (inMenu)
             {
-                _sourceWrapper.WriteOutput(parse.MainMenuInfo());
                 while (ruleNotSet)
                 {
-                     input = _sourceWrapper.ReadInput();
+                    UpdateOutput();
+                    _error = string.Empty;
 
-                    if (input.Substring(0, 1) == "/")
+                    var input = _sourceWrapper.ReadInput();
+                    if (input == "/closegame")
+                        Environment.Exit(0);
+
+                    if (input.Length == 0 || input.Substring(0, 1) != "/")
                     {
-                        CreateNewRulesInGame(input.Substring(1, input.Length - 1));
+                        _error = "Type in an existing Command";
+                        _lastInput = input;
+                        continue;
                     }
-                    else _sourceWrapper.WriteOutput("Type in an existing Command");
-                }
 
-                input = _sourceWrapper.ReadInput();
-                if (input == "/startgame")
-                {
-                    _game.SwitchState(new GameStartingState(_game));
-                    inMenu = false;
+                    switch (input)
+                    {
+                        case "/startgame":
+                            _error = "select a rule first";
+                            break;
+                        default:
+                            CreateNewRulesInGame(input);
+                            break;
+                    }
+
+                    _lastInput = input;
                 }
+                while (gameNotStarted)
+                {
+                    UpdateOutput();
+                    _error = string.Empty;
+
+                    var input = _sourceWrapper.ReadInput();
+
+                    switch (input)
+                    {
+                        case "/startgame":
+                            inMenu = false;
+                            gameNotStarted = false;
+                            _game.SwitchState(new GameStartingState(_game));
+                            break;
+
+                        case "/closegame":
+                            Environment.Exit(0);
+                            break;
+
+                        default:
+                            _error = "Start or close the game.";
+                            break;
+                    }
+                    _lastInput = input;
+                }
+            }
+        }
+
+        private void UpdateOutput()
+        {
+            _sourceWrapper.Clear();
+            _sourceWrapper.WriteOutput(parse.MainMenuInfo());
+            _sourceWrapper.WriteOutput(string.Empty);
+
+            if (_additionalInformation.Length != 0)
+                _sourceWrapper.WriteOutput(_additionalInformation);
+
+            if (_error.Length != 0)
+            {
+                _sourceWrapper.WriteOutput(_lastInput);
+                _sourceWrapper.WriteOutput(_error);
             }
         }
 
         private void CreateNewRulesInGame(string rulesname)
         {
-            if (_rulesFactory.TryGetValue(rulesname, out var createdRule))
+            if (_rulesFactory.TryGetValue(rulesname.Substring(1, rulesname.Length - 1), out var createdRule))
             { 
                 _game.SwitchRules(createdRule(_game,_configurationProvider));
                 ruleNotSet = false;
+                _additionalInformation = "Ruleset chosen.\nYou can now start the game.";
             }
             else
-                GiveErrorRuleNotFound();
+                _error = "Command does not exist";
         }
 
-        private void GiveErrorRuleNotFound()
-        {
-            if(input == "/startgame")
-            {
-                _sourceWrapper.WriteOutput("select a rule first");
-            }
-            else _sourceWrapper.WriteOutput("Rule does not exist");
-        }
     }
 }

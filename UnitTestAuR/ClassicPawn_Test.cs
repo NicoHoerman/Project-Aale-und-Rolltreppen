@@ -28,22 +28,23 @@ namespace UnitTestAuR
                 mockedRules.Setup(m => m.diceResult).
                     Returns(() => diceResultUnderTest);
 
-                var mockedGame = new Mock<IGame>();
-                mockedGame.Setup(m => m.Rules).
-                    Returns(() => mockedRules.Object);
-
                 var mockedPawn = new Mock<IPawn>();
                 mockedPawn.Setup(m => m.location).
                     Returns(() => pawnLocationUnderTest);
 
-                Creator = () => new ClassicPawn(mockedGame.Object);
+                var mockedGame = new Mock<IGame>();
+                mockedGame.Setup(m => m.Rules).
+                    Returns(() => mockedRules.Object);
+                //mockedGame.Setup(m => m.Board.Pawn).
+                //    Returns(() => mockedPawn.Object);
 
+                Creator = () => new ClassicPawn(mockedGame.Object);
+                
             }
 
             [TestMethod]
             public void If_Calling_MovePawn__Move_Pawn_By_Dice_Result()
             {
-
                 var pawn = Creator();
                 pawn.MovePawn();
 

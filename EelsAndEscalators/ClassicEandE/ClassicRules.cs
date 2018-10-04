@@ -46,7 +46,7 @@ namespace EelsAndEscalators.ClassicEandE
             var configurations = _configurationProvider.GetEntityConfigurations();
             configurations.ForEach(config =>
             {
-                var entityType = (EntityType)Convert.ToInt32(config.Element("entitytype"));
+                var entityType = (EntityType)config.Get("entitytype", Convert.ToInt32);
                 if (entityType == EntityType.Pawn)
                     _game.Board.Pawns.Add(CreatePawn(config));
                 else
@@ -63,9 +63,9 @@ namespace EelsAndEscalators.ClassicEandE
         {
             return new ClassicPawn
             {
-                color = Convert.ToInt32(configuration.Element("color")),
-                location = Convert.ToInt32(configuration.Element("location")),
-                playerID = Convert.ToInt32(configuration.Element("player_id")),
+                color = configuration.Get("color", Convert.ToInt32),
+                location = configuration.Get("location", Convert.ToInt32),
+                playerID = configuration.Get("playerid", Convert.ToInt32),
                 Id = NextId(),
             };
         }
@@ -74,8 +74,8 @@ namespace EelsAndEscalators.ClassicEandE
         {
             return new ClassicEel
             {
-                top_location = Convert.ToInt32(configuration.Element("top_location")),
-                bottom_location = Convert.ToInt32(configuration.Element("bottom_location")),
+                top_location = configuration.Get("toplocation", Convert.ToInt32),
+                bottom_location = configuration.Get("bottomlocation", Convert.ToInt32),
                 Id = NextId(),
             };
         }
@@ -84,8 +84,8 @@ namespace EelsAndEscalators.ClassicEandE
         {
             return new ClassicEscalator
             {
-                top_location = Convert.ToInt32(configuration.Element("top_location")),
-                bottom_location = Convert.ToInt32(configuration.Element("bottom_location")),
+                top_location = configuration.Get("toplocation", Convert.ToInt32),
+                bottom_location = configuration.Get("bottomlocation", Convert.ToInt32),
                 Id = NextId(),
             };
         }

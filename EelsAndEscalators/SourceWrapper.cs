@@ -7,6 +7,11 @@ namespace EelsAndEscalators
 {
     public class SourceWrapper : ISourceWrapper
     {
+        public void Clear()
+        {
+            Console.Clear();
+        }
+
         public string ReadInput()
         {
             return Console.ReadLine();
