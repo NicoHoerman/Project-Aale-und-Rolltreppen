@@ -72,9 +72,9 @@ namespace EelsAndEscalators
                     //<topspace>
                     Board.Entities.ForEach(entity =>
                     {
-                        if (Board.Entity.type == EntityType.Eel & Board.Entity.top_location == i)
+                        if (entity.type == EntityType.Eel & entity.top_location == i)
                             topspace = "S";
-                        else if (Board.Entity.type == EntityType.Escalator & Board.Entity.top_location == i)
+                        else if (entity.type == EntityType.Escalator & entity.top_location == i)
                             topspace = "E";
                         else topspace = " ";
 
@@ -87,10 +87,10 @@ namespace EelsAndEscalators
                     //<pawnspace>
                     Board.Pawns.ForEach(pawn =>
                     {
-                        if (Board.Pawn.location == i & pawn1space.Length == 0)
-                            pawn1space = "|" + Board.Pawn.playerID.ToString();
-                        else if (Board.Pawn.location == i & pawn2space.Length == 0  )
-                            pawn2space = Board.Pawn.playerID.ToString() + "|";
+                        if (pawn.location == i & pawn1space.Length == 0)
+                            pawn1space = "|" + pawn.playerID.ToString();
+                        else if (pawn.location == i & pawn2space.Length == 0  )
+                            pawn2space = pawn.playerID.ToString() + "|";
                         else pawn1space = " |"; pawn2space = " | ";
                         
 
@@ -108,9 +108,9 @@ namespace EelsAndEscalators
                     //<bot>
                     Board.Entities.ForEach(entity =>
                     {
-                        if (Board.Entity.type == EntityType.Eel & Board.Entity.bottom_location == i)
+                        if (entity.type == EntityType.Eel & entity.bottom_location == i)
                             bottomspace = "s";
-                        else if (Board.Entity.type == EntityType.Escalator & Board.Entity.bottom_location == i)
+                        else if (entity.type == EntityType.Escalator & entity.bottom_location == i)
                             bottomspace = "e";
                         else bottomspace = " ";
 
