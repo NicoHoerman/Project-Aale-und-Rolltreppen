@@ -12,6 +12,8 @@ namespace EelsAndEscalators.States
         private readonly IGame _game;
         private readonly IConfigurationProvider _configurationProvider;
         private readonly ISourceWrapper _sourceWrapper;
+        Parse parse = new Parse();
+        DataProvider Show = new DataProvider();
 
         private bool inMenu;
         private bool ruleNotSet = true;
@@ -19,7 +21,6 @@ namespace EelsAndEscalators.States
         private string _error = string.Empty;
         private string _lastInput = string.Empty;
         private string _additionalInformation = string.Empty;
-        Parse parse = new Parse();
 
         private Dictionary<string, Func<IGame,IConfigurationProvider, IRules>> _rulesFactory = new Dictionary<string, Func<IGame, IConfigurationProvider, IRules>>
         {
@@ -58,11 +59,12 @@ namespace EelsAndEscalators.States
                     UpdateOutput();
                     _error = string.Empty;
 
-
                     _sourceWrapper.WriteOutput(0, 15, "Type an Command: ");
                     Console.SetCursorPosition(17, 15);
                     var input = _sourceWrapper.ReadInput();
-                        _lastInput = input;
+
+                    _lastInput = input;
+                    rulesname = input;
                     parser.Execute(input);
              
                 }
@@ -71,27 +73,26 @@ namespace EelsAndEscalators.States
                     UpdateOutput();
                     _error = string.Empty;
 
+                    _sourceWrapper.WriteOutput(0, 17, "Type an Command: ");
+                    Console.SetCursorPosition(17, 17);
                     var input = _sourceWrapper.ReadInput();
+
                     _lastInput = input;
+                    parser.Execute(input);
                 }
             }
         }
 
         private void OnErrorCommand(string token)
         {
-            if (_lastInput.Length == 0 || _lastInput.Substring(0, 1) != "/")
-                _error = "That's no Command";
-            else if (token == "/startgame")
-                _error = "select a rule first";
-            else
-                _error = "Command does not exist";
-
+            _error = "Invalid input";
+            return;
         }
 
         private void OnStartGameCommand()
         {
-            if(!ruleNotSet)
-                OnErrorCommand(_lastInput);
+            if(ruleNotSet)
+                _error = "Please choose a rule first";
             else
             {
                 inMenu = false;
@@ -113,16 +114,18 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0,parse.MainMenuInfo());
+            _sourceWrapper.WriteOutput(0,0,Show.MainMenuInfo());
             _sourceWrapper.WriteOutput(0, 12, string.Empty);
 
             if (_additionalInformation.Length != 0)
-                _sourceWrapper.WriteOutput(0, 13, _additionalInformation);
+                _sourceWrapper.WriteOutput(0, 15, _additionalInformation);
 
             if (_error.Length != 0)
             {
-                _sourceWrapper.WriteOutput(0, 13, _lastInput);
-                _sourceWrapper.WriteOutput(0, 14, _error);
+                _sourceWrapper.WriteOutput(0, 12, "Last Input: ");
+                _sourceWrapper.WriteOutput(11, 12, _lastInput);
+                _sourceWrapper.WriteOutput(0, 13, "Last Error: ");
+                _sourceWrapper.WriteOutput(11, 13, _error);
             }
         }
 
@@ -135,7 +138,7 @@ namespace EelsAndEscalators.States
                 _additionalInformation = "Ruleset chosen.\nYou can now start the game.";
             }
             else
-                OnErrorCommand(_lastInput);
+                _error = "Interal error.";
         }
 
     }

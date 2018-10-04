@@ -9,8 +9,10 @@ namespace EelsAndEscalators.States
     {
         private readonly IGame _game;
         private readonly ISourceWrapper _sourceWrapper;
+        private Parse parse = new Parse();
+        private DataProvider Show = new DataProvider();
+
         private bool _gameStarting;
-        private Parse parse = new Parse(); 
         private bool _diceNotRolled = true;
         private bool gameInitialized = false;
         private string _error = string.Empty;
@@ -80,7 +82,7 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0,parse.GameInfo());
+            _sourceWrapper.WriteOutput(0,0,Show.GameInfo());
             if (!gameInitialized)
             {
                 _sourceWrapper.WriteOutput(0, 16, _game.InitializeGame());
