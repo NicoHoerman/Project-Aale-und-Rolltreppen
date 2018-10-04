@@ -7,9 +7,8 @@ namespace EelsAndEscalators.ClassicEandE
 {
     public class ClassicBoard : IBoard
     {
-        public IPawn Pawn { get; set; }
-        public IEntity Entity { get; set; }
-        public int size { get => size; set => size = 30; }
+
+        public int size { get; } = 30;
         public List<IPawn> Pawns { get; set; }
         public List<IEntity> Entities { get; set; }
 
