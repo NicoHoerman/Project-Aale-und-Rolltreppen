@@ -23,7 +23,7 @@ namespace EelsAndEscalators
         }
 
         public ConfigurationProvider()
-            : this(@".\XML\Configurations.xml")
+            : this(@".\XML Config\Configurations.xml")
         { }
 
 
