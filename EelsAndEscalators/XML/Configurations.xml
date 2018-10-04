@@ -33,14 +33,14 @@
     <entitytype>2</entitytype>
     <location>  0 </location>
     <color>     1 </color>
-    <playerID>  1 </playerID>
+    <playerid>  1 </playerid>
   </config>
   <!--Pawn-->
   <config>
     <entitytype>2</entitytype>
     <location>  0 </location>
     <color>     2 </color>
-    <playerID>  2 </playerID>
+    <playerid>  2 </playerid>
   </config> 
   
 </Configurations>

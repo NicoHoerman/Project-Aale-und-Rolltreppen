@@ -6,9 +6,7 @@ namespace EelsAndEscalators.Contracts
 {
     public interface IBoard
     {
-        int size { get; set; }
-        IPawn Pawn { get; set; }
-        IEntity Entity { get; set; }
+        int size { get; }
         List<IPawn> Pawns { get; set; }
         List<IEntity> Entities { get; set; }
 

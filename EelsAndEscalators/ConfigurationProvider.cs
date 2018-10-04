@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
-
 using EelsAndEscalators.States;
 using System.Xml.Linq;
 using System.Linq;
@@ -32,7 +30,7 @@ namespace EelsAndEscalators
         private void ReadConfigurationFile()
         {
             var doc = XDocument.Load(_configurationFile);
-            _configurations = doc.Root.Elements().Select(x => x.Element("config")).ToList();
+            _configurations = doc.Root.Elements().ToList();
         }
 
         public List<XElement> GetEntityConfigurations() => _configurations;

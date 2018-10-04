@@ -16,7 +16,7 @@ namespace EelsAndEscalators.States
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();  
         }
     }
 }
