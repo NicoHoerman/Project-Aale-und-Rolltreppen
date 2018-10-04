@@ -79,10 +79,12 @@ namespace EelsAndEscalators.States
 
         private void OnErrorCommand(string token)
         {
-            if (token == "/startgame")
+            if (_lastInput.Length == 0 || _lastInput.Substring(0, 1) != "/")
+                _error = "That's no Command";
+            else if (token == "/startgame")
                 _error = "select a rule first";
             else
-            _error = "Command does not exist";
+                _error = "Command does not exist";
 
         }
 
