@@ -143,14 +143,3 @@ namespace EelsAndEscalators.States
 
     }
 }
-
-
-/*
- * if (input == "/closegame")
-                        Environment.Exit(0);
-
-                    if (input.Length == 0 || input.Substring(0, 1) != "/")
-                    {
-                        _error = "Type in an existing Command";
-                    
- */

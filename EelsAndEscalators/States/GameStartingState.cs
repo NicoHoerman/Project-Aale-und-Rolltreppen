@@ -90,7 +90,7 @@ namespace EelsAndEscalators.States
             }
             else _sourceWrapper.WriteOutput(0, 16, _game.CreateBoard());
 
-            _sourceWrapper.WriteOutput(0, 19, parse.AfterBoardInfo());
+            _sourceWrapper.WriteOutput(0, 19, Show.AfterBoardInfo());
 
             if (_helpOutput.Length != 0)
                 _sourceWrapper.WriteOutput(0, 25, _helpOutput);
