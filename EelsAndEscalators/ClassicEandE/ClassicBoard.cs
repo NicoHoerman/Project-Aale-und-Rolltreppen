@@ -13,8 +13,8 @@ namespace EelsAndEscalators.ClassicEandE
 
         public ClassicBoard()
         {
-            List<IPawn> pawns = new List<IPawn>();
-            List<IEntity> entities = new List<IEntity>();
+            Pawns = new List<IPawn>();
+            Entities = new List<IEntity>();
         }
 
         

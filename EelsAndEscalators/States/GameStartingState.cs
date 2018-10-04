@@ -45,7 +45,9 @@ namespace EelsAndEscalators.States
                     UpdateOutput();
                     _error = string.Empty;
                     _helpOutput = string.Empty;
-                  
+
+                    _sourceWrapper.WriteOutput(0, 23, "Type an Command: ");
+                    Console.SetCursorPosition(17, 23);
                     var input = _sourceWrapper.ReadInput();
                     parser.Execute(input);
                     _lastInput = input;
@@ -78,23 +80,23 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,20,parse.GameInfo());
+            _sourceWrapper.WriteOutput(0,0,parse.GameInfo());
             if (!gameInitialized)
             {
-                _sourceWrapper.WriteOutput(0, 20, _game.InitializeGame());
+                _sourceWrapper.WriteOutput(0, 16, _game.InitializeGame());
                 gameInitialized = true;
             }
-            else _sourceWrapper.WriteOutput(0, 20, _game.CreateBoard());
+            else _sourceWrapper.WriteOutput(0, 16, _game.CreateBoard());
 
-            _sourceWrapper.WriteOutput(0, 20, parse.AfterBoardInfo());
+            _sourceWrapper.WriteOutput(0, 19, parse.AfterBoardInfo());
 
             if (_helpOutput.Length != 0)
-                _sourceWrapper.WriteOutput(0, 20, _helpOutput);
+                _sourceWrapper.WriteOutput(0, 25, _helpOutput);
 
             if (_error.Length != 0)
             {
-                _sourceWrapper.WriteOutput(0, 20, _lastInput);
-                _sourceWrapper.WriteOutput(0, 21, _error);
+                _sourceWrapper.WriteOutput(0, 21, _lastInput);
+                _sourceWrapper.WriteOutput(0, 22, _error);
             }
 
         }
