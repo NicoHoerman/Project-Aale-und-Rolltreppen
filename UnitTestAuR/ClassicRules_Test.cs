@@ -18,8 +18,7 @@ namespace UnitTestAuR
         public Func<IRules> Creator;
 
         private List<IPawn> pawnListUnderTest;
-        private List<IEntity> entityListUnderTest;
-        private List<XElement> configList;
+        private List<IEntity> entityListUnderTest;       
         private int NumberOfListContent;
         private int boardSizeUnderTest;
         private int diceSidesUnderTest;
@@ -35,8 +34,10 @@ namespace UnitTestAuR
         public void Setup()
         {
             //Attribute Arrange
-            configList = new List<XElement>();
             
+
+            var configList = XDocument.Parse(_xmlString).Elements().ToList();
+
             boardSizeUnderTest = 10;
 
             //mockedBoard Setup
@@ -65,7 +66,7 @@ namespace UnitTestAuR
             mockedConfigurationProvider.Setup(m => m.GetEntityConfigurations()).
                 Returns(() => configList);
 
-            var list = XDocument.Parse(_xmlString).Elements().ToList();
+            
             Creator = () => new ClassicRules(mockedGame.Object, mockedConfigurationProvider.Object);
         }
 
