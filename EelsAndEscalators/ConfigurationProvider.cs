@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using EelsAndEscalators;
 using EelsAndEscalators.Contracts;
-
 using EelsAndEscalators.States;
 using System.Xml.Linq;
 using System.Linq;
@@ -36,6 +34,5 @@ namespace EelsAndEscalators
         }
 
         public List<XElement> GetEntityConfigurations() => _configurations;
-
     }
 }
