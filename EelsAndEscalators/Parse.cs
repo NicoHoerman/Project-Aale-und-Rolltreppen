@@ -72,10 +72,6 @@ namespace EelsAndEscalators
         }
 
 
-        public string HelpInfo()
-        {
-            return "Commands are" +"\n" + "/closegame" + "\n" + "/rolldice";
-        }
 
         public string AfterBoardInfo()
         {
