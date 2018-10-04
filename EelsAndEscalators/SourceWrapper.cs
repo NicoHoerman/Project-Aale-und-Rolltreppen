@@ -17,8 +17,9 @@ namespace EelsAndEscalators
             return Console.ReadLine();
         }
 
-        public void WriteOutput(string output)
+        public void WriteOutput(int x, int y, string output)
         {
+            Console.SetCursorPosition(0, y);
             Console.WriteLine(output);
         }
 

@@ -37,23 +37,7 @@ namespace EelsAndEscalators
         }
 
 
-        public void WriteAt(string text,int y)
-        {
-            Console.SetCursorPosition(0, y);
-            _sourceWrapper.WriteOutput(text);
-        }
-
-        public void ChooseOutput(string input)
-        {
-            
-            if(input == "/help")
-                 _sourceWrapper.WriteOutput(HelpInfo());
-            else if(input == "/closegame")
-                 Environment.Exit(0);
-            else if(input.Length == 0 || input.Substring(0, 1) != "/")
-                 _sourceWrapper.WriteOutput("Type in an existing Command");
-            
-        }
+       
 
         public string MainMenuInfo()
         {

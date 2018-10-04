@@ -6,7 +6,7 @@ namespace EelsAndEscalators.Contracts
 { 
     public interface ISourceWrapper
     {
-        void WriteOutput(string output);
+        void WriteOutput(int x, int y, string output);
         string ReadInput();
         void Clear();
     }

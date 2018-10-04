@@ -107,16 +107,16 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(parse.MainMenuInfo());
-            _sourceWrapper.WriteOutput(string.Empty);
+            _sourceWrapper.WriteOutput(0,0,parse.MainMenuInfo());
+            _sourceWrapper.WriteOutput(0, 12, string.Empty);
 
             if (_additionalInformation.Length != 0)
-                _sourceWrapper.WriteOutput(_additionalInformation);
+                _sourceWrapper.WriteOutput(0, 13, _additionalInformation);
 
             if (_error.Length != 0)
             {
-                _sourceWrapper.WriteOutput(_lastInput);
-                _sourceWrapper.WriteOutput(_error);
+                _sourceWrapper.WriteOutput(0, 13, _lastInput);
+                _sourceWrapper.WriteOutput(0, 14, _error);
             }
         }
 

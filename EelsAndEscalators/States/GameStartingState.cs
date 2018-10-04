@@ -10,7 +10,7 @@ namespace EelsAndEscalators.States
         private readonly IGame _game;
         private readonly ISourceWrapper _sourceWrapper;
         private bool _gameStarting;
-        Parse parse = new Parse();
+        private Parse parse = new Parse(); 
         private bool _diceNotRolled = true;
         private bool gameInitialized = false;
         private string _error = string.Empty;
@@ -78,23 +78,23 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(parse.GameInfo());
+            _sourceWrapper.WriteOutput(0,20,parse.GameInfo());
             if (!gameInitialized)
             {
-                _sourceWrapper.WriteOutput(_game.InitializeGame());
+                _sourceWrapper.WriteOutput(0, 20, _game.InitializeGame());
                 gameInitialized = true;
             }
-            else _sourceWrapper.WriteOutput(_game.CreateBoard());
+            else _sourceWrapper.WriteOutput(0, 20, _game.CreateBoard());
 
-            _sourceWrapper.WriteOutput(parse.AfterBoardInfo());
+            _sourceWrapper.WriteOutput(0, 20, parse.AfterBoardInfo());
 
             if (_helpOutput.Length != 0)
-                _sourceWrapper.WriteOutput(_helpOutput);
+                _sourceWrapper.WriteOutput(0, 20, _helpOutput);
 
             if (_error.Length != 0)
             {
-                _sourceWrapper.WriteOutput(_lastInput);
-                _sourceWrapper.WriteOutput(_error);
+                _sourceWrapper.WriteOutput(0, 20, _lastInput);
+                _sourceWrapper.WriteOutput(0, 21, _error);
             }
 
         }
