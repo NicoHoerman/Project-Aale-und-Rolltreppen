@@ -11,16 +11,32 @@ namespace EelsAndEscalators
         public string diceResultInfo;
         private readonly ISourceWrapper _sourceWrapper;
 
+        private Dictionary<string, Action> _commandList;
+        private Action<string> _errorAction = s => { };
+
         public Parse(ISourceWrapper sourceWrapper)
         {
             _sourceWrapper = sourceWrapper;
+            _commandList = new Dictionary<string, Action>();
         }
+
         public Parse()
         : this( new SourceWrapper())
         { }
 
+        public void AddCommand(string token, Action command) => _commandList.Add(token, command);
 
-      
+        public void SetErrorAction(Action<string> action) => _errorAction = action;
+
+        public void Execute(string token)
+        {
+            if (_commandList.TryGetValue(token.ToLower(), out var function) == false)
+                _errorAction(token);
+            else
+                function();
+        }
+
+
         public void WriteAt(string text,int y)
         {
             Console.SetCursorPosition(0, y);
@@ -29,11 +45,14 @@ namespace EelsAndEscalators
 
         public void ChooseOutput(string input)
         {
-            if (input == "/help")
-                _sourceWrapper.WriteOutput(HelpInfo());
+            
+            if(input == "/help")
+                 _sourceWrapper.WriteOutput(HelpInfo());
             else if(input == "/closegame")
-                Environment.Exit(0);
-            else _sourceWrapper.WriteOutput("Use an active command");
+                 Environment.Exit(0);
+            else if(input.Length == 0 || input.Substring(0, 1) != "/")
+                 _sourceWrapper.WriteOutput("Type in an existing Command");
+            
         }
 
         public string MainMenuInfo()
