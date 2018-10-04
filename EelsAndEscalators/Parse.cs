@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EelsAndEscalators.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,17 +9,38 @@ namespace EelsAndEscalators
     {
         public string currentPlayerInfo;
         public string diceResultInfo;
+        private readonly ISourceWrapper _sourceWrapper;
 
-        public void ChooseOutput(string command)
+        public Parse(ISourceWrapper sourceWrapper)
         {
-            throw new NotImplementedException();
+            _sourceWrapper = sourceWrapper;
+        }
+        public Parse()
+        : this( new SourceWrapper())
+        { }
+
+
+      
+        public void WriteAt(string text,int y)
+        {
+            Console.SetCursorPosition(0, y);
+            _sourceWrapper.WriteOutput(text);
+        }
+
+        public void ChooseOutput(string input)
+        {
+            if (input == "/help")
+                _sourceWrapper.WriteOutput(HelpInfo());
+            else if(input == "/closegame")
+                Environment.Exit(0);
+            else _sourceWrapper.WriteOutput("Use an active command");
         }
 
         public string MainMenuInfo()
         {
             return  "Welcome at Eels and Escalators" +"\n" +"You are in the MainMenu"+ "\n" +
                     "\n" + "Commandlist" + "\n" + "/startgame" + "\n" + "/closegame" + 
-                    "\n" + "/classic" + "\n" + "\n" + "/rolldice (only ingame)" + "\n" + "First choose a ruleset then start the game" +
+                    "\n" + "/classic" + "\n" + "/rolldice (only ingame)" + "\n" + "\n"  + "\n" + "First choose a ruleset then start the game" +
                     "\n" + "Waiting for your Input";
         }
 

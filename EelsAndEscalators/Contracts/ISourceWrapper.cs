@@ -8,5 +8,6 @@ namespace EelsAndEscalators.Contracts
     {
         void WriteOutput(string output);
         string ReadInput();
+        void Clear();
     }
 }
