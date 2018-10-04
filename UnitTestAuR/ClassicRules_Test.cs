@@ -8,7 +8,7 @@ using EelsAndEscalators.Contracts;
 using EelsAndEscalators.States;
 using EelsAndEscalators.ClassicEandE;
 using System.Xml.Linq;
-
+using System.Linq;
 
 namespace UnitTestAuR
 {
@@ -18,25 +18,29 @@ namespace UnitTestAuR
         public Func<IRules> Creator;
 
         private List<IPawn> pawnListUnderTest;
-        private List<IEntity> entityListUnderTest;
-        private List<XElement> configList;
+        private List<IEntity> entityListUnderTest;       
         private int NumberOfListContent;
         private int boardSizeUnderTest;
         private int diceSidesUnderTest;
-        private int diceResultUnderTest;       
+        private int diceResultUnderTest;
+        
+
+        static string _xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> <Configurations> <!--Eel--> <config> <toplocation>15</toplocation> <bottomlocation>4</bottomlocation> </config> <!--Escalator--> <config> <toplocation>17</toplocation> <bottomlocation>6</bottomlocation> </config> <!--Pawn--> <config> <location>3</location> <color>2</color> <playerid>1</playerid> </config> </Configurations>";
+  
+
+        private List<XElement> configList = XDocument.Parse(_xmlString).Elements().ToList();
 
         private bool correctDice;
-
-        //PawnConfig pawnConfig = new PawnConfig();
-        //EelConfig eelConfig = new EelConfig();
-        //EscalatorConfig escalatorConfig = new EscalatorConfig();
+       
+        
+       
 
         [TestInitialize]
         public void Setup()
         {
             //Attribute Arrange
-            configList = new List<XElement>();
-            
+            var configList = XDocument.Parse(_xmlString).Root.Elements().ToList();
+
             boardSizeUnderTest = 10;
 
             //mockedBoard Setup
@@ -46,93 +50,103 @@ namespace UnitTestAuR
             mockedBoard.Setup(m => m.Entities).
                 Returns(() => entityListUnderTest);
             mockedBoard.Setup(m => m.Pawns).
-                Returns(() => pawnListUnderTest);
-
-            //mockedRules Setup
-            var mockedRule = new Mock<IRules>();
-            mockedRule.Setup(g => g.diceResult)
-                .Returns(diceResultUnderTest);
+                Returns(() => pawnListUnderTest);                   
 
             //mockedGame Setup
             var mockedGame = new Mock<IGame>();
             mockedGame.Setup(m => m.Board).
-                Returns(() => mockedBoard.Object);
-            mockedGame.Setup(m => m.Rules).
-                Returns(() => mockedRule.Object);
+                Returns(() => mockedBoard.Object);            
 
             //mockedConfigurationProvider Setup
             var mockedConfigurationProvider = new Mock<IConfigurationProvider>();
             mockedConfigurationProvider.Setup(m => m.GetEntityConfigurations()).
                 Returns(() => configList);
 
-            var list = XDocument.Parse(_xmlString).Elements().ToList();
             Creator = () => new ClassicRules(mockedGame.Object, mockedConfigurationProvider.Object);
         }
 
         [TestMethod]
-        public void If_Calling_CreatePawn__Pawn_Should_Have_Location_As_Defined_By_Configuration()
+        public void If_Calling_SetupEntities__IPawn_Should_Be_Added_To_PawnList_If_A_PawnConfig_Was_Found_In_The_Config_List()
         {
-
             var rules = Creator();
-            var result = rules.CreatePawn(pawnConfig);
+            rules.SetupEntitites();
 
-            Assert.AreEqual(pawnConfig.location, result.location);
+            Assert.IsNotNull(pawnListUnderTest);
+        }
+             
+        [TestMethod]
+        public void If_Calling_SetupEntities__IEntity_Should_Be_Added_To_EntityList_If_A_Eel_Or_EscalatorConfig_Was_Found_In_The_Config_List()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
+
+            Assert.IsNotNull(entityListUnderTest);
         }
 
         [TestMethod]
-        public void If_Calling_CreatePawn__Pawn_Should_Have_Color_As_Defined_By_Configuration()
+        public void If_Calling_SetupEntities__The_Created_Pawn_Should_Have_Location_As_Defined_By_Configuration()
         {
 
             var rules = Creator();
-            var result = rules.CreatePawn(pawnConfig);
-
-            Assert.AreEqual(pawnConfig.color, result.color);
+            rules.SetupEntitites();
+           
+            Assert.AreEqual(2, pawnListUnderTest[1].location);
         }
 
         [TestMethod]
-        public void If_Calling_CreatePawn__Pawn_Should_Have_PlayerID_As_Defined_By_Configuration()
+        public void If_Calling_SetupEntities__The_Created_Pawn_Should_Have_Color_As_Defined_By_Configuration()
         {
 
             var rules = Creator();
-            var result = rules.CreatePawn(pawnConfig);
+            rules.SetupEntitites();
 
-            Assert.AreEqual(pawnConfig.playerID, result.playerID);
+            Assert.AreEqual(1, pawnListUnderTest[1].color);
+        }
+
+        [TestMethod]
+        public void If_Calling_SetupEntities__The_Created_Pawn_Should_Have_PlayerID_As_Defined_By_Configuration()
+        {
+
+            var rules = Creator();
+            rules.SetupEntitites();
+
+            Assert.AreEqual(1, pawnListUnderTest[1].playerID);
         }
 
         [TestMethod]
         public void If_Calling_CreateEel__Eel_Should_Have_Bottom_Location_As_Defined_By_Configuration()
         {
             var rules = Creator();
-            var result = rules.CreateEel(eelConfig);
+            var result = rules.CreateEel(config);
 
-            Assert.AreEqual(eelConfig.bottom_location, result.bottom_location);
+            Assert.AreEqual(4, result.bottom_location);
         }
 
         [TestMethod]
         public void If_Calling_CreateEel__Eel_Should_Have_Top_Location_As_Defined_By_Configuration()
         {
             var rules = Creator();
-            var result = rules.CreateEel(eelConfig);
+            var result = rules.CreateEel(config);
 
-            Assert.AreEqual(eelConfig.top_location, result.top_location);
+            Assert.AreEqual(15, result.top_location);
         }
 
         [TestMethod]
         public void If_Calling_CreateEscalator__Escalator_Should_Have_Bottom_Location_As_Defined_By_Configuration()
         {
             var rules = Creator();
-            var result = rules.CreateEscalator(escalatorConfig);
+            var result = rules.CreateEscalator(config);
 
-            Assert.AreEqual(escalatorConfig.bottom_location, result.bottom_location);
+            Assert.AreEqual(6, result.bottom_location);
         }
 
         [TestMethod]
         public void If_Calling_CreateEscalator__Escalator_Should_Have_Top_Location_As_Defined_By_Configuration()
         {
             var rules = Creator();
-            var result = rules.CreateEscalator(escalatorConfig);
+            var result = rules.CreateEscalator(config);
 
-            Assert.AreEqual(escalatorConfig.top_location, result.top_location);
+            Assert.AreEqual(17, result.top_location);
         }
 
         [TestMethod]
