@@ -32,9 +32,10 @@ namespace EelsAndEscalators
         private void ReadConfigurationFile()
         {
             var doc = XDocument.Load(_configurationFile);
-            _configurations = doc.Root.Elements().Select(x => x.Element("config")).ToList();
+            _configurations = doc.Root.Elements().ToList();
         }
 
         public List<XElement> GetEntityConfigurations() => _configurations;
+
     }
 }

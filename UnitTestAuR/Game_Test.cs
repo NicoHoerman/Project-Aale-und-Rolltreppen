@@ -109,7 +109,7 @@ namespace UnitTestAuR
             mockedBoard.Setup(b => b.Entities)
                 .Returns(() => entitiesUnderTest);
 
-            Creator = () => new Game(mockedBoard.Object, mockedRules.Object);
+            Creator = () => new Game();
         }
 
        
