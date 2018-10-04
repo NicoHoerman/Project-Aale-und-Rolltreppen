@@ -36,6 +36,7 @@ namespace EelsAndEscalators.States
             _sourceWrapper = sourceWrapper;
             inMenu = true;
         }
+     
 
         public MainMenuState(IGame game)
             : this(game, new ConfigurationProvider(), new SourceWrapper())

@@ -6,6 +6,6 @@ namespace EelsAndEscalators.Contracts
 {
     public interface IState
     {
-        void Execute();  
+        void Execute();                
     }
 }

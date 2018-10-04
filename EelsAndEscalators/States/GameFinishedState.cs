@@ -8,6 +8,7 @@ namespace EelsAndEscalators.States
     class GameFinishedState : IState
     {
         private readonly IGame _game;
+
         public bool isFinished;
         public GameFinishedState(IGame game)
         {

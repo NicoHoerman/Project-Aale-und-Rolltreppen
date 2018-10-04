@@ -17,15 +17,9 @@ namespace EelsAndEscalators
         GameRunningState gameRunningState { get; set; }
         GameFinishedState gameFinishedState { get; set; }
         
-
-        private IPawn CurrentPawn;
-        public bool GameFinished;
-
-        private int player = 1;
-
+        public IPawn CurrentPawn;
+        public bool GameFinished;      
         private int playerID = 1;
-
-      
 
         private readonly IGame _game;
         public Logic(IGame game)
@@ -126,17 +120,16 @@ namespace EelsAndEscalators
 
             if (currentTurnState == TurnState.GameFinished)
             {
-                gameFinishedState.Execute();
-                gameRunningState.isRunning = false;
+                _game.SwitchState(new GameFinishedState(_game));
             }
             else if (currentTurnState == TurnState.PlayerExceedsBoard)
             {
-               // gameRunningState.AfterTurnMessage();
+                //gameRunningState.Parse.PlayerExceedsBoardMessage();
                 currentTurnState = TurnState.TurnFinished;
             }
             else
             {
-               // gameRunningState.AfterTurnMessage();
+                //gameRunningState.Parse.AfterTurnMessage();
                 
             }    
 
