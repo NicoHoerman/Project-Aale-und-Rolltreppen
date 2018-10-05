@@ -42,16 +42,24 @@ namespace EelsAndEscalators.ClassicEandE
         public void SetupEntitites()
         {
             _game.Board = new ClassicBoard();
-
-            var configurations = _configurationProvider.GetEntityConfigurations();
-            configurations.ForEach(config =>
+            try
             {
-                var entityType = (EntityType)config.Get("entitytype", Convert.ToInt32);
-                if (entityType == EntityType.Pawn)
-                    _game.Board.Pawns.Add(CreatePawn(config));
-                else
-                    _game.Board.Entities.Add(_entityFactory[entityType](config));
-            });
+
+
+                var configurations = _configurationProvider.GetEntityConfigurations();
+                configurations.ForEach(config =>
+                {
+                    var entityType = (EntityType)config.Get("entitytype", Convert.ToInt32);
+                    if (entityType == EntityType.Pawn)
+                        _game.Board.Pawns.Add(CreatePawn(config));
+                    else
+                        _game.Board.Entities.Add(_entityFactory[entityType](config));
+                });
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException($"Something went wrong", e);
+            }
         }
 
         public IBoard CreateBoard()
@@ -61,6 +69,9 @@ namespace EelsAndEscalators.ClassicEandE
 
         public IPawn CreatePawn(XElement configuration)
         {
+            try
+            {
+
             return new ClassicPawn
             {
                 color = configuration.Get("color", Convert.ToInt32),
@@ -68,32 +79,60 @@ namespace EelsAndEscalators.ClassicEandE
                 playerID = configuration.Get("playerid", Convert.ToInt32),
                 Id = NextId(),
             };
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException($"Something went wrong", e);
+            }
         }
 
         public IEntity CreateEel(XElement configuration)
         {
+            try
+            {
+
             return new ClassicEel
             {
                 top_location = configuration.Get("toplocation", Convert.ToInt32),
                 bottom_location = configuration.Get("bottomlocation", Convert.ToInt32),
                 Id = NextId(),
             };
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException($"Something went wrong", e);
+            }
         }
 
         public IEntity CreateEscalator(XElement configuration)
         {
+            try
+            {
+
             return new ClassicEscalator
             {
                 top_location = configuration.Get("toplocation", Convert.ToInt32),
                 bottom_location = configuration.Get("bottomlocation", Convert.ToInt32),
                 Id = NextId(),
             };
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException($"Something went wrong", e);
+            }
         }
 
         public void RollDice()
         {
+            try
+            {
             Random rnd = new Random();
             diceResult = rnd.Next(1, diceSides+1);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException($"Something went wrong", e);
+            }
 
         }
 
