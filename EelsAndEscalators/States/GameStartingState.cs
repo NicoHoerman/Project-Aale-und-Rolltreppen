@@ -48,7 +48,7 @@ namespace EelsAndEscalators.States
                     _error = string.Empty;
                     _helpOutput = string.Empty;
 
-                    _sourceWrapper.WriteOutput(0, 23, "Type an Command: ");
+                    _sourceWrapper.WriteOutput(0, 23, "Type an Command: ", ConsoleColor.DarkGray);
                     Console.SetCursorPosition(17, 23);
                     var input = _sourceWrapper.ReadInput();
                     parser.Execute(input);
@@ -82,23 +82,23 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0,_dataProvider.GetText("gameinfo"), ConsoleColor.Blue);
+            _sourceWrapper.WriteOutput(0,0,_dataProvider.GetText("gameinfo"), ConsoleColor.DarkCyan);
             if (!gameInitialized)
             {
-                _sourceWrapper.WriteOutput(0, 16, _game.InitializeGame());
+                _sourceWrapper.WriteOutput(0, 16, _game.InitializeGame(), ConsoleColor.Gray);
                 gameInitialized = true;
             }
-            else _sourceWrapper.WriteOutput(0, 16, _game.CreateBoard());
+            else _sourceWrapper.WriteOutput(0, 16, _game.CreateBoard(), ConsoleColor.Gray);
 
-            _sourceWrapper.WriteOutput(0, 19, _dataProvider.GetText("afterboardinfo"));
+            _sourceWrapper.WriteOutput(0, 19, _dataProvider.GetText("afterboardinfo"), ConsoleColor.DarkCyan);
 
             if (_helpOutput.Length != 0)
-                _sourceWrapper.WriteOutput(30, 2, _helpOutput);
+                _sourceWrapper.WriteOutput(30, 2, _helpOutput , ConsoleColor.DarkRed);
 
             if (_error.Length != 0)
             {
-                _sourceWrapper.WriteOutput(0, 21, _lastInput);
-                _sourceWrapper.WriteOutput(0, 22, _error);
+                _sourceWrapper.WriteOutput(0, 21, _lastInput, ConsoleColor.DarkRed);
+                _sourceWrapper.WriteOutput(0, 22, _error, ConsoleColor.Red);
             }
 
         }

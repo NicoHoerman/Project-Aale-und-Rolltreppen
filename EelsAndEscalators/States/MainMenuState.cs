@@ -63,7 +63,7 @@ namespace EelsAndEscalators.States
                     UpdateOutput();
                     _error = string.Empty;
 
-                    _sourceWrapper.WriteOutput(0, 15, "Type an Command: ");
+                    _sourceWrapper.WriteOutput(0, 15, "Type an Command: ", ConsoleColor.DarkGray);
                     Console.SetCursorPosition(17, 15);
                     var input = _sourceWrapper.ReadInput();
 
@@ -77,7 +77,7 @@ namespace EelsAndEscalators.States
                     UpdateOutput();
                     _error = string.Empty;
 
-                    _sourceWrapper.WriteOutput(0, 17, "Type an Command: ");
+                    _sourceWrapper.WriteOutput(0, 17, "Type an Command: ", ConsoleColor.DarkGray);
                     Console.SetCursorPosition(17, 17);
                     var input = _sourceWrapper.ReadInput();
 
@@ -118,11 +118,11 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0, _dataProvider.GetText("mainmenuinfo"), ConsoleColor.Blue);
+            _sourceWrapper.WriteOutput(0,0, _dataProvider.GetText("mainmenuinfo"), ConsoleColor.DarkCyan);
             _sourceWrapper.WriteOutput(0, 12, string.Empty);
 
             if (_additionalInformation.Length != 0)
-                _sourceWrapper.WriteOutput(0, 15, _additionalInformation);
+                _sourceWrapper.WriteOutput(0, 15, _additionalInformation, ConsoleColor.DarkCyan);
 
             if (_error.Length != 0)
             {
