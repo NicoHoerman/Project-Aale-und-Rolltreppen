@@ -8,99 +8,16 @@ namespace EelsAndEscalators.States
     public class GameStartingState : IState
     {
         private readonly IGame _game;
-        private readonly ISourceWrapper _sourceWrapper;
-        private readonly DataProvider _dataProvider;
 
-        private bool _gameStarting;
-        private bool _diceNotRolled = true;
-        private bool gameInitialized = false;
-        private string _error = string.Empty;
-        private string _lastInput = string.Empty;
-        private string _helpOutput = string.Empty;
-
-        public GameStartingState(IGame game, ISourceWrapper sourceWrapper, DataProvider dataProvider) 
+        public GameStartingState(IGame game) 
         {
             _game = game;
-            _sourceWrapper = sourceWrapper;
-            _dataProvider = dataProvider;
-            _gameStarting = true;
         }
-
-        public GameStartingState(IGame game)
-            : this(game, new SourceWrapper(), new DataProvider())
-        { }
-        
 
         public void Execute()
         {
-            var parser = new Parse();
-            parser.AddCommand("/help", OnHelpCommand);
-            parser.AddCommand("/closegame", OnCloseGameCommand);
-            parser.AddCommand("/rolldice", OnRollDiceCommand);
-            parser.SetErrorAction(OnErrorCommand);
-
-            _gameStarting = true;
-            while (_gameStarting)
-            {
-                while (_diceNotRolled)
-                {
-                    UpdateOutput();
-                    _error = string.Empty;
-                    _helpOutput = string.Empty;
-
-                    _sourceWrapper.WriteOutput(0, 23, "Type an Command: ", ConsoleColor.DarkGray);
-                    Console.SetCursorPosition(17, 23);
-                    var input = _sourceWrapper.ReadInput();
-                    parser.Execute(input);
-                    _lastInput = input;
-                }
-            }
-        }
-
-        private void OnErrorCommand(string token)
-        {
-            _error = "Unknown command.";
-        }
-
-        private void OnRollDiceCommand()
-        {
-            _gameStarting = false;
-            _diceNotRolled = false;
+            _game.InitializeGame();
             _game.SwitchState(new GameRunningState(_game));
-        }
-
-        private void OnCloseGameCommand()
-        {
-            Environment.Exit(0);
-        }
-
-        private void OnHelpCommand()
-        {
-            _helpOutput = "Commands are" + "\n" + "/closegame" + "\n" + "/rolldice";
-        }
-
-        private void UpdateOutput()
-        {
-            _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0,_dataProvider.GetText("gameinfo"), ConsoleColor.DarkCyan);
-            if (!gameInitialized)
-            {
-                _sourceWrapper.WriteOutput(0, 16, _game.InitializeGame(), ConsoleColor.Gray);
-                gameInitialized = true;
-            }
-            else _sourceWrapper.WriteOutput(0, 16, _game.CreateBoard(), ConsoleColor.Gray);
-
-            _sourceWrapper.WriteOutput(0, 19, _dataProvider.GetText("afterboardinfo"), ConsoleColor.DarkCyan);
-
-            if (_helpOutput.Length != 0)
-                _sourceWrapper.WriteOutput(30, 2, _helpOutput , ConsoleColor.DarkRed);
-
-            if (_error.Length != 0)
-            {
-                _sourceWrapper.WriteOutput(0, 21, _lastInput, ConsoleColor.DarkRed);
-                _sourceWrapper.WriteOutput(0, 22, _error, ConsoleColor.Red);
-            }
-
         }
     }
 }

@@ -17,9 +17,11 @@ namespace EelsAndEscalators.States
         private bool inMenu;
         private bool ruleNotSet = true;
         private bool gameNotStarted = true;
+
         private string _error = string.Empty;
         private string _lastInput = string.Empty;
         private string _additionalInformation = string.Empty;
+        private string _mainMenuOutput = string.Empty;
 
         private Dictionary<string, Func<IGame,IConfigurationProvider, IRules>> _rulesFactory = new Dictionary<string, Func<IGame, IConfigurationProvider, IRules>>
         {
@@ -57,6 +59,8 @@ namespace EelsAndEscalators.States
                 parser.AddCommand("/closegame", OnCloseGameCommand);
                 parser.AddCommand("/classic", OnClassicCommand);
                 parser.SetErrorAction(OnErrorCommand);
+
+                _mainMenuOutput = _dataProvider.GetText("mainmenuinfo");
 
                 while (ruleNotSet)
                 {
@@ -107,7 +111,7 @@ namespace EelsAndEscalators.States
 
         private void OnCloseGameCommand()
         {
-            Environment.Exit(0);
+            _game.ClosingGame();
         }
 
         private void OnClassicCommand()
@@ -118,7 +122,7 @@ namespace EelsAndEscalators.States
         private void UpdateOutput()
         {
             _sourceWrapper.Clear();
-            _sourceWrapper.WriteOutput(0,0, _dataProvider.GetText("mainmenuinfo"), ConsoleColor.DarkCyan);
+            _sourceWrapper.WriteOutput(0,0,_mainMenuOutput, ConsoleColor.DarkCyan);
             _sourceWrapper.WriteOutput(0, 12, string.Empty);
 
             if (_additionalInformation.Length != 0)

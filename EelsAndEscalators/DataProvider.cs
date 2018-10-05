@@ -42,14 +42,20 @@ namespace EelsAndEscalators
                 "Roll the dice!"
             },
             {
-                "gamefinishedInfo",
+                "gamefinishedinfo",
                 "Game finished\n"+
                 "{0} wins!"
             },
             {
                 "diceresultinfo",
                 "You rolled a {0}"
+            },
+            {
+                "playerexceedsboardinfo",
+                "You rolled to much\n"+
+                "One Turn off"
             }
+
         };
 
         public string GetText(string key) => _text[key];
