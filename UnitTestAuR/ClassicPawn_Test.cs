@@ -25,7 +25,7 @@ namespace UnitTestAuR
                 pawnLocationUnderTest = 4;
 
                 var mockedRules = new Mock<IRules>();
-                mockedRules.Setup(m => m.diceResult).
+                mockedRules.Setup(m => m.DiceResult).
                     Returns(() => diceResultUnderTest);
 
                 var mockedPawn = new Mock<IPawn>();

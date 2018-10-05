@@ -18,7 +18,7 @@ namespace EelsAndEscalators.Contracts
         EntityType type { get; }
         long Id { get; }
 
-        void SetPawn();
-        bool OnSamePositionAs();
+        void SetPawn(IPawn pawn);
+        bool OnSamePositionAs(IPawn pawn);
     }
 }

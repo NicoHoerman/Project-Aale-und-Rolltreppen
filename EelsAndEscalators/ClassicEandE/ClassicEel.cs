@@ -13,42 +13,14 @@ namespace EelsAndEscalators.ClassicEandE
 
         public long Id { get; set; }
 
-        private readonly IPawn _pawn;
-
-        public ClassicEel(IPawn pawn)
+        public void SetPawn(IPawn pawn)
         {
-            _pawn = pawn;
+            pawn.location = bottom_location;
         }
 
-        public ClassicEel()
+        public bool OnSamePositionAs(IPawn pawn)
         {
-
-        }
-
-        public void SetPawn()
-        {
-            try
-            {
-                _pawn.location = bottom_location;
-            }
-            catch
-            {
-                //may need a better Exception 
-                throw new Exception();
-            }
-        }
-
-        public bool OnSamePositionAs()
-        {
-            try
-            {
-                return top_location == _pawn.location ? true : false;
-            }
-            catch
-            {
-                //may need a better Exception 
-                throw new Exception();
-            }
+            return top_location == pawn.location ? true : false;
         }
     }
 }

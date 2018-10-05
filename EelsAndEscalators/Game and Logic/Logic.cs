@@ -4,9 +4,7 @@ using System.Text;
 using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
-
-
-
+using System.Linq;
 
 namespace EelsAndEscalators
 {
@@ -14,14 +12,15 @@ namespace EelsAndEscalators
     public class Logic
     {
         
-        public IPawn CurrentPawn;
-        public bool GameFinished;      
-        private int playerID = 1;
+        private IPawn CurrentPawn;
+        private bool GameFinished;      
+        public int CurrentPlayerID { get; set; } = 1;
 
         private readonly IGame _game;
         public Logic(IGame game)
         {
             _game = game;
+            
         }
 
         //Gets the Pawn with the matching playerID from the Pawns List
@@ -29,11 +28,11 @@ namespace EelsAndEscalators
         {
             try
             {
-                return CurrentPawn =  _game.Board.Pawns[playerID];
+                return CurrentPawn =  _game.Board.Pawns.Find(x => x.playerID.Equals(CurrentPlayerID));
             }
-            catch
+            catch(Exception e)
             {
-                throw new Exception();
+                throw new InvalidOperationException($"Nothing Found with PlayerID {CurrentPlayerID} ",e);
             }
 
         }
@@ -56,21 +55,18 @@ namespace EelsAndEscalators
 
         public void NextPlayer()
         {
-            //if its player 1's turn, switch int player to 2. If not, switch it to 1.
-            try
-            {
-                playerID = playerID == 1 ? 2 : 1;
-            }
-
-            catch
-            {
-                throw new Exception();
-            }
+            var orderedPlayers = _game.Board.Pawns.OrderBy(x => x.playerID).ToList();
+            var nextPlayer = orderedPlayers.Where(x => x.playerID == CurrentPlayerID + 1).FirstOrDefault();
+            if (nextPlayer == null)
+                CurrentPlayerID = orderedPlayers.First().playerID;
+            else
+                CurrentPlayerID = nextPlayer.playerID;
         }
 
 
         public TurnState MakeTurn()
         {
+
             try
             {
                 //Get current Pawn 
@@ -79,15 +75,21 @@ namespace EelsAndEscalators
                 _game.Rules.RollDice();
 
                 //Check If Player Exceeds Board and Move Pawn
-                if (CurrentPawn.location + _game.Rules.diceResult > _game.Board.size)
+                if (CurrentPawn.location + _game.Rules.DiceResult > _game.Board.size)
+                {
+                    NextPlayer();
                     return TurnState.PlayerExceedsBoard;
-                else CurrentPawn.MovePawn();
+                }
+                else
+                    CurrentPawn.MovePawn(_game.Rules.DiceResult);
                 
                 //Entities check if the pawn is on them
                 _game.Board.Entities.ForEach(entity =>
                 {
-                    if (entity.OnSamePositionAs())
-                    { entity.SetPawn(); }
+                    if (entity.OnSamePositionAs(CurrentPawn))
+                    {
+                        entity.SetPawn(CurrentPawn);
+                    }
                 });
 
                 
@@ -96,9 +98,9 @@ namespace EelsAndEscalators
                 return CheckIfGameFinished();
 
             }
-            catch
+            catch(Exception e)
             {
-                throw new Exception();
+                throw new InvalidOperationException($"Could not Return a TurnState",e);
             }
 
         }

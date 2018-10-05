@@ -17,9 +17,9 @@ namespace EelsAndEscalators.ClassicEandE
 
         private Dictionary<EntityType, Func<XElement, IEntity>> _entityFactory = new Dictionary<EntityType, Func<XElement, IEntity>>();
 
-        public int numberOfPawns { get; } = 2;
-        public int diceSides { get; } = 6;
-        public int diceResult { get; set; }
+        public int NumberOfPawns { get; } = 2;
+        public int DiceSides { get; } = 6;
+        public int DiceResult { get; set; }
 
 
         public ClassicRules(IGame game, IConfigurationProvider configurationProvider)
@@ -127,7 +127,7 @@ namespace EelsAndEscalators.ClassicEandE
             try
             {
             Random rnd = new Random();
-            diceResult = rnd.Next(1, diceSides+1);
+            DiceResult = rnd.Next(1, DiceSides+1);
             }
             catch
             {

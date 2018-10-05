@@ -38,7 +38,7 @@ namespace EelsAndEscalators
             },
             {
                 "afterboardinfo",
-                "{0} \n" +
+                "Player {0} Turn \n" +
                 "Roll the dice!"
             },
             {
@@ -59,5 +59,17 @@ namespace EelsAndEscalators
         };
 
         public string GetText(string key) => _text[key];
+
+        private string[] _numberLiterals = new string[]
+        {
+                "Zero",
+                "One",
+                "Two",
+                "Three",
+
+        };
+
+        public string GetNumberLiteral(int value) => _numberLiterals[value];
+        
     }
 }

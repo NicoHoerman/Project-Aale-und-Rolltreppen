@@ -58,7 +58,7 @@ namespace UnitTestAuR
             
             //Mock Rules
             var mockedRules = new Mock<IRules>();
-            mockedRules.Setup(r => r.diceResult)
+            mockedRules.Setup(r => r.DiceResult)
                 .Returns(() => diceResultUnderTest);
 
             // Mock Game

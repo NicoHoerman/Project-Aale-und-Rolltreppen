@@ -6,10 +6,9 @@ namespace EelsAndEscalators.Contracts
 
     public interface IRules
     {
-        int numberOfPawns { get;}
-        int diceSides { get; }  
-        int diceResult { get; }
-
+        int NumberOfPawns { get;}
+        int DiceSides { get; }  
+        int DiceResult { get; }
 
         IPawn CreatePawn(XElement configuration);
         IEntity CreateEel(XElement configuration);

@@ -13,29 +13,13 @@ namespace EelsAndEscalators.ClassicEandE
         public int playerID { get; set; }
         public long Id { get; set; }
 
-        private readonly IGame _game;
-
-        public ClassicPawn(IGame game)
-        {
-            _game = game;
-        }
-
         public ClassicPawn()
         {
-
         }
 
-        public void MovePawn()
+        public void MovePawn(int fieldsToMove)
         {
-            try
-            {
-                location +=_game.Rules.diceResult;
-            }
-            catch
-            {
-                //may need a better Exception
-                throw new Exception();
-            }
+            location += fieldsToMove;
         }
     }
 }
