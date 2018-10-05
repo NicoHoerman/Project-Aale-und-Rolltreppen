@@ -13,9 +13,6 @@ namespace EelsAndEscalators
 
     public class Logic
     {
-
-        GameRunningState gameRunningState { get; set; }
-        GameFinishedState gameFinishedState { get; set; }
         
         public IPawn CurrentPawn;
         public bool GameFinished;      
@@ -76,11 +73,12 @@ namespace EelsAndEscalators
         {
             try
             {
+                //Get current Pawn 
                 GetPawn();
-
+                //Roll Dice
                 _game.Rules.RollDice();
 
-                //Check If Player Exceeds Board
+                //Check If Player Exceeds Board and Move Pawn
                 if (CurrentPawn.location + _game.Rules.diceResult > _game.Board.size)
                     return TurnState.PlayerExceedsBoard;
                 else CurrentPawn.MovePawn();
@@ -104,40 +102,6 @@ namespace EelsAndEscalators
             }
 
         }
-
-        public enum TurnState
-        {
-            TurnFinished,
-            PlayerExceedsBoard,
-            GameFinished,
-        }
-
-
-        //Undertakes diffrent Actions, depending on the TurnState returned by MakeTurn()
-        public void ActOnTurnState(TurnState currentTurnState)
-        {
-            currentTurnState = MakeTurn();
-
-            if (currentTurnState == TurnState.GameFinished)
-            {
-                _game.SwitchState(new GameFinishedState(_game));
-            }
-            else if (currentTurnState == TurnState.PlayerExceedsBoard)
-            {
-                //gameRunningState.Parse.PlayerExceedsBoardMessage();
-                currentTurnState = TurnState.TurnFinished;
-            }
-            else
-            {
-                //gameRunningState.Parse.AfterTurnMessage();
-                
-            }    
-
-        }
-
-        
-
-        
 
     }
 }

@@ -12,9 +12,10 @@ namespace EelsAndEscalators.Contracts
         IBoard Board { get; set; }
         IState State { get; }
 
-        string InitializeGame();
+        void InitializeGame();
         string CreateBoard();
         void SwitchRules(IRules creator);
         void SwitchState(IState newState);
+        void ClosingGame();
     }
 }
