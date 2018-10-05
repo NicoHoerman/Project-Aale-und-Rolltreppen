@@ -92,7 +92,10 @@ namespace EelsAndEscalators.States
             _sourceWrapper.WriteOutput(0, 0, _gameInfoOutput, ConsoleColor.DarkCyan);
             
             _sourceWrapper.WriteOutput(0, 16, _boardOutput, ConsoleColor.Gray);
-
+            //nur zum Test  
+            _sourceWrapper.WriteOutput(60, 21,_boardOutput.Substring(_boardOutput.Length-5, 1),ConsoleColor.Green);
+            _sourceWrapper.WriteOutput(58, 21, _boardOutput.Substring(_boardOutput.Length - 7, 1), ConsoleColor.Blue);
+            //
             _sourceWrapper.WriteOutput(0, 23, _afterBoardOutput, ConsoleColor.DarkCyan);
 
             if(_afterTurnOutput.Length != 0)

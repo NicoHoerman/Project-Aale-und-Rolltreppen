@@ -56,9 +56,9 @@ namespace EelsAndEscalators.ClassicEandE
                         _game.Board.Entities.Add(_entityFactory[entityType](config));
                 });
             }
-            catch (Exception e)
+            catch 
             {
-                throw new InvalidOperationException($"Something went wrong", e);
+                throw new Exception();
             }
         }
 
@@ -80,9 +80,9 @@ namespace EelsAndEscalators.ClassicEandE
                 Id = NextId(),
             };
             }
-            catch (Exception e)
+            catch
             {
-                throw new InvalidOperationException($"Something went wrong", e);
+                throw new Exception();
             }
         }
 
@@ -98,9 +98,9 @@ namespace EelsAndEscalators.ClassicEandE
                 Id = NextId(),
             };
             }
-            catch (Exception e)
+            catch
             {
-                throw new InvalidOperationException($"Something went wrong", e);
+                throw new Exception();
             }
         }
 
@@ -116,9 +116,9 @@ namespace EelsAndEscalators.ClassicEandE
                 Id = NextId(),
             };
             }
-            catch (Exception e)
+            catch
             {
-                throw new InvalidOperationException($"Something went wrong", e);
+                throw new Exception();
             }
         }
 
@@ -129,9 +129,9 @@ namespace EelsAndEscalators.ClassicEandE
             Random rnd = new Random();
             diceResult = rnd.Next(1, diceSides+1);
             }
-            catch (Exception e)
+            catch
             {
-                throw new InvalidOperationException($"Something went wrong", e);
+                throw new Exception();
             }
 
         }
