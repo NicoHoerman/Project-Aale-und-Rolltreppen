@@ -12,7 +12,7 @@ namespace EelsAndEscalators
     public class Logic
     {
         
-        private IPawn CurrentPawn;
+        public IPawn CurrentPawn;
         private bool GameFinished;      
         public int CurrentPlayerID { get; set; } = 1;
 
@@ -38,12 +38,25 @@ namespace EelsAndEscalators
         }
 
 
-        public TurnState CheckIfGameFinished()
+        public TurnState CheckIfGameFinished(IPawn pawn)
         {
             try
             {
-                GameFinished = CurrentPawn.location == _game.Board.size ? true : false;
-                return GameFinished == true ? TurnState.GameFinished : TurnState.TurnFinished;
+                pawn = CurrentPawn;
+
+                if (pawn.location == _game.Board.size)
+                    GameFinished = true;
+                else
+                    GameFinished = false;
+
+                if (GameFinished == true)
+                    return TurnState.GameFinished;
+                else
+                    return TurnState.TurnFinished;
+                        
+
+                //GameFinished = CurrentPawn.location == _game.Board.size ? true : false;
+                //return GameFinished == true ? TurnState.GameFinished : TurnState.TurnFinished;
             }
             catch
             {
@@ -74,7 +87,7 @@ namespace EelsAndEscalators
                 //Roll Dice
                 _game.Rules.RollDice();
 
-                //Check If Player Exceeds Board and Move Pawn
+                //Check If Player Exceeds Board and Moves Pawn
                 if (CurrentPawn.location + _game.Rules.DiceResult > _game.Board.size)
                 {
                     NextPlayer();
@@ -95,7 +108,9 @@ namespace EelsAndEscalators
                 
                 NextPlayer();
 
-                return CheckIfGameFinished();
+                var CurrentState = CheckIfGameFinished(CurrentPawn);
+
+                return CurrentState;
 
             }
             catch(Exception e)

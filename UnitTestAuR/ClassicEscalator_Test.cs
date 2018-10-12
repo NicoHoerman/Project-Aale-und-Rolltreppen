@@ -1,78 +1,78 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using EelsAndEscalators;
-using EelsAndEscalators.Contracts;
-using EelsAndEscalators.States;
-using EelsAndEscalators.ClassicEandE;
+﻿//using System;
+//using System.Text;
+//using System.Collections.Generic;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Moq;
+//using EelsAndEscalators;
+//using EelsAndEscalators.Contracts;
+//using EelsAndEscalators.States;
+//using EelsAndEscalators.ClassicEandE;
 
-namespace UnitTestAuR
-{
+//namespace UnitTestAuR
+//{
 
-        [TestClass]
-        public class ClassicEscalator_Test
-        {
-            public Func<IEntity> Creator;
+//        [TestClass]
+//        public class ClassicEscalator_Test
+//        {
+//            public Func<IEntity> Creator;
 
-            bool result;
-            int pawnLocationUnderTest;
-            int escalatorBottomLocationUnderTest;
+//            bool result;
+//            int pawnLocationUnderTest;
+//            int escalatorBottomLocationUnderTest;
 
-            [TestInitialize]
-            public void Setup()
-            {
-                pawnLocationUnderTest = 6;
-                escalatorBottomLocationUnderTest = 6;
+//            [TestInitialize]
+//            public void Setup()
+//            {
+//                pawnLocationUnderTest = 6;
+//                escalatorBottomLocationUnderTest = 6;
 
-                var mockedPawn = new Mock<IPawn>();
-                mockedPawn.Setup(m => m.location).
-                    Returns(() => pawnLocationUnderTest);
+//                var mockedPawn = new Mock<IPawn>();
+//                mockedPawn.Setup(m => m.location).
+//                    Returns(() => pawnLocationUnderTest);
 
-                var mockedEscalator = new Mock<IEntity>();
-                mockedEscalator.Setup(m => m.bottom_location).
-                    Returns(() => escalatorBottomLocationUnderTest);
+//                var mockedEscalator = new Mock<IEntity>();
+//                mockedEscalator.Setup(m => m.bottom_location).
+//                    Returns(() => escalatorBottomLocationUnderTest);
 
-                Creator = () => new ClassicEscalator(mockedPawn.Object);
-            }
+//                Creator = () => new ClassicEscalator(mockedPawn.Object);
+//            }
 
-            [TestMethod]
-            public void If_Calling_OnSamePositionAs__Return_True_If_Entity_On_Same_Position()
-            {
+//            [TestMethod]
+//            public void If_Calling_OnSamePositionAs__Return_True_If_Entity_On_Same_Position()
+//            {
 
-                var escalator = Creator();
+//                var escalator = Creator();
 
-                var result = escalator.OnSamePositionAs();
+//                var result = escalator.OnSamePositionAs();
 
-                Assert.IsTrue(result);
-            }
-            [TestMethod]
-            public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
-            {
-                pawnLocationUnderTest = 4;
+//                Assert.IsTrue(result);
+//            }
+//            [TestMethod]
+//            public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
+//            {
+//                pawnLocationUnderTest = 4;
 
-                var escalator = Creator();
+//                var escalator = Creator();
 
-                var result = escalator.OnSamePositionAs();
+//                var result = escalator.OnSamePositionAs();
 
-                Assert.IsFalse(result);
-            }
+//                Assert.IsFalse(result);
+//            }
 
-            [TestMethod]
-            public void If_Calling_MovePawn__New_Pawn_Location_Should_Be_Higher_Than_Old_Location()
-            {
+//            [TestMethod]
+//            public void If_Calling_MovePawn__New_Pawn_Location_Should_Be_Higher_Than_Old_Location()
+//            {
 
-                var escalator = Creator();
+//                var escalator = Creator();
 
-                escalator.SetPawn();
+//                escalator.SetPawn();
 
-                result = pawnLocationUnderTest > 6 ? true : false;
+//                result = pawnLocationUnderTest > 6 ? true : false;
 
-                Assert.IsTrue(result);
+//                Assert.IsTrue(result);
 
-            }
+//            }
 
-        }
-}
+//        }
+//}
 
