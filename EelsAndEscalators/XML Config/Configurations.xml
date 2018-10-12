@@ -37,7 +37,7 @@
   <!--Pawn-->
   <config>
     <entitytype>2</entitytype>
-    <location>  1 </location>
+    <location>  29 </location>
     <color>     2 </color>
     <playerid>  2 </playerid>
   </config> 

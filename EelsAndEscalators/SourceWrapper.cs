@@ -18,6 +18,11 @@ namespace EelsAndEscalators
             return Console.ReadLine();
         }
 
+        public ConsoleKeyInfo ReadKey()
+        {
+            return Console.ReadKey();
+        }
+
         public void WriteOutput(int x, int y, string output, ConsoleColor color)
         {
             var offsetY = 0;

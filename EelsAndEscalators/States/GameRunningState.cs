@@ -12,7 +12,6 @@ namespace EelsAndEscalators.States
         private readonly ISourceWrapper _sourceWrapper;
         private readonly DataProvider _dataProvider;
         private readonly Logic _logic;
-
         public bool isRunning;
         private string _error = string.Empty;
         private string _gameInfoOutput = string.Empty;
@@ -137,7 +136,7 @@ namespace EelsAndEscalators.States
             if (turnstate == TurnState.GameFinished)
             {
                 isRunning = false;
-                _game.SwitchState(new GameFinishedState(_game));
+                _game.SwitchState(new GameFinishedState(_game,lastPlayer));
             }
             else if (turnstate == TurnState.PlayerExceedsBoard)
             {
