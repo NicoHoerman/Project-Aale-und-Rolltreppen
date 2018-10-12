@@ -13,7 +13,8 @@ namespace EelsAndEscalators
     {
         
         private IPawn CurrentPawn;
-        private bool GameFinished;      
+        private bool GameFinished;
+        public int numberOfPlayers;
         public int CurrentPlayerID { get; set; } = 1;
 
         private readonly IGame _game;
@@ -39,6 +40,7 @@ namespace EelsAndEscalators
 
 
         public TurnState CheckIfGameFinished()
+
         {
             try
             {
@@ -56,6 +58,8 @@ namespace EelsAndEscalators
         public void NextPlayer()
         {
             var orderedPlayers = _game.Board.Pawns.OrderBy(x => x.playerID).ToList();
+            numberOfPlayers = orderedPlayers[orderedPlayers.Count-1].playerID;
+
             var nextPlayer = orderedPlayers.Where(x => x.playerID == CurrentPlayerID + 1).FirstOrDefault();
             if (nextPlayer == null)
                 CurrentPlayerID = orderedPlayers.First().playerID;

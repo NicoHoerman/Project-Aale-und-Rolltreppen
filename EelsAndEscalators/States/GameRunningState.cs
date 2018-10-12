@@ -22,7 +22,6 @@ namespace EelsAndEscalators.States
         private string _afterTurnOutput = string.Empty;
         private string _afterBoardOutput = string.Empty;
 
-
         public GameRunningState(IGame game, ISourceWrapper sourceWrapper, DataProvider dataProvider, Logic logic)
         {
             _game = game;
@@ -62,6 +61,10 @@ namespace EelsAndEscalators.States
                 Console.SetCursorPosition(17, 29);
                 var input = _sourceWrapper.ReadInput();
                 parser.Execute(input);
+
+                _afterBoardOutput = string.Format(
+                    _dataProvider.GetText("afterboardinfo"),
+                    _dataProvider.GetNumberLiteral(_logic.CurrentPlayerID));
 
                 _lastInput = input;
             }
@@ -103,7 +106,10 @@ namespace EelsAndEscalators.States
 
             //After Turn Info
             if(_afterTurnOutput.Length != 0)
-            _sourceWrapper.WriteOutput(0, 25, _afterTurnOutput, ConsoleColor.DarkCyan);
+            {
+                _sourceWrapper.WriteOutput(0, 31, _afterTurnOutput, ConsoleColor.DarkCyan);
+
+            }
 
 
             //Help Info 
@@ -124,23 +130,29 @@ namespace EelsAndEscalators.States
         {
             var dataprovider = new DataProvider();
 
+            int lastPlayer = _logic.CurrentPlayerID -1;
+            if (_logic.CurrentPlayerID == 1)
+                lastPlayer =_logic.numberOfPlayers;
+
             if (turnstate == TurnState.GameFinished)
             {
+                isRunning = false;
                 _game.SwitchState(new GameFinishedState(_game));
             }
             else if (turnstate == TurnState.PlayerExceedsBoard)
             {
                 _afterTurnOutput = string.Format(
                     dataprovider.GetText("playerexceedsboardinfo"), 
-                    _dataProvider.GetNumberLiteral(_logic.CurrentPlayerID));
-
+                    _dataProvider.GetNumberLiteral(lastPlayer));
+                
                 turnstate = TurnState.TurnFinished;
             }
             else
             {
                 _afterTurnOutput = string.Format(
                     dataprovider.GetText("diceresultinfo"),
-                    _game.Rules.DiceResult);
+                    _game.Rules.DiceResult,
+                dataprovider.GetNumberLiteral(lastPlayer));
             }
         }
 

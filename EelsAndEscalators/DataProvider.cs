@@ -14,9 +14,10 @@ namespace EelsAndEscalators
                 "You are in the MainMenu\n\nCommandlist\n"+
                 "/startgame\n" +
                 "/closegame\n" +
-                "/classic\n" +
                 "/rolldice (only ingame)\n" +
-                "\n" +
+                "\n"+
+                "rule commands:\n"+
+                "/classic\n" +
                 "\n" +
                 "First choose a ruleset then start the game"
             },
@@ -48,12 +49,13 @@ namespace EelsAndEscalators
             },
             {
                 "diceresultinfo",
-                "You rolled a {0}"
+                "Player {1} rolled a {0}"
             },
             {
                 "playerexceedsboardinfo",
-                "You rolled to much\n"+
-                "One Turn off"
+                "Player {0}\n"+
+                "Your role was too high\n"+
+                "Better Luck next time"
             }
 
         };
