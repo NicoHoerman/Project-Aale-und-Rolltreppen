@@ -44,7 +44,6 @@ namespace EelsAndEscalators.States
 
             while (isFinished)
             {
-                Console.BackgroundColor = ConsoleColor.Black;
                 _sourceWrapper.Clear();
                 _sourceWrapper.WriteOutput(35, 0, _finishinfo, ConsoleColor.Green);
                 _sourceWrapper.WriteOutput(0, 0, _finishskull1);
