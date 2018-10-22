@@ -5,7 +5,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.ClassicEandE
 {
-    //Nico
+    
     public class ClassicPawn : IPawn
     {
         public int location { get; set; }

@@ -12,8 +12,8 @@ namespace EelsAndEscalators
     public class Logic
     {
         
-        private IPawn CurrentPawn;
-        private bool GameFinished;
+        private IPawn currentPawn;
+        private bool gameFinished;
         public int numberOfPlayers;
         public int CurrentPlayerID { get; set; } = 1;
 
@@ -29,7 +29,7 @@ namespace EelsAndEscalators
         {
             try
             {
-                return CurrentPawn =  _game.Board.Pawns.Find(x => x.playerID.Equals(CurrentPlayerID));
+                return currentPawn =  _game.Board.Pawns.Find(x => x.playerID.Equals(CurrentPlayerID));
             }
             catch(Exception e)
             {
@@ -44,8 +44,8 @@ namespace EelsAndEscalators
         {
             try
             {
-                GameFinished = CurrentPawn.location == _game.Board.size ? true : false;
-                return GameFinished == true ? TurnState.GameFinished : TurnState.TurnFinished;
+                gameFinished = currentPawn.location == _game.Board.size ? true : false;
+                return gameFinished == true ? TurnState.GameFinished : TurnState.TurnFinished;
             }
             catch
             {
@@ -80,20 +80,20 @@ namespace EelsAndEscalators
                 _game.Rules.RollDice();
 
                 //Check If Player Exceeds Board and Move Pawn
-                if (CurrentPawn.location + _game.Rules.DiceResult > _game.Board.size)
+                if (currentPawn.location + _game.Rules.DiceResult > _game.Board.size)
                 {
                     NextPlayer();
                     return TurnState.PlayerExceedsBoard;
                 }
                 else
-                    CurrentPawn.MovePawn(_game.Rules.DiceResult);
+                    currentPawn.MovePawn(_game.Rules.DiceResult);
                 
                 //Entities check if the pawn is on them
                 _game.Board.Entities.ForEach(entity =>
                 {
-                    if (entity.OnSamePositionAs(CurrentPawn))
+                    if (entity.OnSamePositionAs(currentPawn))
                     {
-                        entity.SetPawn(CurrentPawn);
+                        entity.SetPawn(currentPawn);
                     }
                 });
 

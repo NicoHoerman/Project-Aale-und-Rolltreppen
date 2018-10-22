@@ -16,8 +16,6 @@ namespace EelsAndEscalators
         public IRules Rules { get; private set; }
         public IState State { get; private set; }
 
-        public int winner { get; set; }
-
         public void Init()
         {
             // Wichtige Objekte initialisiert
@@ -197,81 +195,4 @@ namespace EelsAndEscalators
 
     }
 
-}
-
-
-/*
-    class MenuState
-    {
-        private Dictionary<string, Func<IGame, IRules>> _rulesFactory = new Dictionary<string, Func<IGame, IRules>>
-        {
-            { "classic", (game) => new ClassicRules(game) },
-        //    { "fancy", (g) => new FancyRules(g) },
-        };
-
-        private IGame _game;
-
-        public MenuState(IGame game)
-        {
-            _game = game;
-        }
-
-        public void Execute()
-        {
-            while(true)
-            {
-                ShowMenu();
-                var input = WaitForInput();
-                var parsedcommand = Parse(command);
-                if (parsedcommand.command == "switchrules")
-                    CreateNewRulesInGame(parsedcommand.parameterlist[0]);
-            }
-        }
-
-        private object Parse(string command)
-        {
-            throw new NotImplementedException();
-        }
-
-        private object WaitForInput()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ShowMenu()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void CreateNewRulesInGame(string rulesname)
-        {
-            //if (rulesname == "classic")
-            //    _game.SwitchRules(new ClassicRules(_game));
-            //else if (rulesname == "fancy")
-            //    _game.SwitchRules(new FancyRules(_game));
-            //else GiveErrorRuleNotFound();
-
-            if (_rulesFactory.TryGetValue(rulesname, out var creator))
-                _game.SwitchRules(creator(_game));
-            else
-                GiveErrorRuleNotFound();
-        }
-
-        private void GiveErrorRuleNotFound()
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
-
-    public enum TurnState
-    {
-        Ok,
-        PlayerExceedsBoard,
-        PlayerMustWait,
-        PlayerWins,
-    }
-    public void MakeTurn(int dice) { ...}
-    public TurnState GetTurnState() { ...}
-    */
-
+}   

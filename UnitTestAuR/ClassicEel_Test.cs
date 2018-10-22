@@ -1,78 +1,79 @@
 ﻿//using System;
-//using System.Text;
-//using System.Collections.Generic;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using EelsAndEscalators;
-//using EelsAndEscalators.Contracts;
-//using EelsAndEscalators.States;
-//using EelsAndEscalators.ClassicEandE;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using EelsAndEscalators;
+using EelsAndEscalators.Contracts;
+using EelsAndEscalators.States;
+using EelsAndEscalators.ClassicEandE;
+using System;
 
-//namespace UnitTestAuR
-//{
-//    [TestClass]
-//    public class ClassicEel_Test
-//    {
-//        public Func<IEntity> Creator;
+namespace UnitTestAuR
+{
+    [TestClass]
+    public class ClassicEel_Test
+    {
+        public Func<IEntity> Creator;
 
-//        int pawnLocationUnderTest;
-//        int eelTopLocationUnderTest;
+        ClassicPawn _testPawn = new ClassicPawn();
+        int pawnLocationUnderTest;
+        int eelTopLocationUnderTest;
 
-//        bool result;
-
-
-//        [TestInitialize]
-//        public void Setup()
-//        {
-//            eelTopLocationUnderTest = 6;
-//            pawnLocationUnderTest = 6;
+        bool result;
 
 
-//            var mockedPawn = new Mock<IPawn>();
-//            mockedPawn.Setup(m => m.location).
-//                Returns(() => pawnLocationUnderTest);
+        [TestInitialize]
+        public void Setup()
+        {
+            eelTopLocationUnderTest = 6;
+            _testPawn.location = pawnLocationUnderTest = 6;
+            
+            //var mockedPawn = new Mock<IPawn>();
+            //mockedPawn.Setup(m => m.location).
+            //    Returns(() => pawnLocationUnderTest);
 
 
-//            var mockedEel = new Mock<IEntity>();
-//            mockedEel.Setup(m => m.top_location).
-//                Returns(() => eelTopLocationUnderTest);
+            //var mockedEel = new Mock<IEntity>();
+            //mockedEel.Setup(m => m.top_location).
+            //    Returns(() => eelTopLocationUnderTest);
 
-//            Creator = () => new ClassicEel(mockedPawn.Object);
-//        }
-//        [TestMethod]
-//        public void If_Calling_OnSamePositionAs__Return_True_If_Entity_On_Same_Position()
-//        {
+            Creator = () => new ClassicEel();
+        }
+        [TestMethod]
+        public void If_Calling_OnSamePositionAs__Return_True_If_Entity_On_Same_Position()
+        {
 
-//            var eel = Creator();
+            var eel = Creator();
 
-//            result = eel.OnSamePositionAs();
+            result = eel.OnSamePositionAs(_testPawn);
 
-//            Assert.IsTrue(result);
-//        }
-//        [TestMethod]
-//        public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
-//        {
-//            pawnLocationUnderTest = 4;
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
+        {
+            pawnLocationUnderTest = 4;
 
-//            var eel = Creator();
+            var eel = Creator();
 
-//            result = eel.OnSamePositionAs();
+            result = eel.OnSamePositionAs(_testPawn);
 
-//            Assert.IsFalse(result);
-//        }
-//        [TestMethod]
-//        public void If_Calling_MovePawn__New_Pawn_Location_Should_Be_Lower_Than_Old_Location()
-//        {
+            Assert.IsFalse(result);
+        }
+        [TestMethod]
+        public void If_Calling_MovePawn__New_Pawn_Location_Should_Be_Lower_Than_Old_Location()
+        {
 
 
-//            var eel = Creator();
+            var eel = Creator();
 
-//            eel.SetPawn();
+            eel.SetPawn(_testPawn);
 
-//            result = pawnLocationUnderTest < 6 ? true : false;
+            result = pawnLocationUnderTest < 6 ? true : false;
 
-//            Assert.IsTrue(result);
+            Assert.IsTrue(result);
 
-//        }
-//    }
-//}
+        }
+    }
+}
