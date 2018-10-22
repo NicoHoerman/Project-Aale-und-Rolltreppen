@@ -10,45 +10,33 @@ using EelsAndEscalators.ClassicEandE;
 
 namespace UnitTestAuR
 {
-        [TestClass]
-        public class ClassicPawn_Test
+    [TestClass]
+    public class ClassicPawn_Test
+    {
+        public Func<IPawn> Creator;
+
+        int _testinput;
+        int pawnLocationUnderTest;
+
+        [TestInitialize]
+        public void Setup()
         {
-            public Func<IPawn> Creator;
+            _testinput = 4;
+            pawnLocationUnderTest = 4;
 
-            int diceResultUnderTest;
-            int pawnLocationUnderTest;
-
-            [TestInitialize]
-            public void Setup()
+            Creator = () => new ClassicPawn
             {
-                diceResultUnderTest = 5;
-                pawnLocationUnderTest = 4;
-
-                var mockedRules = new Mock<IRules>();
-                mockedRules.Setup(m => m.DiceResult).
-                    Returns(() => diceResultUnderTest);
-
-                var mockedPawn = new Mock<IPawn>();
-                mockedPawn.Setup(m => m.location).
-                    Returns(() => pawnLocationUnderTest);
-
-                var mockedGame = new Mock<IGame>();
-                mockedGame.Setup(m => m.Rules).
-                    Returns(() => mockedRules.Object);
-                //mockedGame.Setup(m => m.Board.Pawn).
-                //    Returns(() => mockedPawn.Object);
-
-                Creator = () => new ClassicPawn(mockedGame.Object);
-                
-            }
-
-            [TestMethod]
-            public void If_Calling_MovePawn__Move_Pawn_By_Dice_Result()
-            {
-                var pawn = Creator();
-                pawn.MovePawn();
-
-                Assert.AreEqual(9, pawn.location);
-            }
+                location = pawnLocationUnderTest
+            };
         }
+
+        [TestMethod]
+        public void If_Calling_MovePawn__Move_Pawn_By_Dice_Result()
+        {
+            var pawn = Creator();
+            pawn.MovePawn(_testinput);
+
+            Assert.AreEqual(8, pawn.location);
+        }
+    }
 }
