@@ -58,6 +58,7 @@ namespace EelsAndEscalators
         public void NextPlayer()
         {
             var orderedPlayers = _game.Board.Pawns.OrderBy(x => x.playerID).ToList();
+            if(numberOfPlayers == 0)
             numberOfPlayers = orderedPlayers[orderedPlayers.Count-1].playerID;
 
             var nextPlayer = orderedPlayers.Where(x => x.playerID == CurrentPlayerID + 1).FirstOrDefault();

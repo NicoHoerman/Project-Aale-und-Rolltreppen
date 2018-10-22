@@ -14,8 +14,9 @@ namespace EelsAndEscalators
 
         public IBoard Board { get; set; }
         public IRules Rules { get; private set; }
-        public IState State { get; private set; }        
-                             
+        public IState State { get; private set; }
+
+        public int winner { get; set; }
 
         public void Init()
         {

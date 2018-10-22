@@ -54,6 +54,7 @@ namespace EelsAndEscalators.States
             
             while (inMenu)
             {
+                Console.BackgroundColor = ConsoleColor.Black;
                 var parser = new Parse();
                 parser.AddCommand("/startgame", OnStartGameCommand);
                 parser.AddCommand("/closegame", OnCloseGameCommand);
