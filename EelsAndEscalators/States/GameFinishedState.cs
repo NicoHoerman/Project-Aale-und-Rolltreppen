@@ -48,7 +48,7 @@ namespace EelsAndEscalators.States
                 _sourceWrapper.WriteOutput(35, 0, _finishinfo, ConsoleColor.Green);
                 _sourceWrapper.WriteOutput(0, 0, _finishskull1);
                 _sourceWrapper.WriteOutput(35, 5, _finishskull2);
-                _sourceWrapper.WriteOutput(Console.LargestWindowWidth, 0, _finishskull1);
+                _sourceWrapper.WriteOutput(73, 0, _finishskull1);
 
                 _sourceWrapper.WriteOutput(35, 3, "Press any Key to leave", ConsoleColor.DarkGreen);
                 Console.SetCursorPosition(35, 15);
