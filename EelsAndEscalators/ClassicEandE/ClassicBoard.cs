@@ -13,6 +13,7 @@ namespace EelsAndEscalators.ClassicEandE
         public List<IPawn> Pawns { get; set; }
         public List<IEntity> Entities { get; set; }
 
+        //XD
         public ClassicBoard()
         {
             Pawns = new List<IPawn>();
@@ -22,142 +23,98 @@ namespace EelsAndEscalators.ClassicEandE
         public string CreateOutput()
         {
 
-            try
+            var fields = size;
+            double ratio = 9.0 / 16.0;
+
+            var fieldCount_x = (int)Math.Sqrt(ratio * fields);
+            var fieldCount_y = fields / fieldCount_x; //ratio * fieldCount_y;
+            if (fields % fieldCount_x != 0)
+                fieldCount_y++;
+
+            string[,] array2D = new string[fieldCount_y, fieldCount_x];
+            string result = "";
+
+            var counter = 1;
+
+            
+
+            for (var y = 0; y < fieldCount_y; ++y)
             {
-                
-                int fieldNumberInt = size;
-                string fieldNumber = string.Empty;
-                string left = "[";
-                string right = "] ";
-                string pawn1space = string.Empty;
-                string pawn2space = string.Empty;
-                string topspace = string.Empty;
-                string bottomspace = string.Empty;
-                string board = string.Empty;
-                string memory = string.Empty;
 
-
-                for (int i = fieldNumberInt; i >= 1; i--) //Methoden Inhalt: Einen Kasten bauen.
+                for (var x = 0; x < fieldCount_x; ++x)
                 {
+                    string bottomSpace = "";
+                    string topSpace = "";
+                    string firstPawnSpace = "";
+                    string secondPawnSpace = "";
 
-                    //<Number>
-                    //fieldNumber = string.Empty;
+                    var xOffs = y % 2 == 0 ? x : fieldCount_x - x - 1;
+                    var stringDigit = $"      {counter} ";
+                    stringDigit = stringDigit.Substring(stringDigit.Length - 4);
 
-                    fieldNumber = fieldNumberInt.ToString();
+                    if (counter <= fields)
+                        array2D[y, xOffs] = $"{stringDigit}[ | , | ] ";
+                    else
+                        array2D[y, xOffs] = "".PadLeft(14, ' ');
 
-                    if (fieldNumber.Length == 2)
-                        fieldNumber = " " + fieldNumber;
-                    else if (fieldNumber.Length == 1)
-                        fieldNumber = "  " + fieldNumber;
-
-                    board += fieldNumber;
-                    memory = board;
-                    //</Number>
-
-                    //<Left>
-                    board = board + left;
-                    memory = board;
-                    //</left>
-
-                    //<topspace>
                     Entities.ForEach(entity =>
                     {
-                        if (entity.type == EntityType.Eel & entity.top_location == i)
-                            topspace = "S";
-                        else if (entity.type == EntityType.Escalator & entity.top_location == i)
-                            topspace = "E";
-
-
+                        if (entity.type == EntityType.Eel & entity.bottom_location == counter)
+                            bottomSpace = "s";
+                        else if (entity.type == EntityType.Escalator & entity.bottom_location == counter)
+                            bottomSpace = "e";                       
                     });
 
-                    if (topspace.Length == 0)
-                        topspace = " ";
+                     if (bottomSpace.Length == 0)
+                         bottomSpace = " ";
+                     if (bottomSpace.Length == 0)
+                         bottomSpace = " ";
 
-                    board = board + topspace;
-                    topspace = string.Empty;
-                    memory = board;
-                    //</topspace>
+                    Entities.ForEach(entity =>
+                    {
+                        if (entity.type == EntityType.Eel & entity.top_location == counter)
+                            topSpace = "S";
+                        else if (entity.type == EntityType.Escalator & entity.top_location == counter)
+                            topSpace = "E";
+                    });
 
-                    //<DivideSpae>
-                    board = board + "|";
-                    memory = board;
-                    //<DivideSpace
+                    if (topSpace.Length == 0)
+                        topSpace = " ";
+                    if (topSpace.Length == 0)
+                        topSpace = " ";
 
-                    //<pawnspace>
                     Pawns.ForEach(pawn =>
                     {
-                        if (pawn.location == i & pawn1space.Length == 0)
-                            pawn1space = pawn.playerID.ToString();
-                        else if (pawn.location == i & pawn2space.Length == 0)
-                            pawn2space = pawn.playerID.ToString();
-
-
+                    if (pawn.location == counter & (firstPawnSpace.Length == 0 || firstPawnSpace == " "))
+                            firstPawnSpace = pawn.playerID.ToString();
+                        else if (pawn.location == counter & (secondPawnSpace.Length == 0 || secondPawnSpace == " "))
+                            secondPawnSpace = pawn.playerID.ToString();
                     });
 
-                    if (pawn1space.Length == 0)
-                        pawn1space = " ";
+                    if (firstPawnSpace.Length == 0)
+                        firstPawnSpace = " ";
+                    if (secondPawnSpace.Length == 0 || secondPawnSpace == " ")
+                        secondPawnSpace = " ";
 
-                    if (pawn2space.Length == 0)
-                        pawn2space = " ";
+                    if (counter <= fields)
+                        array2D[y, xOffs] = $"{stringDigit}[{topSpace}|{firstPawnSpace},{secondPawnSpace}|{bottomSpace}] ";
 
-
-
-                    board = board + pawn1space + "," + pawn2space;
-                    pawn1space = pawn2space = string.Empty;
-                    memory = board;
-                    //</pawnspace>
-
-                    //<DivideSpae>
-                    board = board + "|";
-                    memory = board;
-                    //<DivideSpace
-
-                    //<bot>
-                    Entities.ForEach(entity =>
-                    {
-                        if (entity.type == EntityType.Eel & entity.bottom_location == i)
-                            bottomspace = "s";
-                        else if (entity.type == EntityType.Escalator & entity.bottom_location == i)
-                            bottomspace = "e";
-
-                    });
-                    if (bottomspace.Length == 0)
-                        bottomspace = " ";
-
-
-
-                    board = board + bottomspace;
-                    bottomspace = string.Empty;
-                    memory = board;
-                    //</bot>
-
-                    //<Right>
-                    board = board + right;
-                    memory = board;
-                    //</Right>
-                    if (fieldNumber == " 26")
-                        board = board + "\n";
-                    else if (fieldNumber == " 21")
-                        board = board + "\n";
-                    else if (fieldNumber == " 16")
-                        board = board + "\n";
-                    else if (fieldNumber == " 11")
-                        board = board + "\n";
-                    else if (fieldNumber == "  6")
-                        board = board + "\n";
-
-
-
-
-                    fieldNumberInt--;
-
+                    counter++;
+                    
                 }
-                return memory;
+
+               
             }
-            catch
+            
+            for (var y = 0; y < fieldCount_y; ++y)
             {
-                throw new Exception();
+                for (var x = 0; x < fieldCount_x; ++x)
+                    result += array2D[y, x];
+
+                result += "\n";
             }
+
+            return result;
         }
     }
 }
