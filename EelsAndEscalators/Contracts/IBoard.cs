@@ -10,5 +10,6 @@ namespace EelsAndEscalators.Contracts
         List<IPawn> Pawns { get; set; }
         List<IEntity> Entities { get; set; }
 
+        string CreateOutput();
     }
 }

@@ -50,7 +50,7 @@ namespace EelsAndEscalators.States
 
             while (isRunning)
             {
-                _boardOutput = _game.CreateBoard();
+                _boardOutput = _game.Board.CreateOutput();
                 UpdateOutput();
                 _error = string.Empty;
                 _helpOutput = string.Empty;
