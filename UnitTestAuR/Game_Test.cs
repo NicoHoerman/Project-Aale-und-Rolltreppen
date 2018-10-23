@@ -119,8 +119,8 @@ namespace UnitTestAuR
         public void If_Calling_CreateBoard__Correct_String_Should_Be_Returned()
         {
             boardSizeUnderTest = 30;
-            pawnLocationUnderTest = 0;
-            pawnLocationUnderTest2 = 0;
+            pawnLocationUnderTest = 1;
+            pawnLocationUnderTest2 = 1;
 
             eel1TopLocationUnderTest = 16;
             eel1BottomLocationUnderTest = 11;

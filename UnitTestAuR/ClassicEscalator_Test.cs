@@ -17,7 +17,8 @@ namespace UnitTestAuR
         public Func<IEntity> Creator;
 
         ClassicPawn _testPawn = new ClassicPawn();
-       
+        private bool result;
+
         [TestInitialize]
         public void Setup()
         {
@@ -44,6 +45,8 @@ namespace UnitTestAuR
             _testPawn.location = 4;
 
             var escalator = Creator();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
 
             var result = escalator.OnSamePositionAs(_testPawn);
 
@@ -55,10 +58,12 @@ namespace UnitTestAuR
         {
 
             var escalator = Creator();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
 
-            escalator.SetPawn();
+            escalator.SetPawn(_testPawn);
 
-            result = pawnLocationUnderTest > 6 ? true : false;
+            result = _testPawn.location > 6 ? true : false;
 
             Assert.IsTrue(result);
 

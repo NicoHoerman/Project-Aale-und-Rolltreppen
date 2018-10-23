@@ -20,7 +20,7 @@ namespace UnitTestAuR
         //int pawnLocationUnderTest;
         //int eelTopLocationUnderTest;
 
-        bool result;
+        private bool result;
 
 
         [TestInitialize]
