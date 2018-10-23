@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="UnitTestAuR.MainMenuState_Test.If_Calling_WaitingForInput" /><Add Test="UnitTestAuR.MainMenuState_Test.If_Calling_Execute" /></Playlist>
