@@ -18,22 +18,22 @@
 //        public Func<IRules> Creator;
 
 //        private List<IPawn> pawnListUnderTest;
-//        private List<IEntity> entityListUnderTest;       
+//        private List<IEntity> entityListUnderTest;
 //        private int NumberOfListContent;
 //        private int boardSizeUnderTest;
 //        private int diceSidesUnderTest;
 //        private int diceResultUnderTest;
-        
+
 
 //        static string _xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> <Configurations> <!--Eel--> <config> <toplocation>15</toplocation> <bottomlocation>4</bottomlocation> </config> <!--Escalator--> <config> <toplocation>17</toplocation> <bottomlocation>6</bottomlocation> </config> <!--Pawn--> <config> <location>3</location> <color>2</color> <playerid>1</playerid> </config> </Configurations>";
-  
+
 
 //        private List<XElement> configList = XDocument.Parse(_xmlString).Elements().ToList();
 
 //        private bool correctDice;
-       
-        
-       
+
+
+
 
 //        [TestInitialize]
 //        public void Setup()
@@ -50,12 +50,12 @@
 //            mockedBoard.Setup(m => m.Entities).
 //                Returns(() => entityListUnderTest);
 //            mockedBoard.Setup(m => m.Pawns).
-//                Returns(() => pawnListUnderTest);                   
+//                Returns(() => pawnListUnderTest);
 
 //            //mockedGame Setup
 //            var mockedGame = new Mock<IGame>();
 //            mockedGame.Setup(m => m.Board).
-//                Returns(() => mockedBoard.Object);            
+//                Returns(() => mockedBoard.Object);
 
 //            //mockedConfigurationProvider Setup
 //            var mockedConfigurationProvider = new Mock<IConfigurationProvider>();
@@ -73,7 +73,7 @@
 
 //            Assert.IsNotNull(pawnListUnderTest);
 //        }
-             
+
 //        [TestMethod]
 //        public void If_Calling_SetupEntities__IEntity_Should_Be_Added_To_EntityList_If_A_Eel_Or_EscalatorConfig_Was_Found_In_The_Config_List()
 //        {
@@ -89,7 +89,7 @@
 
 //            var rules = Creator();
 //            rules.SetupEntitites();
-           
+
 //            Assert.AreEqual(2, pawnListUnderTest[1].location);
 //        }
 

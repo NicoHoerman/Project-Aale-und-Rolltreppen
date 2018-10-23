@@ -12,9 +12,8 @@ namespace EelsAndEscalators
     public class Logic
     {
         
-        private IPawn currentPawn;
-        private bool gameFinished;
-        public int numberOfPlayers;
+        public IPawn CurrentPawn;
+        private bool GameFinished;      
         public int CurrentPlayerID { get; set; } = 1;
 
         private readonly IGame _game;
@@ -29,7 +28,7 @@ namespace EelsAndEscalators
         {
             try
             {
-                return currentPawn =  _game.Board.Pawns.Find(x => x.playerID.Equals(CurrentPlayerID));
+                return CurrentPawn =  _game.Board.Pawns.Find(x => x.playerID.Equals(CurrentPlayerID));
             }
             catch(Exception e)
             {
@@ -39,13 +38,25 @@ namespace EelsAndEscalators
         }
 
 
-        public TurnState CheckIfGameFinished()
-
+        public TurnState CheckIfGameFinished(IPawn pawn)
         {
             try
             {
-                gameFinished = currentPawn.location == _game.Board.size ? true : false;
-                return gameFinished == true ? TurnState.GameFinished : TurnState.TurnFinished;
+                pawn = CurrentPawn;
+
+                if (pawn.location == _game.Board.size)
+                    GameFinished = true;
+                else
+                    GameFinished = false;
+
+                if (GameFinished == true)
+                    return TurnState.GameFinished;
+                else
+                    return TurnState.TurnFinished;
+                        
+
+                //GameFinished = CurrentPawn.location == _game.Board.size ? true : false;
+                //return GameFinished == true ? TurnState.GameFinished : TurnState.TurnFinished;
             }
             catch
             {
@@ -58,9 +69,6 @@ namespace EelsAndEscalators
         public void NextPlayer()
         {
             var orderedPlayers = _game.Board.Pawns.OrderBy(x => x.playerID).ToList();
-            if(numberOfPlayers == 0)
-            numberOfPlayers = orderedPlayers[orderedPlayers.Count-1].playerID;
-
             var nextPlayer = orderedPlayers.Where(x => x.playerID == CurrentPlayerID + 1).FirstOrDefault();
             if (nextPlayer == null)
                 CurrentPlayerID = orderedPlayers.First().playerID;
@@ -79,28 +87,30 @@ namespace EelsAndEscalators
                 //Roll Dice
                 _game.Rules.RollDice();
 
-                //Check If Player Exceeds Board and Move Pawn
-                if (currentPawn.location + _game.Rules.DiceResult > _game.Board.size)
+                //Check If Player Exceeds Board and Moves Pawn
+                if (CurrentPawn.location + _game.Rules.DiceResult > _game.Board.size)
                 {
                     NextPlayer();
                     return TurnState.PlayerExceedsBoard;
                 }
                 else
-                    currentPawn.MovePawn(_game.Rules.DiceResult);
+                    CurrentPawn.MovePawn(_game.Rules.DiceResult);
                 
                 //Entities check if the pawn is on them
                 _game.Board.Entities.ForEach(entity =>
                 {
-                    if (entity.OnSamePositionAs(currentPawn))
+                    if (entity.OnSamePositionAs(CurrentPawn))
                     {
-                        entity.SetPawn(currentPawn);
+                        entity.SetPawn(CurrentPawn);
                     }
                 });
 
                 
                 NextPlayer();
 
-                return CheckIfGameFinished();
+                var CurrentState = CheckIfGameFinished(CurrentPawn);
+
+                return CurrentState;
 
             }
             catch(Exception e)
