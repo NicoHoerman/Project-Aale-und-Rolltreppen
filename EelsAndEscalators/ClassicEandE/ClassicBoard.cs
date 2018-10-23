@@ -21,7 +21,7 @@ namespace EelsAndEscalators.ClassicEandE
         public string CreateOutput()
         {
 
-            var fields = 30;
+            var fields = size;
             double ratio = 9.0 / 16.0;
 
             var fieldCount_x = (int)Math.Sqrt(ratio * fields);
@@ -34,23 +34,24 @@ namespace EelsAndEscalators.ClassicEandE
 
             var counter = 1;
 
-            string bottomSpace="";
-            string topSpace="";
-            string firstPawnSpace="";
-            string secondPawnSpace="";
+            
 
             for (var y = 0; y < fieldCount_y; ++y)
             {
 
                 for (var x = 0; x < fieldCount_x; ++x)
                 {
-                    
+                    string bottomSpace = "";
+                    string topSpace = "";
+                    string firstPawnSpace = "";
+                    string secondPawnSpace = "";
+
                     var xOffs = y % 2 == 0 ? x : fieldCount_x - x - 1;
                     var stringDigit = $"      {counter} ";
                     stringDigit = stringDigit.Substring(stringDigit.Length - 4);
 
                     if (counter <= fields)
-                        array2D[y, xOffs] = string.Format("{0}[ | , | ] ", stringDigit);
+                        array2D[y, xOffs] = $"{stringDigit}[ | , | ] ";
                     else
                         array2D[y, xOffs] = "".PadLeft(14, ' ');
 
@@ -58,35 +59,51 @@ namespace EelsAndEscalators.ClassicEandE
                     {
                         if (entity.type == EntityType.Eel & entity.bottom_location == counter)
                             bottomSpace = "s";
-
                         else if (entity.type == EntityType.Escalator & entity.bottom_location == counter)
-                            bottomSpace = "e";                     
+                            bottomSpace = "e";                       
                     });
+
+                     if (bottomSpace.Length == 0)
+                         bottomSpace = " ";
+                     if (bottomSpace.Length == 0)
+                         bottomSpace = " ";
 
                     Entities.ForEach(entity =>
                     {
                         if (entity.type == EntityType.Eel & entity.top_location == counter)
                             topSpace = "S";
-
                         else if (entity.type == EntityType.Escalator & entity.top_location == counter)
                             topSpace = "E";
-                            
                     });
+
+                    if (topSpace.Length == 0)
+                        topSpace = " ";
+                    if (topSpace.Length == 0)
+                        topSpace = " ";
 
                     Pawns.ForEach(pawn =>
                     {
-                        if(pawn.location == counter)
-
-                            
+                    if (pawn.location == counter & (firstPawnSpace.Length == 0 || firstPawnSpace == " "))
+                            firstPawnSpace = pawn.playerID.ToString();
+                        else if (pawn.location == counter & (secondPawnSpace.Length == 0 || secondPawnSpace == " "))
+                            secondPawnSpace = pawn.playerID.ToString();
                     });
 
-                    array2D[y, xOffs] = $"{stringDigit}[{topSpace}|{firstPawnSpace},{secondPawnSpace}|{bottomSpace}] ";
+                    if (firstPawnSpace.Length == 0)
+                        firstPawnSpace = " ";
+                    if (secondPawnSpace.Length == 0 || secondPawnSpace == " ")
+                        secondPawnSpace = " ";
+
+                    if (counter <= fields)
+                        array2D[y, xOffs] = $"{stringDigit}[{topSpace}|{firstPawnSpace},{secondPawnSpace}|{bottomSpace}] ";
 
                     counter++;
+                    
                 }
+
+               
             }
-
-
+            
             for (var y = 0; y < fieldCount_y; ++y)
             {
                 for (var x = 0; x < fieldCount_x; ++x)
