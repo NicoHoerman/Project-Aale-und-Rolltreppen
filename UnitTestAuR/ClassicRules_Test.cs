@@ -10,8 +10,12 @@
 //using System.Xml.Linq;
 //using System.Linq;
 
+
 //namespace UnitTestAuR
 //{
+/// <summary>
+/// Klasse und verbundenen Klassen zu komplex am Ende Testen   
+/// </summary>
 //    [TestClass]
 //    public class ClassicRules_Test
 //    {
@@ -24,16 +28,11 @@
 //        private int diceSidesUnderTest;
 //        private int diceResultUnderTest;
 
-
 //        static string _xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> <Configurations> <!--Eel--> <config> <toplocation>15</toplocation> <bottomlocation>4</bottomlocation> </config> <!--Escalator--> <config> <toplocation>17</toplocation> <bottomlocation>6</bottomlocation> </config> <!--Pawn--> <config> <location>3</location> <color>2</color> <playerid>1</playerid> </config> </Configurations>";
-
 
 //        private List<XElement> configList = XDocument.Parse(_xmlString).Elements().ToList();
 
 //        private bool correctDice;
-
-
-
 
 //        [TestInitialize]
 //        public void Setup()

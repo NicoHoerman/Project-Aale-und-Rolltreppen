@@ -17,7 +17,7 @@ namespace UnitTestAuR
     public class Board_Test
     {
         //Attributes
-        private Func<IBoard> Creator;
+        private Func<ClassicBoard> Creator;
 
         private List<IPawn> pawnsUnderTest;
         private int pawnLocationUnderTest;
@@ -38,19 +38,22 @@ namespace UnitTestAuR
         private int escalator2BottomLocationUnderTest;
 
 
-        private int boardSizeUnderTest;
+        
       
         [TestInitialize]
         public void Setup()
         {
             //Defaults
-            boardSizeUnderTest = 10;
 
-            eel1TopLocationUnderTest = 5;
-            eel1BottomLocationUnderTest = 3;
 
-            escalator1TopLocationUnderTest = 8;
-            escalator1BottomLocationUnderTest = 2;
+            pawnLocationUnderTest = 1;
+            pawnLocationUnderTest2 = 1;
+
+            eel1TopLocationUnderTest = 16;
+            eel1BottomLocationUnderTest = 11;
+
+            escalator1TopLocationUnderTest = 18;
+            escalator1BottomLocationUnderTest = 14;
 
             eel2TopLocationUnderTest = 28;
             eel2BottomLocationUnderTest = 24;
@@ -58,10 +61,7 @@ namespace UnitTestAuR
             escalator2TopLocationUnderTest = 27;
             escalator2BottomLocationUnderTest = 22;
 
-            pawnLocationUnderTest = 1;
-            pawnLocationUnderTest2 = 1;
-           
-            
+
             //Mock Pawn
             var mockedPawn = new Mock<IPawn>();
             mockedPawn.Setup(p => p.location)
@@ -108,42 +108,35 @@ namespace UnitTestAuR
             entitiesUnderTest.Add(escalatorEntity.Object);
             entitiesUnderTest.Add(eel2Entity.Object);
             entitiesUnderTest.Add(escalator2Entity.Object);
-            Creator = () => new ClassicBoard();
+
+            Creator = () =>
+            {
+                var result = new ClassicBoard();
+                result.Entities = entitiesUnderTest;
+                result.Pawns = pawnsUnderTest;
+                return result;
+            };
         }
 
        
 
         [TestMethod]
         // CreateBoard creates a board with all entities 
-        public void If_Calling_CreateBoard__Correct_String_Should_Be_Returned()
+        public void If_Calling_CreateOutput__Correct_String_Should_Be_Returned()
         {
-            boardSizeUnderTest = 30;
-            pawnLocationUnderTest = 1;
-            pawnLocationUnderTest2 = 1;
+            var board = Creator();
+            var acutalBoard = board.CreateOutput();
 
-            eel1TopLocationUnderTest = 16;
-            eel1BottomLocationUnderTest = 11;
-
-            escalator1TopLocationUnderTest = 18;
-            escalator1BottomLocationUnderTest = 14;
-
-            eel2TopLocationUnderTest = 28;
-            eel2BottomLocationUnderTest = 24;
-
-            escalator2TopLocationUnderTest = 27;
-            escalator2BottomLocationUnderTest = 22;
-
-
-            var game = Creator();
-            var acutalBoard = game.CreateBoard();
-
-            var boardDesignUnderTest = "30[ | _ | ]" + "29[ | _ | ]" + "28[S| _ | ]" + "27[E| _ | ]" + "26[ | _ | ]" +
-                                       "25[ | _ | ]" + "24[ | _ |s]" + "23[ | _ | ]" + "22[ | _ |e]" + "21[ | _ | ]" +
-                                       "20[ | _ | ]" + "19[ | _ | ]" + "18[E| _ | ]" + "17[ | _ | ]" + "16[S| _ | ]" +
-                                       "15[ | _ | ]" + "14[ | _ |e]" + "13[ | _ | ]" + "12[ | _ | ]" + "11[ | _ |s]" +
-                                       "10[ | _ | ]" + "09[ | _ | ]" + "08[ | _ | ]" + "07[ | _ | ]" + "06[ | _ | ]" +
-                                       "05[ | _ | ]" + "04[ | _ | ]" + "03[ | _ | ]" + "02[ | _ | ]" + "01[ |1_2| ]";
+            var boardDesignUnderTest =   "  1 [ |1,2| ]" + "  2 [ | , | ]" + "  3 [ | , | ]" + "  4 [ | , | ]\n" +
+                                         "  8 [ | , | ]" + "  7 [ | , | ]" + "  6 [ | , | ]" + "  5 [ | , | ]\n" +
+                                         "  9 [ | , | ]" + " 10 [ | , | ]" + " 11 [ | , |s]" + " 12 [ | , | ]\n" +
+                                         " 16 [S| , | ]" + " 15 [ | , | ]" + " 14 [ | , |e]" + " 13 [ | , | ]\n" +
+                                         " 17 [ | , | ]" + " 18 [E| , | ]" + " 19 [ | , | ]" + " 20 [ | , | ]\n" +
+                                         " 24 [ | , |s]" + " 23 [ | , | ]" + " 22 [ | , |e]" + " 21 [ | , | ]\n" +
+                                         " 25 [ | , | ]" + " 26 [ | , | ]" + " 27 [E| , | ]" + " 28 [S| , | ]\n" +
+                                         "                                     30 [ | , | ]" + " 29 [ | , | ]";
             Assert.AreEqual(boardDesignUnderTest, acutalBoard);
         }
+
     }
 }

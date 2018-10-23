@@ -1,78 +1,74 @@
-﻿//using System;
-//using System.Text;
-//using System.Collections.Generic;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using EelsAndEscalators;
-//using EelsAndEscalators.Contracts;
-//using EelsAndEscalators.States;
-//using EelsAndEscalators.ClassicEandE;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using EelsAndEscalators;
+using EelsAndEscalators.Contracts;
+using EelsAndEscalators.States;
+using EelsAndEscalators.ClassicEandE;
 
-//namespace UnitTestAuR
-//{
+namespace UnitTestAuR
+{
 
-//        [TestClass]
-//        public class ClassicEscalator_Test
-//        {
-//            public Func<IEntity> Creator;
+    [TestClass]
+    public class ClassicEscalator_Test
+    {
+        public Func<IEntity> Creator;
 
-//            bool result;
-//            int pawnLocationUnderTest;
-//            int escalatorBottomLocationUnderTest;
+        ClassicPawn _testPawn = new ClassicPawn();
+        private bool result;
 
-//            [TestInitialize]
-//            public void Setup()
-//            {
-//                pawnLocationUnderTest = 6;
-//                escalatorBottomLocationUnderTest = 6;
+        [TestInitialize]
+        public void Setup()
+        {
+            _testPawn.location = 6;
 
-//                var mockedPawn = new Mock<IPawn>();
-//                mockedPawn.Setup(m => m.location).
-//                    Returns(() => pawnLocationUnderTest);
 
-//                var mockedEscalator = new Mock<IEntity>();
-//                mockedEscalator.Setup(m => m.bottom_location).
-//                    Returns(() => escalatorBottomLocationUnderTest);
+            Creator = () => new ClassicEscalator();
+        }
 
-//                Creator = () => new ClassicEscalator(mockedPawn.Object);
-//            }
+        [TestMethod]
+        public void If_Calling_OnSamePositionAs__Return_True_If_Entity_On_Same_Position()
+        {
 
-//            [TestMethod]
-//            public void If_Calling_OnSamePositionAs__Return_True_If_Entity_On_Same_Position()
-//            {
+            var escalator = Creator();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
+            var result = escalator.OnSamePositionAs(_testPawn);
 
-//                var escalator = Creator();
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
+        {
+            _testPawn.location = 4;
 
-//                var result = escalator.OnSamePositionAs();
+            var escalator = Creator();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
 
-//                Assert.IsTrue(result);
-//            }
-//            [TestMethod]
-//            public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
-//            {
-//                pawnLocationUnderTest = 4;
+            var result = escalator.OnSamePositionAs(_testPawn);
 
-//                var escalator = Creator();
+            Assert.IsFalse(result);
+        }
 
-//                var result = escalator.OnSamePositionAs();
+        [TestMethod]
+        public void If_Calling_MovePawn__New_Pawn_Location_Should_Be_Higher_Than_Old_Location()
+        {
 
-//                Assert.IsFalse(result);
-//            }
+            var escalator = Creator();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
 
-//            [TestMethod]
-//            public void If_Calling_MovePawn__New_Pawn_Location_Should_Be_Higher_Than_Old_Location()
-//            {
+            escalator.SetPawn(_testPawn);
 
-//                var escalator = Creator();
+            result = _testPawn.location > 6 ? true : false;
 
-//                escalator.SetPawn();
+            Assert.IsTrue(result);
 
-//                result = pawnLocationUnderTest > 6 ? true : false;
+        }
 
-//                Assert.IsTrue(result);
-
-//            }
-
-//        }
-//}
+    }
+}
 

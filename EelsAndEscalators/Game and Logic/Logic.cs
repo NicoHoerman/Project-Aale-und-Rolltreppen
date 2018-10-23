@@ -13,7 +13,8 @@ namespace EelsAndEscalators
     {
         
         public IPawn CurrentPawn;
-        private bool GameFinished;      
+        private bool GameFinished;
+        public int numberOfPlayers;
         public int CurrentPlayerID { get; set; } = 1;
         public int numberOfPlayers;
 

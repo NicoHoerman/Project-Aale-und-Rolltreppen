@@ -1,54 +1,38 @@
-﻿//using System;
-//using System.Text;
-//using System.Collections.Generic;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using EelsAndEscalators;
-//using EelsAndEscalators.Contracts;
-//using EelsAndEscalators.States;
-//using EelsAndEscalators.ClassicEandE;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using EelsAndEscalators;
+using EelsAndEscalators.Contracts;
+using EelsAndEscalators.States;
+using EelsAndEscalators.ClassicEandE;
 
-//namespace UnitTestAuR
-//{
-//        [TestClass]
-//        public class ClassicPawn_Test
-//        {
-//            public Func<IPawn> Creator;
+namespace UnitTestAuR
+{
+    [TestClass]
+    public class ClassicPawn_Test
+    {
+        public Func<ClassicPawn> Creator;
 
-//            int diceResultUnderTest;
-//            int pawnLocationUnderTest;
+        int fieldsToMove;
 
-//            [TestInitialize]
-//            public void Setup()
-//            {
-//                diceResultUnderTest = 5;
-//                pawnLocationUnderTest = 4;
+        [TestInitialize]
+        public void Setup()
+        {
+            fieldsToMove = 5;
 
-//                var mockedRules = new Mock<IRules>();
-//                mockedRules.Setup(m => m.DiceResult).
-//                    Returns(() => diceResultUnderTest);
+            Creator = () => new ClassicPawn();
+        }
 
-//                var mockedPawn = new Mock<IPawn>();
-//                mockedPawn.Setup(m => m.location).
-//                    Returns(() => pawnLocationUnderTest);
+        [TestMethod]
+        public void If_Calling_MovePawn__Move_Pawn_By_Dice_Result()
+        {
+            var pawn = Creator();
+            pawn.location = 4;
+            pawn.MovePawn(fieldsToMove);
 
-//                var mockedGame = new Mock<IGame>();
-//                mockedGame.Setup(m => m.Rules).
-//                    Returns(() => mockedRules.Object);
-//                //mockedGame.Setup(m => m.Board.Pawn).
-//                //    Returns(() => mockedPawn.Object);
-
-//                Creator = () => new ClassicPawn(mockedGame.Object);
-                
-//            }
-
-//            [TestMethod]
-//            public void If_Calling_MovePawn__Move_Pawn_By_Dice_Result()
-//            {
-//                var pawn = Creator();
-//                pawn.MovePawn();
-
-//                Assert.AreEqual(9, pawn.location);
-//            }
-//        }
-//}
+            Assert.AreEqual(9, pawn.location);
+        }
+    }
+}
