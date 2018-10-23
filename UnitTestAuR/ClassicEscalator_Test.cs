@@ -16,25 +16,16 @@ namespace UnitTestAuR
     {
         public Func<IEntity> Creator;
 
-        bool result;
-        int pawnLocationUnderTest;
-        int escalatorBottomLocationUnderTest;
+        ClassicPawn _testPawn = new ClassicPawn();
+        private bool result;
 
         [TestInitialize]
         public void Setup()
         {
-            pawnLocationUnderTest = 6;
-            escalatorBottomLocationUnderTest = 6;
+            _testPawn.location = 6;
 
-            var mockedPawn = new Mock<IPawn>();
-            mockedPawn.Setup(m => m.location).
-                Returns(() => pawnLocationUnderTest);
 
-            var mockedEscalator = new Mock<IEntity>();
-            mockedEscalator.Setup(m => m.bottom_location).
-                Returns(() => escalatorBottomLocationUnderTest);
-
-            Creator = () => new ClassicEscalator(mockedPawn.Object);
+            Creator = () => new ClassicEscalator();
         }
 
         [TestMethod]
@@ -42,19 +33,22 @@ namespace UnitTestAuR
         {
 
             var escalator = Creator();
-
-            var result = escalator.OnSamePositionAs();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
+            var result = escalator.OnSamePositionAs(_testPawn);
 
             Assert.IsTrue(result);
         }
         [TestMethod]
         public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
         {
-            pawnLocationUnderTest = 4;
+            _testPawn.location = 4;
 
             var escalator = Creator();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
 
-            var result = escalator.OnSamePositionAs();
+            var result = escalator.OnSamePositionAs(_testPawn);
 
             Assert.IsFalse(result);
         }
@@ -64,10 +58,12 @@ namespace UnitTestAuR
         {
 
             var escalator = Creator();
+            escalator.bottom_location = 6;
+            escalator.top_location = 12;
 
-            escalator.SetPawn();
+            escalator.SetPawn(_testPawn);
 
-            result = pawnLocationUnderTest > 6 ? true : false;
+            result = _testPawn.location > 6 ? true : false;
 
             Assert.IsTrue(result);
 
