@@ -11,6 +11,7 @@ namespace EelsAndEscalators.ClassicEandE
         public List<IPawn> Pawns { get; set; }
         public List<IEntity> Entities { get; set; }
 
+        //XD
         public ClassicBoard()
         {
             Pawns = new List<IPawn>();
