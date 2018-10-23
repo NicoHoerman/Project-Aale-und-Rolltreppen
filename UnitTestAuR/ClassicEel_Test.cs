@@ -17,9 +17,6 @@ namespace UnitTestAuR
         public Func<IEntity> Creator;
 
         ClassicPawn _testPawn = new ClassicPawn();
-        //int pawnLocationUnderTest;
-        //int eelTopLocationUnderTest;
-
         private bool result;
 
 
