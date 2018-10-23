@@ -34,11 +34,17 @@ namespace EelsAndEscalators.ClassicEandE
 
             var counter = 1;
 
+            string bottomSpace="";
+            string topSpace="";
+            string firstPawnSpace="";
+            string secondPawnSpace="";
+
             for (var y = 0; y < fieldCount_y; ++y)
             {
 
                 for (var x = 0; x < fieldCount_x; ++x)
                 {
+                    
                     var xOffs = y % 2 == 0 ? x : fieldCount_x - x - 1;
                     var stringDigit = $"      {counter} ";
                     stringDigit = stringDigit.Substring(stringDigit.Length - 4);
@@ -47,6 +53,34 @@ namespace EelsAndEscalators.ClassicEandE
                         array2D[y, xOffs] = string.Format("{0}[ | , | ] ", stringDigit);
                     else
                         array2D[y, xOffs] = "".PadLeft(14, ' ');
+
+                    Entities.ForEach(entity =>
+                    {
+                        if (entity.type == EntityType.Eel & entity.bottom_location == counter)
+                            bottomSpace = "s";
+
+                        else if (entity.type == EntityType.Escalator & entity.bottom_location == counter)
+                            bottomSpace = "e";                     
+                    });
+
+                    Entities.ForEach(entity =>
+                    {
+                        if (entity.type == EntityType.Eel & entity.top_location == counter)
+                            topSpace = "S";
+
+                        else if (entity.type == EntityType.Escalator & entity.top_location == counter)
+                            topSpace = "E";
+                            
+                    });
+
+                    Pawns.ForEach(pawn =>
+                    {
+                        if(pawn.location == counter)
+
+                            
+                    });
+
+                    array2D[y, xOffs] = $"{stringDigit}[{topSpace}|{firstPawnSpace},{secondPawnSpace}|{bottomSpace}] ";
 
                     counter++;
                 }
@@ -60,10 +94,6 @@ namespace EelsAndEscalators.ClassicEandE
 
                 result += "\n";
             }
-
-
-
-
 
             return result;
         }
