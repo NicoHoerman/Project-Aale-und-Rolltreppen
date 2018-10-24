@@ -35,7 +35,7 @@ namespace EelsAndEscalators.ClassicEandE
             string[,] array2D = new string[fieldCount_y, fieldCount_x];
             string result = "";
 
-            var counter = 1;
+            var counter = size;
 
             
 
@@ -53,7 +53,7 @@ namespace EelsAndEscalators.ClassicEandE
                     var stringDigit = $"      {counter} ";
                     stringDigit = stringDigit.Substring(stringDigit.Length - 4);
 
-                    if (counter <= fields)
+                    if (counter > 0 & counter <= fields)
                         array2D[y, xOffs] = $"{stringDigit}[ | , | ] ";
                     else
                         array2D[y, xOffs] = "".PadLeft(14, ' ');
@@ -97,10 +97,10 @@ namespace EelsAndEscalators.ClassicEandE
                     if (secondPawnSpace.Length == 0 || secondPawnSpace == " ")
                         secondPawnSpace = " ";
 
-                    if (counter <= fields)
+                    if (counter > 0 & counter <= fields)
                         array2D[y, xOffs] = $"{stringDigit}[{topSpace}|{firstPawnSpace},{secondPawnSpace}|{bottomSpace}] ";
 
-                    counter++;
+                    counter--;
                     
                 }
 
