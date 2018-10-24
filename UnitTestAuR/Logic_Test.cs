@@ -31,6 +31,8 @@ namespace UnitTestAuR
 
         private bool gameFinishedUnderTest;
 
+        private bool turnFinishedUnderTest;
+
         private bool playerExceedsBoardUnderTest;
         
         private int pawnPlayerIdUnderTest;
@@ -51,9 +53,11 @@ namespace UnitTestAuR
 
         private int escalatorBottomLocationUnderTest;
 
-        private EntityType escalatorEntityTypeUnderTest;
+        private EntityType escalatorEntityTypeUnderTest = EntityType.Escalator;
 
-        private EntityType eelEntityTypeUnderTest;
+        private EntityType eelEntityTypeUnderTest = EntityType.Eel;
+
+        private EntityType pawnTypeUnderTest = EntityType.Pawn;
 
         private TurnState currentStateUnderTest;
 
@@ -121,6 +125,8 @@ namespace UnitTestAuR
                 .Returns(() => pawnIdUnderTest);
             mockedPawn.Setup(p => p.color)
                 .Returns(() => pawnColorUnderTest);
+            mockedPawn.Setup(p => p.type)
+                .Returns(() => pawnTypeUnderTest);
             mockedPawn.Setup(p => p.MovePawn(diceResultUnderTest))
                 .Callback(() => movePawnUnderTest(diceResultUnderTest));
             
@@ -272,36 +278,23 @@ namespace UnitTestAuR
 
         [TestMethod]
 
-        public void If_Calling_Make_Turn_And_Current_Pawn_Lands_On_Eel__Eel_Should_Set_Pawn_To_New_Location()
+        public void If_Calling_MakeTurn_And_Player_Does_Not_Exceed_Board__TurnState_Should_Be_Turn_Finished()
         {
-            
-            pawnLocationUnderTest = 5;
-            diceResultUnderTest = 3;
-            eelTopLocationUnderTest = 8;
-            eelBottomLocationUnderTest = 3;
-            
-            var logic = Creator();
-            
-            logic.MakeTurn();
-
-            Assert.AreEqual(eelBottomLocationUnderTest, pawnLocationUnderTest);
-        }
-
-        [TestMethod]
-        public void If_Calling_Make_Turn_And_Current_Pawn_Lands_On_Escalator__Escalator_Should_Set_Pawn_To_New_Location()
-        {
-
-            pawnLocationUnderTest = 1;
-            diceResultUnderTest = 2;
-            escalatorTopLocationUnderTest = 8;
-            escalatorBottomLocationUnderTest = 3;
+            pawnLocationUnderTest = 2;
 
             var logic = Creator();
 
-            logic.MakeTurn();
+            currentStateUnderTest = logic.MakeTurn();
 
-            Assert.AreEqual(escalatorTopLocationUnderTest, pawnLocationUnderTest);
+            if (currentStateUnderTest == TurnState.TurnFinished)
+                turnFinishedUnderTest = true;
+            else
+                turnFinishedUnderTest = false;
+
+
+            Assert.IsTrue(turnFinishedUnderTest);
         }
+
 
         [TestMethod]
 
