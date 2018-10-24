@@ -51,7 +51,7 @@ namespace EelsAndEscalators.States
                 _sourceWrapper.WriteOutput(73, 0, _finishskull1);
 
                 _sourceWrapper.WriteOutput(35, 3, "Press any Key to leave", ConsoleColor.DarkGreen);
-                Console.SetCursorPosition(56, 3);
+                Console.SetCursorPosition(57, 3);
                 var input = _sourceWrapper.ReadKey();
                  if(input != null)
                 {
