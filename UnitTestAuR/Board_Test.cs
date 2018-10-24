@@ -21,7 +21,10 @@ namespace UnitTestAuR
 
         private List<IPawn> pawnsUnderTest;
         private int pawnLocationUnderTest;
+        private int pawnPlayerIDUnderTest;
+
         private int pawnLocationUnderTest2;
+        private int pawnPlayerIDUnderTest2;
 
         private List<IEntity> entitiesUnderTest;
 
@@ -47,7 +50,9 @@ namespace UnitTestAuR
 
 
             pawnLocationUnderTest = 1;
+            pawnPlayerIDUnderTest = 1;
             pawnLocationUnderTest2 = 1;
+            pawnPlayerIDUnderTest2 = 2;
 
             eel1TopLocationUnderTest = 16;
             eel1BottomLocationUnderTest = 11;
@@ -66,9 +71,18 @@ namespace UnitTestAuR
             var mockedPawn = new Mock<IPawn>();
             mockedPawn.Setup(p => p.location)
                 .Returns(() => pawnLocationUnderTest);
+            mockedPawn.Setup(p => p.type)
+                .Returns(() => EntityType.Pawn);
+            mockedPawn.Setup(p => p.playerID)
+                .Returns(() => pawnPlayerIDUnderTest);
+
             var mockedPawn2 = new Mock<IPawn>();
             mockedPawn2.Setup(p => p.location)
                 .Returns(() => pawnLocationUnderTest2);
+            mockedPawn2.Setup(p => p.type)
+                .Returns(() => EntityType.Pawn);
+            mockedPawn2.Setup(p => p.playerID)
+                .Returns(() => pawnPlayerIDUnderTest2);
 
             pawnsUnderTest = new List<IPawn>();
             pawnsUnderTest.Add(mockedPawn.Object);
@@ -80,6 +94,8 @@ namespace UnitTestAuR
                 .Returns(() => eel1TopLocationUnderTest);
             eelEntity.Setup(e => e.bottom_location)
                 .Returns(() => eel1BottomLocationUnderTest);
+            eelEntity.Setup(e => e.type)
+                .Returns(() => EntityType.Eel);
 
             //Mock Escalator
             var escalatorEntity = new Mock<IEntity>();
@@ -87,20 +103,26 @@ namespace UnitTestAuR
                 .Returns(() => escalator1TopLocationUnderTest);
             escalatorEntity.Setup(e => e.bottom_location)
                 .Returns(() => escalator1BottomLocationUnderTest);
+            escalatorEntity.Setup(e => e.type)
+                .Returns(() => EntityType.Escalator);
 
             //Mock Eel2
             var eel2Entity = new Mock<IEntity>();
-            eelEntity.Setup(e => e.top_location)
+            eel2Entity.Setup(e => e.top_location)
                 .Returns(() => eel2TopLocationUnderTest);
-            eelEntity.Setup(e => e.bottom_location)
+            eel2Entity.Setup(e => e.bottom_location)
                 .Returns(() => eel2BottomLocationUnderTest);
+            eel2Entity.Setup(e => e.type)
+                .Returns(() => EntityType.Eel);
 
             //Mock Escalator2
             var escalator2Entity = new Mock<IEntity>();
-            escalatorEntity.Setup(e => e.top_location)
+            escalator2Entity.Setup(e => e.top_location)
                 .Returns(() => escalator2TopLocationUnderTest);
-            escalatorEntity.Setup(e => e.bottom_location)
+            escalator2Entity.Setup(e => e.bottom_location)
                 .Returns(() => escalator2BottomLocationUnderTest);
+            escalator2Entity.Setup(e => e.type)
+                .Returns(() => EntityType.Escalator);
 
             //List
             entitiesUnderTest = new List<IEntity>();
@@ -127,14 +149,15 @@ namespace UnitTestAuR
             var board = Creator();
             var acutalBoard = board.CreateOutput();
 
-            var boardDesignUnderTest =   "  1 [ |1,2| ]" + "  2 [ | , | ]" + "  3 [ | , | ]" + "  4 [ | , | ]\n" +
-                                         "  8 [ | , | ]" + "  7 [ | , | ]" + "  6 [ | , | ]" + "  5 [ | , | ]\n" +
-                                         "  9 [ | , | ]" + " 10 [ | , | ]" + " 11 [ | , |s]" + " 12 [ | , | ]\n" +
-                                         " 16 [S| , | ]" + " 15 [ | , | ]" + " 14 [ | , |e]" + " 13 [ | , | ]\n" +
-                                         " 17 [ | , | ]" + " 18 [E| , | ]" + " 19 [ | , | ]" + " 20 [ | , | ]\n" +
-                                         " 24 [ | , |s]" + " 23 [ | , | ]" + " 22 [ | , |e]" + " 21 [ | , | ]\n" +
-                                         " 25 [ | , | ]" + " 26 [ | , | ]" + " 27 [E| , | ]" + " 28 [S| , | ]\n" +
-                                         "                                     30 [ | , | ]" + " 29 [ | , | ]";
+            var boardDesignUnderTest =  "  1 [ |1,2| ]   2 [ | , | ]   3 [ | , | ]   4 [ | , | ] \n"+
+                                        "  8 [ | , | ]   7 [ | , | ]   6 [ | , | ]   5 [ | , | ] \n" +
+                                        "  9 [ | , | ]  10 [ | , | ]  11 [ | , |s]  12 [ | , | ] \n" +
+                                        " 16 [S| , | ]  15 [ | , | ]  14 [ | , |e]  13 [ | , | ] \n" +
+                                        " 17 [ | , | ]  18 [E| , | ]  19 [ | , | ]  20 [ | , | ] \n" +
+                                        " 24 [ | , |s]  23 [ | , | ]  22 [ | , |e]  21 [ | , | ] \n" +
+                                        " 25 [ | , | ]  26 [ | , | ]  27 [E| , | ]  28 [S| , | ] \n" +
+                                        "                             30 [ | , | ]  29 [ | , | ] \n";
+   
             Assert.AreEqual(boardDesignUnderTest, acutalBoard);
         }
 
