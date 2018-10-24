@@ -31,7 +31,7 @@ namespace EelsAndEscalators
                 "Symbols:\n" +
                 "Player 1 is 1\n" +
                 "Player 2 is 2\n" +
-                "[ | _ | ] is field\n" +
+                "[ | , | ] is a field\n" +
                 "S Top of an Eel\n" +
                 "s Bottom of a Eel\n" +
                 "E Top of an Escalator\n" +
@@ -53,7 +53,6 @@ namespace EelsAndEscalators
             },
             {
                 "playerexceedsboardinfo",
-                "Player {0}\n"+
                 "Your role was too high\n"+
                 "Better Luck next time"
             },
@@ -113,7 +112,7 @@ namespace EelsAndEscalators
                     "─████████████████████████████████████─\n"+
                    "▐██████  ███████▀▄██▄▀███████  ██████▌\n"+
                     "▐█████    ██████████████████    █████▌\n"+
-                    "▐█████     ██████▀──▀██████     █████▌\n"+
+                    "▐█████     ██████▀  ▀██████     █████▌\n"+
                     "─█████▄     ███        ███     ▄█████─\n"+
                     "──██████     █          █     ██████──\n"+
                     "────█████                    █████────\n"+
