@@ -16,6 +16,7 @@ namespace EelsAndEscalators
         private bool GameFinished;
         public int numberOfPlayers;
         public int CurrentPlayerID { get; set; } = 1;
+        
 
         private readonly IGame _game;
         public Logic(IGame game)
