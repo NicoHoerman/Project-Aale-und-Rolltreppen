@@ -66,10 +66,11 @@ namespace EelsAndEscalators
 
         }
 
-        //hallo test
+        
         public void NextPlayer()
         {
             var orderedPlayers = _game.Board.Pawns.OrderBy(x => x.playerID).ToList();
+
             if (numberOfPlayers == 0)
                 numberOfPlayers = orderedPlayers[orderedPlayers.Count - 1].playerID;
 

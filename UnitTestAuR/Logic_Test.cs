@@ -57,13 +57,27 @@ namespace UnitTestAuR
 
         private TurnState currentStateUnderTest;
 
-        public void movePawnUnderTest()
+        public void SetPawnUnderTestEel(IPawn pawn)
+        {
+            pawnLocationUnderTest = eelBottomLocationUnderTest;
+        }
+
+        public void SetPawnUnderTestEscalator(IPawn pawn)
+        {
+            pawnLocationUnderTest = escalatorTopLocationUnderTest;
+        }
+
+        public bool OnSamePositionAsUnderTest(IPawn pawn)
+        {
+            return eelTopLocationUnderTest == pawnLocationUnderTest ? true : false;
+        }
+
+        public void movePawnUnderTest(int diceResultUnderTest)
         {
             pawnLocationUnderTest += diceResultUnderTest;
         }
 
         
-
         [TestInitialize]
         public void Setup()
         {
@@ -103,7 +117,7 @@ namespace UnitTestAuR
             mockedPawn.Setup(p => p.color)
                 .Returns(() => pawnColorUnderTest);
             mockedPawn.Setup(p => p.MovePawn(diceResultUnderTest))
-                .Callback(() => movePawnUnderTest());
+                .Callback(() => movePawnUnderTest(diceResultUnderTest));
             
             pawnsUnderTest.Add(mockedPawn.Object);
 
@@ -131,6 +145,11 @@ namespace UnitTestAuR
                 .Returns(() => eelBottomLocationUnderTest);
             mockedEel.Setup(e => e.top_location)
                 .Returns(() => eelTopLocationUnderTest);
+            mockedEel.Setup(e => e.OnSamePositionAs(mockedPawn.Object))
+                .Callback(() => OnSamePositionAsUnderTest(mockedPawn.Object));
+            mockedEel.Setup(e => e.SetPawn(mockedPawn.Object))
+                .Callback(() => SetPawnUnderTestEel(mockedPawn.Object));
+                
 
             entitiesUnderTest.Add(mockedEel.Object);
 
@@ -142,6 +161,10 @@ namespace UnitTestAuR
                 .Returns(() => escalatorBottomLocationUnderTest);
             mockedEscalator.Setup(e => e.top_location)
                 .Returns(() => escalatorTopLocationUnderTest);
+            mockedEel.Setup(e => e.OnSamePositionAs(mockedPawn.Object))
+                .Callback(() => OnSamePositionAsUnderTest(mockedPawn.Object));
+            mockedEel.Setup(e => e.SetPawn(mockedPawn.Object))
+                .Callback(() => SetPawnUnderTestEscalator(mockedPawn.Object));
 
             entitiesUnderTest.Add(mockedEscalator.Object);
 
@@ -149,6 +172,7 @@ namespace UnitTestAuR
             var mockedRules = new Mock<IRules>();
             mockedRules.Setup(r => r.DiceResult)
                 .Returns(() => diceResultUnderTest);
+            
 
             // Mock Game
             var mockedGame = new Mock<IGame>();
@@ -158,6 +182,8 @@ namespace UnitTestAuR
                 Returns(() => mockedRules.Object);                     
             
             Creator = () => new Logic(mockedGame.Object);
+          
+            
         }
 
 
@@ -172,9 +198,7 @@ namespace UnitTestAuR
         {
                                    
             var logic = Creator();
-
-            
-                     
+                                
             currentStateUnderTest = logic.CheckIfGameFinished(logic.GetPawn());
 
             if (currentStateUnderTest == TurnState.GameFinished)
@@ -245,16 +269,19 @@ namespace UnitTestAuR
 
         public void If_Calling_Make_Turn_And_Current_Pawn_Lands_On_Eel__Eeel_Should_Set_Pawn_To_New_Location()
         {
+            
             pawnLocationUnderTest = 5;
             diceResultUnderTest = 3;
             eelTopLocationUnderTest = 8;
             eelBottomLocationUnderTest = 3;
+            
 
 
             var logic = Creator();
+            
             logic.MakeTurn();
 
-            Assert.AreEqual(3, pawnLocationUnderTest);
+            Assert.AreEqual(eelBottomLocationUnderTest, pawnLocationUnderTest);
         }
 
         [TestMethod]
