@@ -43,7 +43,7 @@ namespace EelsAndEscalators
         {
             try
             {
-                pawn = CurrentPawn;
+                pawn = GetPawn();
 
                 if (pawn.location == _game.Board.size)
                     GameFinished = true;

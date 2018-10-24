@@ -67,9 +67,14 @@ namespace UnitTestAuR
             pawnLocationUnderTest = escalatorTopLocationUnderTest;
         }
 
-        public bool OnSamePositionAsUnderTest(IPawn pawn)
+        public bool OnSamePositionAsUnderTestEel(IPawn pawn)
         {
             return eelTopLocationUnderTest == pawnLocationUnderTest ? true : false;
+        }
+
+        public bool OnSamePositionAsUnderTestEscalator(IPawn pawn)
+        {
+            return escalatorBottomLocationUnderTest == pawnLocationUnderTest ? true : false;
         }
 
         public void movePawnUnderTest(int diceResultUnderTest)
@@ -146,7 +151,7 @@ namespace UnitTestAuR
             mockedEel.Setup(e => e.top_location)
                 .Returns(() => eelTopLocationUnderTest);
             mockedEel.Setup(e => e.OnSamePositionAs(mockedPawn.Object))
-                .Callback(() => OnSamePositionAsUnderTest(mockedPawn.Object));
+                .Callback(() => OnSamePositionAsUnderTestEel(mockedPawn.Object));
             mockedEel.Setup(e => e.SetPawn(mockedPawn.Object))
                 .Callback(() => SetPawnUnderTestEel(mockedPawn.Object));
                 
@@ -162,7 +167,7 @@ namespace UnitTestAuR
             mockedEscalator.Setup(e => e.top_location)
                 .Returns(() => escalatorTopLocationUnderTest);
             mockedEel.Setup(e => e.OnSamePositionAs(mockedPawn.Object))
-                .Callback(() => OnSamePositionAsUnderTest(mockedPawn.Object));
+                .Callback(() => OnSamePositionAsUnderTestEscalator(mockedPawn.Object));
             mockedEel.Setup(e => e.SetPawn(mockedPawn.Object))
                 .Callback(() => SetPawnUnderTestEscalator(mockedPawn.Object));
 
@@ -256,7 +261,7 @@ namespace UnitTestAuR
         //Make Turn when dice result would not exceed the boardsize 
         //[ExpectedException(typeof(ArgumentOutOfRangeException),
          //"Pawn is not on the Board anymore")]
-        public void If_Calling_MakeTurn_And_Player_Does_Not_Exceed_Board__Move_Pawn()
+        public void If_Calling_MakeTurn_And_Player_Does_Not_Exceed_Board__Pawn_Should_Be_Moved()
         {
             pawnLocationUnderTest = 2;
             var logic = Creator();
@@ -267,7 +272,7 @@ namespace UnitTestAuR
 
         [TestMethod]
 
-        public void If_Calling_Make_Turn_And_Current_Pawn_Lands_On_Eel__Eeel_Should_Set_Pawn_To_New_Location()
+        public void If_Calling_Make_Turn_And_Current_Pawn_Lands_On_Eel__Eel_Should_Set_Pawn_To_New_Location()
         {
             
             pawnLocationUnderTest = 5;
@@ -275,13 +280,27 @@ namespace UnitTestAuR
             eelTopLocationUnderTest = 8;
             eelBottomLocationUnderTest = 3;
             
-
-
             var logic = Creator();
             
             logic.MakeTurn();
 
             Assert.AreEqual(eelBottomLocationUnderTest, pawnLocationUnderTest);
+        }
+
+        [TestMethod]
+        public void If_Calling_Make_Turn_And_Current_Pawn_Lands_On_Escalator__Escalator_Should_Set_Pawn_To_New_Location()
+        {
+
+            pawnLocationUnderTest = 1;
+            diceResultUnderTest = 2;
+            escalatorTopLocationUnderTest = 8;
+            escalatorBottomLocationUnderTest = 3;
+
+            var logic = Creator();
+
+            logic.MakeTurn();
+
+            Assert.AreEqual(escalatorTopLocationUnderTest, pawnLocationUnderTest);
         }
 
         [TestMethod]
