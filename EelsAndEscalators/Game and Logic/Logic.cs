@@ -17,7 +17,6 @@ namespace EelsAndEscalators
         public int numberOfPlayers;
         public int CurrentPlayerID { get; set; } = 1;
         
-
         private readonly IGame _game;
         public Logic(IGame game)
         {
@@ -67,10 +66,11 @@ namespace EelsAndEscalators
 
         }
 
-
+        
         public void NextPlayer()
         {
             var orderedPlayers = _game.Board.Pawns.OrderBy(x => x.playerID).ToList();
+
             if (numberOfPlayers == 0)
                 numberOfPlayers = orderedPlayers[orderedPlayers.Count - 1].playerID;
 

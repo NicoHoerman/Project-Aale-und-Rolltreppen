@@ -10,6 +10,7 @@ namespace EelsAndEscalators.ClassicEandE
     public class ClassicBoard : IBoard
     {
         public int size { get; } = 30;
+        public int MaxSize { get; } = 8;
         public List<IPawn> Pawns { get; set; }
         public List<IEntity> Entities { get; set; }
 
@@ -26,7 +27,7 @@ namespace EelsAndEscalators.ClassicEandE
             var fields = size;
             double ratio = 9.0 / 16.0;
 
-            var fieldCount_x = (int)Math.Sqrt(ratio * fields);
+            var fieldCount_x = Math.Min((int)Math.Sqrt(ratio * fields), MaxSize);
             var fieldCount_y = fields / fieldCount_x; //ratio * fieldCount_y;
             if (fields % fieldCount_x != 0)
                 fieldCount_y++;
