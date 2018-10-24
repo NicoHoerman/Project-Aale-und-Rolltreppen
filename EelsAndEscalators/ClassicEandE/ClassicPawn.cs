@@ -12,6 +12,7 @@ namespace EelsAndEscalators.ClassicEandE
         public int color { get; set; }
         public int playerID { get; set; }
         public long Id { get; set; }
+        public EntityType type => EntityType.Pawn;
 
         public ClassicPawn()
         {
