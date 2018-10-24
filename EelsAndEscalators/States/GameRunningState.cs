@@ -56,8 +56,8 @@ namespace EelsAndEscalators.States
                 _helpOutput = string.Empty;
                 _afterTurnOutput = string.Empty;
 
-                _sourceWrapper.WriteOutput(0, 29, "Type an Command: ", ConsoleColor.DarkGray);
-                Console.SetCursorPosition(17, 29);
+                _sourceWrapper.WriteOutput(0, 31, "Type an Command: ", ConsoleColor.DarkGray);
+                Console.SetCursorPosition(17, 31);
                 var input = _sourceWrapper.ReadInput();
                 parser.Execute(input);
 
@@ -100,13 +100,13 @@ namespace EelsAndEscalators.States
             _sourceWrapper.WriteOutput(0, 16, _boardOutput, ConsoleColor.Gray);
             
             //After Board Info 
-            _sourceWrapper.WriteOutput(0, 23, _afterBoardOutput, ConsoleColor.DarkCyan);
+            _sourceWrapper.WriteOutput(0, 26, _afterBoardOutput, ConsoleColor.DarkCyan);
 
 
             //After Turn Info
             if(_afterTurnOutput.Length != 0)
             {
-                _sourceWrapper.WriteOutput(0, 31, _afterTurnOutput, ConsoleColor.DarkCyan);
+                _sourceWrapper.WriteOutput(0, 33, _afterTurnOutput, ConsoleColor.DarkCyan);
 
             }
 
@@ -119,8 +119,8 @@ namespace EelsAndEscalators.States
             //Last Input and Error
             if (_error.Length != 0)
             {
-                _sourceWrapper.WriteOutput(0, 27, _lastInput, ConsoleColor.DarkRed);
-                _sourceWrapper.WriteOutput(0, 28, _error, ConsoleColor.Red);
+                _sourceWrapper.WriteOutput(0, 28, _lastInput, ConsoleColor.DarkRed);
+                _sourceWrapper.WriteOutput(0, 29, _error, ConsoleColor.Red);
             }
         }
 
