@@ -16,56 +16,54 @@ namespace UnitTestAuR
     {
         public Func<IEntity> Creator;
 
-        ClassicPawn _testPawn = new ClassicPawn();
-        private bool result;
+        IPawn _testPawn = new ClassicPawn();
+
+        public bool result;
 
         [TestInitialize]
         public void Setup()
         {
             _testPawn.location = 6;
-
-
+           
             Creator = () => new ClassicEscalator();
         }
 
         [TestMethod]
-        public void If_Calling_OnSamePositionAs__Return_True_If_Entity_On_Same_Position()
+        public void If_Calling_OnSamePositionAs__Return_True_If_Pawn_On_Same_Position_As_Escalator_Bottom_Location()
         {
-
             var escalator = Creator();
+
             escalator.bottom_location = 6;
-            escalator.top_location = 12;
+            
             var result = escalator.OnSamePositionAs(_testPawn);
 
             Assert.IsTrue(result);
         }
         [TestMethod]
-        public void If_Calling_OnSamePositionAs__Return_False_If_Entity_Not_On_Same_Position()
+        public void If_Calling_OnSamePositionAs__Return_False_If_Pawn_Not_On_Same_Position_As_Escalator_Bottom_Location()
         {
-            _testPawn.location = 4;
-
+            
             var escalator = Creator();
-            escalator.bottom_location = 6;
-            escalator.top_location = 12;
 
+            escalator.bottom_location = 7;
+            
             var result = escalator.OnSamePositionAs(_testPawn);
 
             Assert.IsFalse(result);
+
         }
 
         [TestMethod]
-        public void If_Calling_MovePawn__New_Pawn_Location_Should_Be_Higher_Than_Old_Location()
+        public void If_Calling_SetPawn__New_Pawn_Location_Should_Be_The_Same_As_The_Escalator_Top_Location()
         {
 
             var escalator = Creator();
-            escalator.bottom_location = 6;
+                      
             escalator.top_location = 12;
-
+          
             escalator.SetPawn(_testPawn);
 
-            result = _testPawn.location > 6 ? true : false;
-
-            Assert.IsTrue(result);
+            Assert.AreEqual(escalator.top_location, _testPawn.location);
 
         }
 
