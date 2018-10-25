@@ -17,5 +17,6 @@ namespace EelsAndEscalators.Contracts
         void SwitchRules(IRules creator);
         void SwitchState(IState newState);
         void ClosingGame();
+        void Init();
     }
 }
