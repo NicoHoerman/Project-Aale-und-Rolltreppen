@@ -41,7 +41,8 @@ namespace EelsAndEscalators.ClassicEandE
 
         public void SetupEntitites()
         {
-            _game.Board = new ClassicBoard();
+            _game.Board = CreateBoard();
+
             try
             {
 

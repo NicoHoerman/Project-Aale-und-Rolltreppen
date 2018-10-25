@@ -1,197 +1,286 @@
-﻿//using System;
-//using System.Text;
-//using System.Collections.Generic;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using EelsAndEscalators;
-//using EelsAndEscalators.Contracts;
-//using EelsAndEscalators.States;
-//using EelsAndEscalators.ClassicEandE;
-//using System.Xml.Linq;
-//using System.Linq;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using EelsAndEscalators;
+using EelsAndEscalators.Contracts;
+using EelsAndEscalators.States;
+using EelsAndEscalators.ClassicEandE;
+using System.Xml.Linq;
+using System.Linq;
 
 
-//namespace UnitTestAuR
-//{
-/// <summary>
-/// Klasse und verbundenen Klassen zu komplex am Ende Testen   
-/// </summary>
-//    [TestClass]
-//    public class ClassicRules_Test
-//    {
-//        public Func<IRules> Creator;
 
-//        private List<IPawn> pawnListUnderTest;
-//        private List<IEntity> entityListUnderTest;
-//        private int NumberOfListContent;
-//        private int boardSizeUnderTest;
-//        private int diceSidesUnderTest;
-//        private int diceResultUnderTest;
+namespace UnitTestAuR
+{
 
-//        static string _xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> <Configurations> <!--Eel--> <config> <toplocation>15</toplocation> <bottomlocation>4</bottomlocation> </config> <!--Escalator--> <config> <toplocation>17</toplocation> <bottomlocation>6</bottomlocation> </config> <!--Pawn--> <config> <location>3</location> <color>2</color> <playerid>1</playerid> </config> </Configurations>";
+    [TestClass]
+    public class ClassicRules_Test : IEquatable<ClassicBoard>
+    {
+        public Func<IRules> Creator;
 
-//        private List<XElement> configList = XDocument.Parse(_xmlString).Elements().ToList();
+        private List<IPawn> pawnListUnderTest = new List<IPawn>();
 
-//        private bool correctDice;
+        private List<IEntity> entityListUnderTest = new List<IEntity>();
+       
+        private int boardSizeUnderTest;
 
-//        [TestInitialize]
-//        public void Setup()
-//        {
-//            //Attribute Arrange
-//            var configList = XDocument.Parse(_xmlString).Root.Elements().ToList();
+        private int blub;
 
-//            boardSizeUnderTest = 10;
+        private int bottomEelLocationUnderTest;
+        private int topEelLocationUnderTest;
+        private int bottomEscalatorLocationUnderTest;
+        private int topEscalatorLocationUnderTest;
 
-//            //mockedBoard Setup
-//            var mockedBoard = new Mock<IBoard>();
-//            mockedBoard.Setup(m => m.size).
-//                Returns(() => boardSizeUnderTest);
-//            mockedBoard.Setup(m => m.Entities).
-//                Returns(() => entityListUnderTest);
-//            mockedBoard.Setup(m => m.Pawns).
-//                Returns(() => pawnListUnderTest);
+        private int boardMaxWidthUnderTest;
 
-//            //mockedGame Setup
-//            var mockedGame = new Mock<IGame>();
-//            mockedGame.Setup(m => m.Board).
-//                Returns(() => mockedBoard.Object);
 
-//            //mockedConfigurationProvider Setup
-//            var mockedConfigurationProvider = new Mock<IConfigurationProvider>();
-//            mockedConfigurationProvider.Setup(m => m.GetEntityConfigurations()).
-//                Returns(() => configList);
+        static string _xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> <Configurations> <!--Eel--> <config> <entitytype>0</entitytype> <toplocation>15</toplocation> <bottomlocation>4</bottomlocation> </config> <!--Escalator--> <config> <entitytype>1</entitytype> <toplocation>17</toplocation> <bottomlocation>6</bottomlocation> </config> <!--Pawn--> <config> <entitytype>2</entitytype> <location>3</location> <color>2</color> <playerid>1</playerid> </config> </Configurations>";
 
-//            Creator = () => new ClassicRules(mockedGame.Object, mockedConfigurationProvider.Object);
-//        }
+        private List<XElement> configList = XDocument.Parse(_xmlString).Elements().ToList();
+       
+        private bool correctDice;
 
-//        [TestMethod]
-//        public void If_Calling_SetupEntities__IPawn_Should_Be_Added_To_PawnList_If_A_PawnConfig_Was_Found_In_The_Config_List()
-//        {
-//            var rules = Creator();
-//            rules.SetupEntitites();
 
-//            Assert.IsNotNull(pawnListUnderTest);
-//        }
+        public override bool Equals(Object obj)
+        {
+            var other = obj as ClassicBoard;
+            if (other == null) return false;
 
-//        [TestMethod]
-//        public void If_Calling_SetupEntities__IEntity_Should_Be_Added_To_EntityList_If_A_Eel_Or_EscalatorConfig_Was_Found_In_The_Config_List()
-//        {
-//            var rules = Creator();
-//            rules.SetupEntitites();
+            return Equals(other);
+        }
 
-//            Assert.IsNotNull(entityListUnderTest);
-//        }
+        public bool Equals(ClassicBoard other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
 
-//        [TestMethod]
-//        public void If_Calling_SetupEntities__The_Created_Pawn_Should_Have_Location_As_Defined_By_Configuration()
-//        {
+            else return true;
+        }
 
-//            var rules = Creator();
-//            rules.SetupEntitites();
+        public override int GetHashCode()
+        {
+            return blub;
+        }
 
-//            Assert.AreEqual(2, pawnListUnderTest[1].location);
-//        }
 
-//        [TestMethod]
-//        public void If_Calling_SetupEntities__The_Created_Pawn_Should_Have_Color_As_Defined_By_Configuration()
-//        {
+        [TestInitialize]
+        public void Setup()
+        {
+            //Attribute Arrange
+            var configList = XDocument.Parse(_xmlString).Root.Elements().ToList();
 
-//            var rules = Creator();
-//            rules.SetupEntitites();
+            boardSizeUnderTest = 30;
+            boardMaxWidthUnderTest = 8;
 
-//            Assert.AreEqual(1, pawnListUnderTest[1].color);
-//        }
+            //mockedBoard Setup
+            var mockedBoard = new Mock<IBoard>();
+            mockedBoard.Setup(m => m.size)
+                .Returns(() => boardSizeUnderTest);
+            mockedBoard.Setup(m => m.MaxWidth)
+                .Returns(() => boardMaxWidthUnderTest);
+            mockedBoard.Setup(m => m.Entities)
+                .Returns(() => entityListUnderTest);
+            mockedBoard.Setup(m => m.Pawns)
+                .Returns(() => pawnListUnderTest);
 
-//        [TestMethod]
-//        public void If_Calling_SetupEntities__The_Created_Pawn_Should_Have_PlayerID_As_Defined_By_Configuration()
-//        {
+            var mockedEel = new Mock<IEntity>();
+            mockedEel.Setup(e => e.bottom_location)
+                .Returns(() => bottomEelLocationUnderTest);
+            mockedEel.Setup(e => e.top_location)
+                .Returns(() => topEelLocationUnderTest);
 
-//            var rules = Creator();
-//            rules.SetupEntitites();
+                       
+            var mockedEscalator = new Mock<IEntity>();
+            mockedEscalator.Setup(e => e.bottom_location)
+                .Returns(() => bottomEscalatorLocationUnderTest);
+            mockedEscalator.Setup(e => e.top_location)
+                .Returns(() => topEscalatorLocationUnderTest);
 
-//            Assert.AreEqual(1, pawnListUnderTest[1].playerID);
-//        }
+            
+            //mockedGame Setup
+            var mockedGame = new Mock<IGame>();
+            mockedGame.Setup(m => m.Board)
+                .Returns(() => mockedBoard.Object);
 
-//        [TestMethod]
-//        public void If_Calling_CreateEel__Eel_Should_Have_Bottom_Location_As_Defined_By_Configuration()
-//        {
-//            var rules = Creator();
-//            var result = rules.CreateEel(config);
+            //mockedConfigurationProvider Setup
+            var mockedConfigurationProvider = new Mock<IConfigurationProvider>();
+            mockedConfigurationProvider.Setup(m => m.GetEntityConfigurations())
+                .Returns(() => configList);
 
-//            Assert.AreEqual(4, result.bottom_location);
-//        }
+            Creator = () => new ClassicRules(mockedGame.Object, mockedConfigurationProvider.Object);
+        }
 
-//        [TestMethod]
-//        public void If_Calling_CreateEel__Eel_Should_Have_Top_Location_As_Defined_By_Configuration()
-//        {
-//            var rules = Creator();
-//            var result = rules.CreateEel(config);
+        [TestMethod]
+        public void If_Calling_SetupEntities__Pawn_List_Should_Not_Be_Empty()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//            Assert.AreEqual(15, result.top_location);
-//        }
+            Assert.IsNotNull(pawnListUnderTest.Count);
+        }
 
-//        [TestMethod]
-//        public void If_Calling_CreateEscalator__Escalator_Should_Have_Bottom_Location_As_Defined_By_Configuration()
-//        {
-//            var rules = Creator();
-//            var result = rules.CreateEscalator(config);
+        [TestMethod]
+        public void If_Calling_SetupEntities__Entity_List_Should_Not_Be_Empty()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//            Assert.AreEqual(6, result.bottom_location);
-//        }
+            Assert.IsNotNull(entityListUnderTest.Count);
+        }
 
-//        [TestMethod]
-//        public void If_Calling_CreateEscalator__Escalator_Should_Have_Top_Location_As_Defined_By_Configuration()
-//        {
-//            var rules = Creator();
-//            var result = rules.CreateEscalator(config);
+        [TestMethod]
+        public void If_Calling_SetupEntities__Pawn_In_List_Should_Have_Location_As_Defined_By_Configuration()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//            Assert.AreEqual(17, result.top_location);
-//        }
+            Assert.AreEqual(3, pawnListUnderTest[0].location);
+        }
 
-//        [TestMethod]
-//        public void If_Calling_CreateBoard__Board_Should_Be_Created_With_The_Correct_Board_Size()
-//        {
-//            var rules = Creator();
-//            var result = rules.CreateBoard();
+        [TestMethod]
+        public void If_Calling_SetupEntities__Pawn_In_List_Should_Have_Color_As_Defined_By_Configuration()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//            Assert.AreEqual(boardSizeUnderTest, result.size);
-//        }
+            Assert.AreEqual(2, pawnListUnderTest[0].color);
+        }
 
-//        [TestMethod]
-//        public void If_Calling_CreateBoard__Entity_List_Should_Be_Empty()
-//        {
-//            var rules = Creator();
-//            var result = rules.CreateBoard();
+        [TestMethod]
+        public void If_Calling_SetupEntities__Pawn_In_List_Should_Have_PlayerID_As_Defined_By_Configuration()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//            NumberOfListContent = result.Entities.Count;
+            Assert.AreEqual(1, pawnListUnderTest[0].playerID);
+        }
 
-//            Assert.IsNull(NumberOfListContent);
-//        }
+        [TestMethod]
+        public void If_Calling_SetupEntities__Pawn_In_List_Should_Have_Pawn_As_Entity_Type()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//        [TestMethod]
-//        public void If_Calling_CreateBoard__Pawn_List_Should_Be_Empty()
-//        {
-//            var rules = Creator();
-//            var result = rules.CreateBoard();
+            Assert.AreEqual(EntityType.Pawn, pawnListUnderTest[0].type);
+        }
 
-//            NumberOfListContent = result.Pawns.Count;
+        [TestMethod]
+        public void If_Calling_SetupEntities__Eel_In_List_Should_Have_Bottom_Location_As_Defined_By_Configuration()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();           
+            
+            Assert.AreEqual(4, entityListUnderTest[0].bottom_location);
+        }
 
-//            Assert.IsNull(NumberOfListContent);
-//        }
+        [TestMethod]
+        public void If_Calling_SetupEntities__Eel_In_List_Should_Have_Top_Location_As_Defined_By_Configuration()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//        [TestMethod]
-//        // RollDice should return a nubmer with in the interval
-//        public void If_Calling_RollDice_With_Six_DiceSides_CorrectDiceAttribute_Should_Be_True()
-//        {
-//            diceSidesUnderTest = 6;
-//            var rules = Creator();
-//            rules.RollDice();
-//            if (diceResultUnderTest == 1 | diceResultUnderTest == 2 | diceResultUnderTest == 3 |
-//                diceResultUnderTest == 4 | diceResultUnderTest == 5 | diceResultUnderTest == 6)
-//                correctDice = true;
+            Assert.AreEqual(15, entityListUnderTest[0].top_location);
+        }
 
-//            Assert.IsTrue(correctDice);
-//        }
+        [TestMethod]
+        public void If_Calling_SetupEntities__Eel_In_List_Should_Have_Eel_As_Entity_Type()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
 
-//    }
-//}
+            Assert.AreEqual(EntityType.Eel, entityListUnderTest[0].type);
+        }
+
+        [TestMethod]
+        public void If_Calling_SetupEntities__Escalator_In_List_Should_Have_Bottom_Location_As_Defined_By_Configuration()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
+
+            Assert.AreEqual(6, entityListUnderTest[1].bottom_location);
+        }
+
+        [TestMethod]
+        public void If_Calling_SetupEntities__Escalator_In_List_Should_Have_Top_Location_As_Defined_By_Configuration()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
+
+            Assert.AreEqual(17, entityListUnderTest[1].top_location);
+        }
+
+        [TestMethod]
+        public void If_Calling_SetupEntities__Escalator_In_List_Should_Have_Escalator_As_Entity_Type()
+        {
+            var rules = Creator();
+            rules.SetupEntitites();
+
+            Assert.AreEqual(EntityType.Escalator, entityListUnderTest[1].type);
+        }
+
+        [TestMethod]
+        public void If_Calling_CreateBoard__Board_Should_Be_A_Classic_Board()
+        {
+            var rules = Creator();
+            var result = rules.CreateBoard();
+                                            
+            Assert.IsTrue(Equals(result));
+        }
+
+        [TestMethod]
+        public void If_Calling_CreateBoard__Created_Board_Should_Have_Classic_Size()
+        {
+            var rules = Creator();
+            var result = rules.CreateBoard();
+
+            Assert.AreEqual(boardSizeUnderTest, result.size);
+        }
+
+        [TestMethod]
+        public void If_Calling_CreateBoard__Created_Board_Should_Have_Classic_Max_Size()
+        {
+            var rules = Creator();
+            var result = rules.CreateBoard();
+
+            Assert.AreEqual(boardMaxWidthUnderTest, result.MaxWidth);
+        }
+
+        [TestMethod]
+        public void If_Calling_CreateBoard__Entity_List_Should_Be_Empty()
+        {
+            var rules = Creator();
+            var result = rules.CreateBoard();
+           
+            Assert.AreEqual(0, entityListUnderTest.Count);
+        }
+
+        [TestMethod]
+        public void If_Calling_CreateBoard__Pawn_List_Should_Be_Empty()
+        {
+            var rules = Creator();
+            var result = rules.CreateBoard();
+            
+            Assert.AreEqual(0, pawnListUnderTest.Count);
+        }
+
+        [TestMethod]
+        // RollDice should return a nubmer with in the interval
+        public void If_Calling_RollDice_CorrectDiceAttribute_Should_Be_True()
+        {
+           
+            var rules = Creator();
+            rules.RollDice();
+
+            if (rules.DiceResult >= 1 && rules.DiceResult <= 6)
+                correctDice = true;
+            else correctDice = false;
+
+            Assert.IsTrue(correctDice);
+        }
+
+    }
+}
