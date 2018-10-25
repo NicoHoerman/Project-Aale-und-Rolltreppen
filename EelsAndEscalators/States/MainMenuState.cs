@@ -63,6 +63,7 @@ namespace EelsAndEscalators.States
 
                 _mainMenuOutput = _dataProvider.GetText("mainmenuinfo");
 
+               
                 while (ruleNotSet)
                 {
                     UpdateOutput();
