@@ -6,7 +6,7 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
-    class GameRunningState : IState
+    public class GameRunningState : IState
     {
         private readonly IGame _game;
         private readonly ISourceWrapper _sourceWrapper;
