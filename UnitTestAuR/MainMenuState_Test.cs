@@ -20,35 +20,43 @@ namespace UnitTestAuR
         private Func<MainMenuState> Creator;
         DataProvider dataProvider = new DataProvider();
 
-        private int x;
-        private int y;
-        private string z;
-        private string _TestText;
-        private string _input;
-        private string errorMsg;
+        private int counter = 0;
+        private bool _switchStateMethodCalled = false;
+        private bool _closingGameMethodCalled = false;
+        private string _testOutput;
+        private IRules _ruleUnderTest;
 
-        private string ReturnInput()
+        List<string> commands;
+        List<string> outputs = new List<string>();
+
+        private string Test(int x,int y,string z,ConsoleColor c)
         {
-            return _input;
+            return z;
         }
+
+      
 
         [TestInitialize]
         public void Setup()
         {
             //Defaults
+            //_input = "test";
+            _testOutput = "Invalid input";
 
 
             //Mocked Configurationprovider
             var mockedConfigProvider = new Mock<IConfigurationProvider>();
             //mockedConfigProvider.Setup(c => c.)
-
+            
 
             //Mocked SourceWrapper
             var mockedSourceWrapper = new Mock<ISourceWrapper>();
-            mockedSourceWrapper.Setup(s => s.WriteOutput(x, y, z, ConsoleColor.White))
-               .Callback(() => _TestText = z);
+            mockedSourceWrapper.Setup(s => s.WriteOutput(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<ConsoleColor>()))
+                .Callback<int,int,string,ConsoleColor>((x,y,z,s)=> outputs.Add(z));
             mockedSourceWrapper.Setup(s => s.ReadInput())
-                .Callback(() => ReturnInput());
+               .Returns(() => commands[counter] )
+               .Callback(() => counter++);
+
             //sourcewrapper.Clear soll nichts machen
             //sourcewrapper.ReadKey wird nicht aufgerufen 
 
@@ -60,7 +68,15 @@ namespace UnitTestAuR
 
             //Mock Game
             var mockedGame = new Mock<IGame>();
-            //mockedGame.Setup(g => g.)
+            mockedGame.Setup(g => g.SwitchRules(_ruleUnderTest))
+                .Callback(() => _ruleUnderTest = new ClassicRules(mockedGame.Object));
+            mockedGame.Setup(g => g.SwitchState(It.IsAny<IState>()))
+                .Callback(() => _switchStateMethodCalled = true);
+            mockedGame.Setup(g => g.ClosingGame())
+                .Callback(() => _closingGameMethodCalled = true);
+                
+            
+
 
             Creator = () => new MainMenuState(mockedGame.Object,mockedConfigProvider.Object,
                                               mockedSourceWrapper.Object, dataProvider);      
@@ -71,46 +87,63 @@ namespace UnitTestAuR
         // /startgame while no rules Set
         public void If_Calling_Execute__and_command_is_startgame_and_no_rule_set_errorMessage_should_be_returned()
         {
-            _input = "/startgame";
-            errorMsg = "Invalid input";
+            commands = new List<string>();
+            commands.Add("/startgame");
+            commands.Add("/classic");
+            commands.Add("/startgame");
+            _testOutput = "Last Error: Please choose a rule first";
 
             var state = Creator();
             state.Execute();
 
-            Assert.AreEqual("Last Error:" + errorMsg, "Last Error:" + _TestText);
+            Assert.IsTrue(outputs.Contains(_testOutput));
         }
         
+
         [TestMethod]
-        //WaitingForInput
+        // /startgame while rule set
         public void If_Calling_Execute__and_command_is_startgame_and_rule_set_state_should_be_switched()
         {
-            _input = "/startgame";
+            commands = new List<string>();
+            commands.Add("/classic");
+            commands.Add("/startgame");
 
             var state = Creator();
             state.Execute();
+
+            Assert.IsTrue(_switchStateMethodCalled);
         }
 
         [TestMethod]
-        //WaitingForInput
+        // if /classic  then testOutput should be in the list
         public void If_Calling_Execute__and_command_is_classic_RuleSetMessage_should_be_returned()
         {
-            _input = "/classic";
+            commands = new List<string>();
+            commands.Add("/classic");
+            commands.Add("/startgame");
+            _testOutput = "Ruleset chosen.\nYou can now start the game.";
 
             var state = Creator();
             state.Execute();
+
+            Assert.IsTrue(outputs.Contains(_testOutput));
+            commands.Clear();
         }
 
         [TestMethod]
-        //WaitingForInput
+        // /closegame 
         public void If_Calling_Execute__and_command_is_closegame_Game_ClosingGame_Method_should_be_called()
         {
-            _input = "/closegame";
+            commands = new List<string>();
+            commands.Add("/closegame");
+            commands.Add("/classic");
+            commands.Add("/startgame");
 
             var state = Creator();
             state.Execute();
+            Assert.IsTrue(_closingGameMethodCalled);
+            commands.Clear();
         }
-
-       
 
     }
 }
