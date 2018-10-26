@@ -82,7 +82,8 @@ namespace EelsAndEscalators.States
 
         private void OnCloseGameCommand()
         {
-            _game.ClosingGame();
+            isRunning = false;
+            _game.SwitchState(new GameEndingState(_game));
         }
 
         private void OnHelpCommand()

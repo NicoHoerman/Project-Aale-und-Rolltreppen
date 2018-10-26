@@ -113,7 +113,10 @@ namespace EelsAndEscalators.States
 
         private void OnCloseGameCommand()
         {
-            _game.ClosingGame();
+            ruleNotSet = false;
+            gameNotStarted = false;
+            inMenu = false;
+            _game.SwitchState(new GameEndingState(_game));
         }
 
         private void OnClassicCommand()

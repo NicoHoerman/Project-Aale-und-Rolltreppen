@@ -89,8 +89,7 @@ namespace UnitTestAuR
         {
             commands = new List<string>();
             commands.Add("/startgame");
-            commands.Add("/classic");
-            commands.Add("/startgame");
+            commands.Add("/closegame");
             _testOutput = "Last Error: Please choose a rule first";
 
             var state = Creator();
