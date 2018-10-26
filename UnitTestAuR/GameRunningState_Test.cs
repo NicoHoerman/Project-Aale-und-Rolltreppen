@@ -21,6 +21,7 @@ namespace UnitTestAuR
         private bool _switchStateMethodCalled = false;
         private bool _closingGameMethodCalled = false;
         private string _testOutput;
+        private int sizeUnderTest = 1;
         private IRules _ruleUnderTest;
         private Logic logic;
 
@@ -48,7 +49,10 @@ namespace UnitTestAuR
                .Returns(() => commands[counter])
                .Callback(() => counter++);
 
-           
+            //Mock Board
+            var mockedBoard = new Mock<IBoard>();
+            mockedBoard.Setup(b => b.size)
+                .Returns(() => sizeUnderTest);
 
 
 
@@ -97,7 +101,7 @@ namespace UnitTestAuR
         {
             commands = new List<string>();
             commands.Add("/help");
-            commands.Add("/closegame");
+            commands.Add("/rolldice");
             _testOutput = "Commands are" + "\n" + "/closegame" + "\n" + "/rolldice";
 
             var state = Creator();
