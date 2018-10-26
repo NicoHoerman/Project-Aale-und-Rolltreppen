@@ -71,7 +71,6 @@
     <Compile Include="ClassicRules_Test.cs" />
     <Compile Include="Board_Test.cs" />
     <Compile Include="GameRunningState_Test.cs" />
-    <Compile Include="Game_Test.cs" />
     <Compile Include="Logic_Test.cs" />
     <Compile Include="MainMenuState_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
