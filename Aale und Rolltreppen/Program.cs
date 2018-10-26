@@ -13,10 +13,20 @@ namespace Aale_und_Rolltreppen
     public class Program
     {
 
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.
+            MethodBase.GetCurrentMethod().DeclaringType);
+
+
         static void Main(string[] args)
         {
+            
+
             var game = new Game();
             game.Init();
+
+            log.Info("Hello logging world!");
+            log.Info("xoxoxoxoxoxoxoxoxoxo");
+
         }
     }
 }
