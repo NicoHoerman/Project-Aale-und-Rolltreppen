@@ -5,31 +5,30 @@ using EelsAndEscalators.Contracts;
 
 namespace EelsAndEscalators.States
 {
-    class GameFinishedState : IState
+    public class GameFinishedState : IState
     {
         private readonly IGame _game;
         private readonly ISourceWrapper _sourceWrapper;
         private readonly DataProvider _dataProvider;
-        private readonly Logic _logic;
+        
 
         public bool isFinished;
-        private string _finishinfo =string.Empty;
+        public string _finishinfo =string.Empty;
         private string _finishskull1 = string.Empty;
         private string _finishskull2 = string.Empty;
-        private int _winner;
+        public int _winner;
 
-        public GameFinishedState(IGame game, ISourceWrapper sourceWrapper, DataProvider dataProvider, Logic logic, int winner)
+        public GameFinishedState(IGame game, ISourceWrapper sourceWrapper, DataProvider dataProvider, int winner)
         {
             _game = game;
             _sourceWrapper = sourceWrapper;
-            _dataProvider = dataProvider;
-            _logic = logic;
+            _dataProvider = dataProvider;        
             isFinished = true;
             _winner = winner;
         }
 
         public GameFinishedState(IGame game,int winner)
-            : this(game, new SourceWrapper(), new DataProvider(),new Logic(game),winner)
+            : this(game, new SourceWrapper(), new DataProvider(),winner)
         { }
 
         public void Execute()

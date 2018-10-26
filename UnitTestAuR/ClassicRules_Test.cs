@@ -28,13 +28,7 @@ namespace UnitTestAuR
 
         private int blub;
 
-        private int bottomEelLocationUnderTest;
-        private int topEelLocationUnderTest;
-        private int bottomEscalatorLocationUnderTest;
-        private int topEscalatorLocationUnderTest;
-
         private int boardMaxWidthUnderTest;
-
 
         static string _xmlString = "<?xml version=\"1.0\" encoding=\"utf-8\" ?> <Configurations> <!--Eel--> <config> <entitytype>0</entitytype> <toplocation>15</toplocation> <bottomlocation>4</bottomlocation> </config> <!--Escalator--> <config> <entitytype>1</entitytype> <toplocation>17</toplocation> <bottomlocation>6</bottomlocation> </config> <!--Pawn--> <config> <entitytype>2</entitytype> <location>3</location> <color>2</color> <playerid>1</playerid> </config> </Configurations>";
 
@@ -74,6 +68,7 @@ namespace UnitTestAuR
             var configList = XDocument.Parse(_xmlString).Root.Elements().ToList();
 
             boardSizeUnderTest = 30;
+
             boardMaxWidthUnderTest = 8;
 
             //mockedBoard Setup
@@ -86,20 +81,7 @@ namespace UnitTestAuR
                 .Returns(() => entityListUnderTest);
             mockedBoard.Setup(m => m.Pawns)
                 .Returns(() => pawnListUnderTest);
-
-            var mockedEel = new Mock<IEntity>();
-            mockedEel.Setup(e => e.bottom_location)
-                .Returns(() => bottomEelLocationUnderTest);
-            mockedEel.Setup(e => e.top_location)
-                .Returns(() => topEelLocationUnderTest);
-
-                       
-            var mockedEscalator = new Mock<IEntity>();
-            mockedEscalator.Setup(e => e.bottom_location)
-                .Returns(() => bottomEscalatorLocationUnderTest);
-            mockedEscalator.Setup(e => e.top_location)
-                .Returns(() => topEscalatorLocationUnderTest);
-
+                                             
             
             //mockedGame Setup
             var mockedGame = new Mock<IGame>();
