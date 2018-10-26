@@ -64,8 +64,7 @@ namespace UnitTestAuR
                 .Callback(() => Environment.Exit(0));
             mockedGame.Setup(g => g.Board.CreateOutput())
                 .Returns(() => "");
-            mockedGame.Setup(g => g.Init())
-                .Callback(() => Environment.Exit(0));
+            
             
 
 
