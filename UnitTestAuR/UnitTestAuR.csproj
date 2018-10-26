@@ -75,6 +75,7 @@
     <Compile Include="Logic_Test.cs" />
     <Compile Include="MainMenuState_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GameFinishedState_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
