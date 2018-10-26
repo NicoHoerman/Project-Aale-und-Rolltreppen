@@ -11,23 +11,20 @@ namespace EelsAndEscalators
 {
     public class Game : IGame
     {
-
+        public bool isRunning { get; set; }
         public IBoard Board { get; set; }
         public IRules Rules { get; private set; }
         public IState State { get; private set; }
 
         public void Init()
         {
-            // Wichtige Objekte initialisiert
-            // Configurationen ausgelesen.
-
             State = new MainMenuState(this);
             Run();
         }
 
         public void Run()
         {
-            bool isRunning = true;
+            isRunning = true;
             while (isRunning)
             {
                 State.Execute();
@@ -50,7 +47,7 @@ namespace EelsAndEscalators
 
         public void ClosingGame()
         {
-            Environment.Exit(0);
+            isRunning = false;
         }
 
     }

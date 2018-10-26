@@ -22,7 +22,6 @@ namespace UnitTestAuR
 
         private int counter = 0;
         private bool _switchStateMethodCalled = false;
-        private bool _closingGameMethodCalled = false;
         private string _testOutput;
         private IRules _ruleUnderTest;
 
@@ -61,22 +60,13 @@ namespace UnitTestAuR
             //sourcewrapper.ReadKey wird nicht aufgerufen 
 
             //Parser und DataProvider sind implementierte Klassen
-
-
-
-
-
+            
             //Mock Game
             var mockedGame = new Mock<IGame>();
             mockedGame.Setup(g => g.SwitchRules(_ruleUnderTest))
                 .Callback(() => _ruleUnderTest = new ClassicRules(mockedGame.Object));
             mockedGame.Setup(g => g.SwitchState(It.IsAny<IState>()))
                 .Callback(() => _switchStateMethodCalled = true);
-            mockedGame.Setup(g => g.ClosingGame())
-                .Callback(() => _closingGameMethodCalled = true);
-                
-            
-
 
             Creator = () => new MainMenuState(mockedGame.Object,mockedConfigProvider.Object,
                                               mockedSourceWrapper.Object, dataProvider);      
@@ -106,6 +96,7 @@ namespace UnitTestAuR
             commands = new List<string>();
             commands.Add("/classic");
             commands.Add("/startgame");
+            commands.Add("/closegame");
 
             var state = Creator();
             state.Execute();
@@ -119,7 +110,7 @@ namespace UnitTestAuR
         {
             commands = new List<string>();
             commands.Add("/classic");
-            commands.Add("/startgame");
+            commands.Add("/closegame");
             _testOutput = "Ruleset chosen.\nYou can now start the game.";
 
             var state = Creator();
@@ -135,13 +126,11 @@ namespace UnitTestAuR
         {
             commands = new List<string>();
             commands.Add("/closegame");
-            commands.Add("/classic");
-            commands.Add("/startgame");
+            
 
             var state = Creator();
             state.Execute();
-            Assert.IsTrue(_closingGameMethodCalled);
-            commands.Clear();
+            Assert.IsTrue(_switchStateMethodCalled);
         }
 
     }

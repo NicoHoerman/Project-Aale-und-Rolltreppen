@@ -8,6 +8,8 @@ namespace EelsAndEscalators.Contracts
     public interface IGame
     {
 
+        bool isRunning { get; set; }
+
         IRules Rules { get; }
         IBoard Board { get; set; }
         IState State { get; }

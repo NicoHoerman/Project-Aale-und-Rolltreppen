@@ -16,7 +16,8 @@ namespace EelsAndEscalators.States
 
         public void Execute()
         {
-            Environment.Exit(0);
+            _game.ClosingGame();
+
         }
     }
 
