@@ -18,7 +18,7 @@ namespace EelsAndEscalators.States
         private string _boardOutput = string.Empty;
         private string _helpOutput = string.Empty;
         private string _lastInput = string.Empty;
-        private string _afterTurnOutput = string.Empty;
+        public string _afterTurnOutput = string.Empty;
         private string _afterBoardOutput = string.Empty;
 
         public GameRunningState(IGame game, ISourceWrapper sourceWrapper, DataProvider dataProvider, Logic logic)
@@ -152,7 +152,7 @@ namespace EelsAndEscalators.States
                 
                 turnstate = TurnState.TurnFinished;
             }
-            else
+            else if(turnstate == TurnState.TurnFinished)
             {
                 _afterTurnOutput = string.Format(
                     dataprovider.GetText("diceresultinfo"),
