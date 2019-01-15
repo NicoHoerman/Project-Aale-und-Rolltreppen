@@ -45,8 +45,6 @@ namespace EelsAndEscalators.ClassicEandE
 
             try
             {
-
-
                 var configurations = _configurationProvider.GetEntityConfigurations();
                 configurations.ForEach(config =>
                 {

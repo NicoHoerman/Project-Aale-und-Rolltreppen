@@ -5,9 +5,7 @@ using EelsAndEscalators.Contracts;
 using EelsAndEscalators.ClassicEandE;
 using EelsAndEscalators.States;
 
-
-
-namespace EelsAndEscalators
+namespace EelsAndEscalators.GameAndLogic
 {
     public class Game : IGame
     {

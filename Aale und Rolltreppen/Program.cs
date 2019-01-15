@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aale_und_Rolltreppen;
+using EelsAndEscalators.GameAndLogic;
 using EelsAndEscalators;
-using EelsAndEscalators.Contracts;
-using EelsAndEscalators.States;
+using EelsAndEscalators.Test;
 
 namespace Aale_und_Rolltreppen
 {
     public class Program
     {
-
         static void Main(string[] args)
         {
+            DBProvider test = new DBProvider();
+            test.Test();
+
             var game = new Game();
             game.Init();
         }
